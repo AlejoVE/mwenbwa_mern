@@ -11,7 +11,8 @@
     "work:server": "npx babel src/server -s --watch --verbose --out-dir bin/server",
     "build:client": "npx webpack --progress --profile --colors",
     "work:client": "npx webpack --env=dev --progress",
-    "build": "npm run build:server && npm run build:client"
+    "build": "npm run build:server && npm run build:client",
+    "start": "node bin/server/index.js"
   },
   "lint-staged": {
     "*.js": [
@@ -36,7 +37,6 @@
     "eslint-plugin-unicorn": "^20.0.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
-    "husky": "^4.2.5",
     "lint-staged": "^10.2.3",
     "prettier": "^2.0.5",
     "uglifyjs-webpack-plugin": "^1.1.2",
@@ -48,10 +48,5 @@
     "express": "^4.17.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npx lint-staged"
-    }
   }
 }
