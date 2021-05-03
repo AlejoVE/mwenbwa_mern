@@ -1,11 +1,3 @@
-/* becodeorg/mwenbwa
- *
- * /src/server/index.js - Server entry point
- *
- * coded by leny@BeCode
- * started at 18/05/2020
- */
-
 import express from "express";
 import path from "path";
 
