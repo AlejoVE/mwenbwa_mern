@@ -1,0 +1,56 @@
+{
+  "name": "@becode/mwenbwa",
+  "version": "0.0.1",
+  "description": "A web-based game of conquests… and trees",
+  "author": "leny <leny@becode.org>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "lint": "npx eslint --fix --cache --ignore-pattern 'docs/*' src",
+    "build:server": "npx babel src/server -s --out-dir bin/server",
+    "work:server": "npx babel src/server -s --watch --verbose --out-dir bin/server",
+    "build:client": "npx webpack --progress --profile --colors",
+    "work:client": "npx webpack --env=dev --progress",
+    "build": "npm run build:server && npm run build:client"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npx eslint --fix --cache"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-decorators": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-react": "^7.9.4",
+    "@becode/eslint-config": "^0.9.1",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.0.0",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-unicorn": "^20.0.0",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.3",
+    "prettier": "^2.0.5",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npx lint-staged"
+    }
+  }
+}
