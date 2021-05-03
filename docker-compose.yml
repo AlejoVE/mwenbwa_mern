@@ -6,6 +6,8 @@
       environment:
         NODE_ENV: "development"
         APP_PORT: 12345
+      env_file:
+        - ./.env
       volumes:
         - "./package.json:/src/app/package.json"
         - "./node_modules:/src/app/node_modules"
