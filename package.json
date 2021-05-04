@@ -12,7 +12,7 @@
     "build:client": "npx webpack --progress --profile --colors",
     "work:client": "npx webpack --env=dev --progress",
     "build": "npm run build:server && npm run build:client",
-    "start": "node bin/server/index.js"
+    "start": "nodemon bin/server/index.js"
   },
   "lint-staged": {
     "*.js": [
@@ -38,6 +38,7 @@
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "lint-staged": "^10.2.3",
+    "nodemon": "^2.0.7",
     "prettier": "^2.0.5",
     "uglifyjs-webpack-plugin": "^1.1.2",
     "webpack": "^4.43.0",
