@@ -12,13 +12,7 @@ dbConnection()
 
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 
-app.get("/hello", (req, res) => {
-    console.log(`ℹ️  (${req.method.toUpperCase()}) ${req.url}`);
-    res.send("Hello, World!");
-});
-
 app.use(express.json())
-
 
 //Routes
 app.use("/api/users", require("./routes/UsersRoutes"))
