@@ -13,7 +13,6 @@ const targetFile = path.join(__dirname, "data", "arbustumFormat.json");
 
 const seeNames = (trees) => {
     let names = [];
-    let links = [];
     trees.forEach(async (tree, i) => {
         let name = new Object
         name.name = tree.nom_complet;
@@ -49,18 +48,10 @@ const getFile = async () => {
         const file = await readFile(filetPath, "utf-8");
         const trees = JSON.parse(file);
         const {averageSize, averageDiameter} = avgSizes(trees);
-        
         const formatData = [];
+
         const getNames = seeNames(trees);
-
-
-        
-        
         const allLinks = await getLinks(getNames);
-
-        // console.log(allLinks)
-
-
 
         trees.forEach(async (tree) => {
             let diameter = tree.diametre_cime;
@@ -90,8 +81,6 @@ const getFile = async () => {
                 return;
             }
 
-
-            // let link = await fetchData(tree.nom_complet)
             tree.value = Math.round(size * diameter);
             tree.owner = "";
             tree.name = "";
@@ -141,17 +130,5 @@ const avgSizes = (trees) => {
     return {averageSize, averageDiameter};
 };
 
-
-
-
-
-
-
-// const addLinks = (getNames) =>{
-   
-//     console.log(getNames)
-//     return getNames
-
-// }
 getFile();
 
