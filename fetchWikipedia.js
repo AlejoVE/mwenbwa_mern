@@ -17,6 +17,5 @@ const fetchData = async (query) => {
     return data[3];
 };
 
-// fetchData("Platanus × acerifolia");
 
 module.exports = {fetchData};

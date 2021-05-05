@@ -11,32 +11,70 @@ const readDir = util.promisify(fs.readdir);
 const filetPath = path.join(__dirname, "data", "arbustum.json");
 const targetFile = path.join(__dirname, "data", "arbustumFormat.json");
 
+const seeNames = (trees) => {
+    let names = [];
+    let links = [];
+    trees.forEach(async (tree, i) => {
+        let name = new Object
+        name.name = tree.nom_complet;
+        if (name.name === "en cours de détermination") {
+            return;
+        }
+        if (names.some(item =>item.name === name.name)) {
+            return;
+        }
+        if(!name.name){
+            return
+        }
+        
+        names.push(name);
+    });
+    return names;
+};
+
+const getLinks = async (getNames) => {
+    for(const item of getNames){
+        let link = await fetchData(item.name)
+        if(!link[0]){
+            link[0] = "No link for this tree"
+        }
+
+        item.link = link[0]
+    }
+    return getNames
+}
+
 const getFile = async () => {
     try {
         const file = await readFile(filetPath, "utf-8");
         const trees = JSON.parse(file);
         const {averageSize, averageDiameter} = avgSizes(trees);
-
+        
         const formatData = [];
-
         const getNames = seeNames(trees);
 
-        const links = [];
 
-        getNames.forEach(async (name) => {
-            if (name === "en cours de détermination") {
-                return;
-            }
+        
+        
+        const allLinks = await getLinks(getNames);
 
-            const link = await fetchData(name);
-            links.push({name, link});
-        });
+        // console.log(allLinks)
+
+
 
         trees.forEach(async (tree) => {
             let diameter = tree.diametre_cime;
             let size = tree.hauteur_totale;
+            
+            for(const item of allLinks){
+                if(tree.nom_complet == item.name){
+                    tree.link = item.link;
+                }
+            }
 
-            links.forEach((link) => console.log({link}));
+            if(tree.nom_complet === "en cours de détermination") {
+                tree.link = "No link for this tree"
+            }
 
             if (size == null) {
                 size = averageSize;
@@ -52,6 +90,8 @@ const getFile = async () => {
                 return;
             }
 
+
+            // let link = await fetchData(tree.nom_complet)
             tree.value = Math.round(size * diameter);
             tree.owner = "";
             tree.name = "";
@@ -60,7 +100,7 @@ const getFile = async () => {
             tree.lat = tree.geoloc.lat;
             tree.lon = tree.geoloc.lon;
             tree.comments = [];
-            // tree.link = link;
+            
             delete tree.y_lambert72;
             delete tree.arbotag;
             delete tree.date_donnees;
@@ -69,17 +109,20 @@ const getFile = async () => {
             delete tree.y_phi;
             delete tree.circonf;
             delete tree.geoloc;
+
             formatData.push(tree);
         });
-
-        //   console.log("Writting new file...");
-        //   const stringData = await JSON.stringify(formatData, 2);
-        //   await writeFile(targetFile, stringData);
-        //   console.log("Done");
+          console.log("Writting new file...");
+          const stringData = await JSON.stringify(formatData, 2);
+          await writeFile(targetFile, stringData);
+          console.log("Done");
     } catch (error) {
         console.log(error);
     }
 };
+
+
+
 
 const avgSizes = (trees) => {
     let totalSize = 0;
@@ -98,18 +141,17 @@ const avgSizes = (trees) => {
     return {averageSize, averageDiameter};
 };
 
-const seeNames = (trees) => {
-    const names = [];
-    trees.forEach((tree) => {
-        const name = tree.nom_complet;
-        if (names.includes(name)) {
-            return;
-        }
 
-        names.push(name);
-    });
 
-    return names;
-};
 
+
+
+
+// const addLinks = (getNames) =>{
+   
+//     console.log(getNames)
+//     return getNames
+
+// }
 getFile();
+
