@@ -56,11 +56,6 @@ const userSchema = new mongoose.Schema(
     }
 )
 
-userSchema.method('toJSON', function () {
-    const {__v, _id, ...object} = this.toObject();
-    object.id = _id;
-    return object;
-})
 
 userSchema.pre("save", async function(next){
     const salt = await bcrypt.genSalt();

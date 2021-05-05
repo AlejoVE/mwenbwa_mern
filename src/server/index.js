@@ -2,7 +2,6 @@ import express from "express";
 import path from "path";
 import {dbConnection} from './database/config';
 require('dotenv').config()
-// import router from './routes/UsersRoutes'
 
 const PORT = process.env.APP_PORT
 
