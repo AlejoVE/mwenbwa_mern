@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+const {Schema, model} = require('mongoose')
 
 
-const treeSchema = new mongoose.Schema(
+const treeSchema = new Schema(
     {
         hauter_totale: {
             type: Number,
@@ -74,6 +74,6 @@ const treeSchema = new mongoose.Schema(
     }
 )
 
-const TreeModel = mongoose.model('Tree', treeSchema);
+const TreeModel = model('Tree', treeSchema);
 
 module.exports = TreeModel

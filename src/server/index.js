@@ -15,6 +15,7 @@ app.use(express.json())
 
 //Routes
 app.use("/api/users", require("./routes/UsersRoutes"))
+app.use("/api/trees", require("./routes/TreesRoutes"))
 
 
 //Server
