@@ -1,12 +1,8 @@
 import React from "react";
 import ViewMap from "./components/map";
 
-const App = () => {
+export default function App () {
     return (
-        <div>
-            <ViewMap />
-        </div>
+        <ViewMap />
     )
 }
-
-export default App;
