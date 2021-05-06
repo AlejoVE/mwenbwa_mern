@@ -82,12 +82,13 @@ const getFile = async () => {
             }
 
             tree.value = Math.round(size * diameter);
-            tree.owner = "";
+            tree.owner = null;
             tree.name = "";
             tree.locked = false;
             tree.price = tree.value;
             tree.lat = tree.geoloc.lat;
             tree.lon = tree.geoloc.lon;
+            tree.history = []
             tree.comments = [];
             
             delete tree.y_lambert72;
@@ -102,7 +103,7 @@ const getFile = async () => {
             formatData.push(tree);
         });
           console.log("Writting new file...");
-          const stringData = await JSON.stringify(formatData, 2);
+          const stringData = await JSON.stringify(formatData, null, 2);
           await writeFile(targetFile, stringData);
           console.log("Done");
     } catch (error) {
