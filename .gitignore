@@ -5,3 +5,5 @@ build/Release
 bin
 bin/
 _dev
+fetchWikipedia.js
+formatData.js
