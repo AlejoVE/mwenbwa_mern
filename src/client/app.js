@@ -1,9 +1,12 @@
-import * as React from "react";
-import HelloWorld from "./components/hello";
-import Map from "./components/map";
+import React from "react";
+import ViewMap from "./components/map";
 
+const App = () => {
+    return (
+        <div>
+            <ViewMap />
+        </div>
+    )
+}
 
-export const App = () => {
-    <HelloWorld />,
-    <Map />
-};
+export default App;
