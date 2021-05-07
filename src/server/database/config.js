@@ -7,7 +7,8 @@ const dbConnection = async () => {
 
             useNewUrlParser: true, 
             useUnifiedTopology: true,
-            useCreateIndex: true
+            useCreateIndex: true,
+            useFindAndModify: false
         })
         console.log('You are connected to the DB.');
 

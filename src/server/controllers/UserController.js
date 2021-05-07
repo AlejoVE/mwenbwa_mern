@@ -3,6 +3,7 @@ const TreeModel = require('../models/TreeSchema')
 const {generateJWT} = require('../helpers/jwt')
 const bcrypt = require('bcrypt');
 import {getLeaves} from '../helpers/getLeaves'
+import {nameByRace} from "fantasy-name-generator";
 
 const signup = async (req, res) => {
 
@@ -10,20 +11,25 @@ const signup = async (req, res) => {
 
     try {
 
+        //Search trees without owner
         const trees = await TreeModel.find({owner: null}).limit(3)
-
         const [treeOne, treeTwo, treeThree] = trees
         const treesArray = new Array(treeOne._id, treeTwo._id, treeThree._id)
+
+        //Give leaves 
         const leaves = await getLeaves();
+
+        //Create user
         const user = await UserModel.create({userName, email, password, trees: treesArray, color, leaves})
 
 
 
-        //Give 3 trees
+        //Add history , owner and random name to trees
         for(let tree of trees){
+            const randomName = nameByRace("elf")
             const userObject = {
                 owner: user._id,
-                history: [...tree.history, { username: user.userName, date: new Date().toDateString()}]
+                history: [...tree.history, { username: user.userName, date: new Date().toDateString(), name: randomName}]
             }
             const res = await TreeModel.updateOne({ _id:tree._id}, { $set: userObject})
             console.log(res)

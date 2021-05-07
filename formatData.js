@@ -6,7 +6,7 @@ const {fetchData} = require("./fetchWikipedia");
 // import {fetchData} from './fetchWikipedia'
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
-const readDir = util.promisify(fs.readdir);
+
 
 const filetPath = path.join(__dirname, "data", "arbustum.json");
 const targetFile = path.join(__dirname, "data", "arbustumFormat.json");
