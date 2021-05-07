@@ -1,4 +1,5 @@
-const UserModel = require('../controllers/UserController')
+const UserModel = require('../models/UserModel')
+
 
 const getLeaves = async () =>  {
 
@@ -11,7 +12,9 @@ const getLeaves = async () =>  {
             totalLeaves += user.leaves
         }
 
-        console.log({totalUsers}, {totalLeaves});
+        const result = totalLeaves / totalUsers
+
+        return result
 
     } catch(err){
         console.log(err)

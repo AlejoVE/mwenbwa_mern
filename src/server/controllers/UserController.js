@@ -14,24 +14,24 @@ const signup = async (req, res) => {
 
         const [treeOne, treeTwo, treeThree] = trees
         const treesArray = new Array(treeOne._id, treeTwo._id, treeThree._id)
-        getLeaves();;
-        // const user = await UserModel.create({userName, email, password, trees: treesArray, color})
+        const leaves = await getLeaves();
+        const user = await UserModel.create({userName, email, password, trees: treesArray, color, leaves})
 
 
 
-        // //Give 3 trees
-        // for(let tree of trees){
-        //     const userObject = {
-        //         owner: user._id,
-        //         history: [...tree.history, { username: user.userName, date: new Date().toDateString()}]
-        //     }
-        //     const res = await TreeModel.updateOne({ _id:tree._id}, { $set: userObject})
-        //     console.log(res)
-        // }
+        //Give 3 trees
+        for(let tree of trees){
+            const userObject = {
+                owner: user._id,
+                history: [...tree.history, { username: user.userName, date: new Date().toDateString()}]
+            }
+            const res = await TreeModel.updateOne({ _id:tree._id}, { $set: userObject})
+            console.log(res)
+        }
 
-        // const token = await generateJWT(user._id)
+        const token = await generateJWT(user._id)
         
-        // res.status(201).json({token, message: "The token is OK"})
+        res.status(201).json({token, message: "The token is OK"})
         
     } catch(err){
         console.log(err)
