@@ -7,6 +7,6 @@ const {
 
 router.get('/', getAllTrees)
 router.get('/:id', getOneTree)
-router.post('/buy/:id', buyTree)
+router.put('/buy/:id', buyTree)
 
 module.exports= router

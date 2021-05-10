@@ -1,6 +1,10 @@
-const TreeModel = require('../models/TreeSchema')
-import { nameByRace } from "fantasy-name-generator";
+const TreeModel = require('../models/TreeSchema');
+const UserModel = require('../models/UserModel');
+const ObjectId = require('mongodb').ObjectId;
+import {nameByRace} from "fantasy-name-generator";
 import {getUserLeaves} from '../helpers/getUserLeaves';
+import {getTreesUser} from '../helpers/getTreesUser';
+import {getHistory} from '../helpers/getHistory';
 
 
 const getAllTrees = async (req, res) => {
@@ -19,8 +23,10 @@ const getOneTree = async (req, res) => {
     const id = req.params.id
 
     try{
+
         const tree = await TreeModel.findById(id)
-        req.status(200).json({tree})
+        res.status(200).json({tree})
+
     } catch(err){
         res.status(404).json({err: "Id not found..."})
         console.log(err);
@@ -32,20 +38,26 @@ const buyTree = async (req,res) => {
     const id = req.params.id
     const userName = req.body.userName
 
-    console.log(userName)
-
-
-
     try {
         const randomName = nameByRace("elf", { gender: "female" })
         const {price, locked} = await TreeModel.findById(id)
         const {userLeaves, userId} = await getUserLeaves(userName)
+        const userTrees = await getTreesUser(userName)
+        const history = await getHistory(id)
+       
+        if(userTrees.includes(id)) {
+            res.status(400).json({message: "You have already this tree."})
+            return
+        }
 
-        // !!!! add the tree to user and change history 
         if(userLeaves >= price && !locked) {
-            const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName})
-            console.log(tree)
-            res.status(201).json({tree})
+
+            history.push({userName, date: new Date().toDateString()})
+            userTrees.push(ObjectId(id))
+
+            const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName, history})
+            const user = await UserModel.findOneAndUpdate({userName: userName}, {trees: userTrees, leaves: userLeaves - price})
+            res.status(200).json({tree})
             return
         }
 
@@ -55,6 +67,8 @@ const buyTree = async (req,res) => {
         console.log(err);
     }
 }
+
+
 module.exports = {
     getAllTrees,
     getOneTree,

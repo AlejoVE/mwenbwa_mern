@@ -37,7 +37,7 @@ const signup = async (req, res) => {
 
         const token = await generateJWT(user._id)
         
-        res.status(201).json({token, message: "The token is OK"})
+        res.status(201).json({token, message: "Your account is registered"})
         
     } catch(err){
         console.log(err)
@@ -51,7 +51,6 @@ const login = async (req, res) =>{
 
     try{
         const user = await UserModel.findOne({userName})
-        console.log(user)
 
         if(!user){
             res.status(404).json({err: "User not found"})
@@ -66,7 +65,7 @@ const login = async (req, res) =>{
         }
 
         const token = await generateJWT(user._id)
-        res.status(200).json({token, message: "The token is OK"})
+        res.status(200).json({token, message: "You are connected."})
 
     } catch (err) {
         console.log(err)
@@ -74,22 +73,6 @@ const login = async (req, res) =>{
     }   
 }
 
-// const getAllUsers = async () => {
-
-//     try{
-//         const users = await UserModel.count()
-
-//         console.log(users);
-
-
-//         //15 minutes
-//         // for(let user of users){
-//         //     user.leaves += trees.length
-//         // }
-//     } catch(err) {
-//         console.log(err);
-//     }
-// }
 
 module.exports = {
     signup,
