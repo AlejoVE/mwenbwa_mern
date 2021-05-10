@@ -33,6 +33,7 @@ const treeSchema = new Schema(
         },
         owner: {
             type: Schema.Types.ObjectId,
+            ref: "User"
 
         },
         name: {
@@ -45,6 +46,7 @@ const treeSchema = new Schema(
         locked: {
             type: Boolean,
             required: true,
+            
         },
         price: {
             type: Number,

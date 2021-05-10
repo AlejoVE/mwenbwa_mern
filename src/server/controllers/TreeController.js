@@ -24,7 +24,7 @@ const getOneTree = async (req, res) => {
 
     try{
 
-        const tree = await TreeModel.findById(id)
+        const tree = await TreeModel.findById(id).populate("owner").exec()
         res.status(200).json({tree})
 
     } catch(err){
@@ -68,9 +68,33 @@ const buyTree = async (req,res) => {
     }
 }
 
+const addComment = async (req,res) => {
+
+    const id = req.params.id
+    const message = req.body.message
+    const userName = req.body.userName
+
+    try{
+        const {comments} = await TreeModel.findById(id)
+        const newMessage = {username: userName, message: message}
+        
+        if(message){
+            const tree = await TreeModel.findByIdAndUpdate(id, {comments: [...comments, newMessage]})
+            res.status(200).json({message: "Comment added."})
+            return
+        }
+
+        res.status(400).json({message: "Please fill the comment."})
+
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 
 module.exports = {
     getAllTrees,
     getOneTree,
-    buyTree
+    buyTree,
+    addComment
 }
