@@ -28,18 +28,6 @@ const userSchema = new mongoose.Schema(
             minLength: 6,
             trim: true
         },
-        firstName : {
-            type: String,
-            minLength: 3,
-            maxLength: 34,
-            trim: true,
-        },
-        lastName : {
-            type: String,
-            minLength: 3,
-            maxLength: 34,
-            trim: true,
-        },
         color : {
             type: String,
             required: true
