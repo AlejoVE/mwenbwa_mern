@@ -56,7 +56,7 @@ const login = async (req, res) =>{
             res.status(404).json({err: "User not found"})
             return 
         }
-
+        
         const validPassword = bcrypt.compareSync(password, user.password)
 
         if(!validPassword){
@@ -64,7 +64,7 @@ const login = async (req, res) =>{
             return 
         }
 
-        const token = await generateJWT(user._id)
+        const token = await generateJWT(user._id, userName)
         res.status(200).json({token, message: "You are connected."})
 
     } catch (err) {

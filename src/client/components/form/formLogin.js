@@ -1,40 +1,39 @@
 import React from "react";
 import useForm from "../../hooks/hooks";
-import axios from "axios";
+// import axios from "axios";
+import {startLogin} from '../../actions/authActions'
+import {useDispatch} from 'react-redux'
+
 
 
 const formLogin = () => {
 
-    const {inputs, handleSubmit, handleChange} = useForm();
+    const {inputs, handleChange} = useForm();
+    const dispatch = useDispatch()
 
-    // const handleLogin = (e) => {
-    //     e.preventDefault()
-
-    //     axios({
-    //         method: "post",
-    //         url: `${process.env.REACT_APP_API_URL}`
-
-    //     })
-    // }
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(startLogin(inputs.username, inputs.password))
+    }
 
      return (
 
         <form method="POST" action="" onSubmit={handleSubmit}>
             <input
-                name="Username"
+                name="username"
                 type="text"
                 placeholder={"Username"}
                 value={inputs.username}
                 onChange={handleChange}
             />
             <input 
-                name="Password"
+                name="password"
                 type="password"
                 placeholder={"Password"}
                 value={inputs.password}
                 onChange={handleChange}
             />
-            <button type="submit" value="submit">submit</button>
+            <button type="submit" value="submit" onClick={handleSubmit}>submit</button>
         </form>
      )
 }

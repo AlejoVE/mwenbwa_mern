@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const {resolve} = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 
 module.exports = env => {
     const plugins = [
@@ -13,6 +14,7 @@ module.exports = env => {
             template: resolve(__dirname, "./src/index.html"),
             path: "../",
         }),
+        new Dotenv(),
     ];
 
     let optimization = {};
@@ -49,6 +51,9 @@ module.exports = env => {
                 : "hidden-source-map",
         context: resolve(__dirname, "./src/client"),
         entry: ["./index.js"],
+        node: {
+            fs: "empty"
+        },         
         module: {
             rules: [
                 {

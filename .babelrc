@@ -22,7 +22,8 @@
             {
                 "loose": true
             }
-        ]
+        ],
+        ["@babel/plugin-transform-runtime"]
     ],
     "compact": false,
     "comments": false,
