@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {type} from '../types/types'
 
 export const startLogin = (userName, password) => {
     return async (dispatch) => {
@@ -13,13 +14,22 @@ export const startLogin = (userName, password) => {
             }
             
         }).then(function ({data}){
-            const token = data.token
+            const {token, userName, uid} = data
 
             if(token) {
                 localStorage.setItem("authToken", token)
+                dispatch(login({userName, uid}))
             }
         }).catch(function (err){
             console.log(err)
         })
     }
 }
+
+const login = (user) => ({
+    type: type.authLogin,
+    payload: {
+        uid : user.uid,
+        userName: user.userName
+    }
+})

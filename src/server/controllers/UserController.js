@@ -65,7 +65,7 @@ const login = async (req, res) =>{
         }
 
         const token = await generateJWT(user._id, userName)
-        res.status(200).json({token, message: "You are connected."})
+        res.status(200).json({token, userName, uid: user._id})
 
     } catch (err) {
         console.log(err)
