@@ -1,4 +1,15 @@
-import * as React from "react";
-import HelloWorld from "./components/hello";
+import React, { useState } from "react";
+import ViewMap from "./components/map";
+import Form from "./components/form/form";
 
-export const App = () => <HelloWorld />;
+// import { useMapElement } from "react-leaflet/types/MapContainer";
+
+export default function App () {
+
+    return (
+        <div>
+            <ViewMap />
+            <Form />
+        </div>
+    )
+}
