@@ -1,13 +1,13 @@
 :root {
     --color-theme: #27ae60;
-    --grey-light: #34495e;
-    --grey-dark: #2c3e50;
+    --grey-light: #34495eec;
+    --grey-dark: #2c3e50f6;
 }
 
 *{
     padding: 0;
     margin: 0;
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
 }
 
 
@@ -48,11 +48,39 @@ button{
     right: 20px;
     border-radius: 8px;
     border: 6px solid var(--grey-dark);
+    transition: all .3s ease-in-out;
+}
+
+.dashboard-container.active {
+    height: 40px;
+    background-color: #34495e;
 }
 
 .dashboard-topbar{
     height: 20%;
     width: 100%;
-    border-bottom: 4px solid var(--grey-dark);
     
+}
+
+.dashboard-container.active>.dashboard-topbar{
+    height: 100%;
+}
+
+
+.link-arrow-down{
+    position: absolute;
+    display: flex;
+    width: 35px;
+    height: 35px;
+    margin-top: -20px;
+    margin-left: 5px;
+    background-color: #34495e;
+    border: 4px solid var(--grey-dark);
+    border-radius: 4px;
+    transition: all .3s ease-in-out;
+}
+
+.dashboard-container.active>.dashboard-topbar>.link-arrow-down{
+    transform: rotate(180deg);
+    background-color: #34495e;
 }
