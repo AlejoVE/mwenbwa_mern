@@ -7,15 +7,15 @@ const formLogin = () => {
 
     const {inputs, handleSubmit, handleChange} = useForm();
 
-    const handleLogin = (e) => {
-        e.preventDefault()
+    // const handleLogin = (e) => {
+    //     e.preventDefault()
 
-        axios({
-            method: "post",
-            url: `${process.env.REACT_APP_API_URL}`
+    //     axios({
+    //         method: "post",
+    //         url: `${process.env.REACT_APP_API_URL}`
 
-        })
-    }
+    //     })
+    // }
 
      return (
 
