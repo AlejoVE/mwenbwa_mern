@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import ViewMap from "./components/map";
+import Form from "./components/form/form";
+
+// import { useMapElement } from "react-leaflet/types/MapContainer";
 
 export default function App () {
+
     return (
-        <ViewMap />
+        <div>
+            <ViewMap />
+            <Form />
+        </div>
     )
 }
