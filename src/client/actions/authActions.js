@@ -13,14 +13,14 @@ export const startLogin = (userName, password) => {
                 password: password
             }
             
-        }).then(function ({data}){
+        }).then(({data}) =>{
             const {token, userName, uid} = data
 
             if(token) {
                 localStorage.setItem("authToken", token)
                 dispatch(login({userName, uid}))
             }
-        }).catch(function (err){
+        }).catch((err) =>{
             console.log(err)
         })
     }

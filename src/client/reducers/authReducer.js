@@ -1,6 +1,7 @@
 import {type} from '../types/types'
 
 const initialState = {uid: null, userName: null}
+
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case type.authLogin:
@@ -9,7 +10,6 @@ export const authReducer = (state = initialState, action) => {
                 uid: action.payload.uid,
                 userName: action.payload.userName
             }
-
         default:
             return {...state};
     }

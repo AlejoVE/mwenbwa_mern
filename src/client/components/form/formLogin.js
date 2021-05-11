@@ -1,6 +1,5 @@
 import React from "react";
 import useForm from "../../hooks/hooks";
-// import axios from "axios";
 import {startLogin} from '../../actions/authActions'
 import {useDispatch} from 'react-redux'
 
@@ -8,7 +7,7 @@ import {useDispatch} from 'react-redux'
 
 const formLogin = () => {
 
-    const {inputs, handleChange} = useForm();
+    const {inputs, handleChange} = useForm({});
     const dispatch = useDispatch()
 
     const handleSubmit = (e) => {
@@ -23,14 +22,14 @@ const formLogin = () => {
                 name="username"
                 type="text"
                 placeholder={"Username"}
-                value={inputs.username}
+                value={inputs.username || ""}
                 onChange={handleChange}
             />
             <input 
                 name="password"
                 type="password"
                 placeholder={"Password"}
-                value={inputs.password}
+                value={inputs.password || ""}
                 onChange={handleChange}
             />
             <button type="submit" value="submit" onClick={handleSubmit}>submit</button>
