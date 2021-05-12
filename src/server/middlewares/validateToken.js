@@ -18,7 +18,7 @@ const validateJWT = (req, res = response, next) => {
             token,
             process.env.JWT_SECRET_SEED
         )
-        console.log(payload)
+        
         req.uid = payload.userId;
         req.username = payload.userName;
         

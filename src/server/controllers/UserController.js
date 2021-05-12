@@ -16,7 +16,7 @@ const signup = async (req, res) => {
     try {
         //Check if username or email exist
         const isExist = await verifyUser(userName, email)
-        console.log(isExist)
+
         if(!isExist.ok){
             res.status(400).json({msg: isExist.msg})
             return
@@ -43,11 +43,10 @@ const signup = async (req, res) => {
                 history: [...tree.history, { username: user.userName, date: new Date().toDateString(), name: randomName}]
             }
             const res = await TreeModel.updateOne({ _id:tree._id}, { $set: userObject})
-            console.log(res)
         }
 
         const token = await generateJWT(user._id)
-        const decoded = jwt_decode(token)
+       
         
         res.status(201).json({token, userName: user.userName, uid: user._id})
         

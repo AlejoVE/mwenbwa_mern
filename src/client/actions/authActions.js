@@ -66,7 +66,7 @@ export const startChecking = () => {
                 },
             }).then(({data}) => {
                 const {color, token, uid, username, trees, leaves} = data
-                dispatch(login({color, token, uid, username, trees, leaves}))
+                dispatch(login({color, token, uid, userName: username, trees, leaves}))
             }).catch(err => {
                 console.log(err)
             })
