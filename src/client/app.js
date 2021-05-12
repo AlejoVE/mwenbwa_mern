@@ -12,15 +12,10 @@ export default function App () {
 
     return (
         <Provider store={store}>
-            {localStorage.authToken ?
-                <>
-                <ViewMap />
-                <Dashboard />
-                
-                </>
-                :
-                <Form />
-            }
+            <ViewMap />
+            {/* <Form /> */}
+            <Dashboard />
+        
         </Provider>
     )
 }

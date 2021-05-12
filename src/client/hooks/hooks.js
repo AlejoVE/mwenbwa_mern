@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const useForm = () => {
-    const [inputs, setInputs] = useState({});
+const useForm = (initialstate) => {
+    const [inputs, setInputs] = useState(initialstate);
     
     const handleChange = (event) => {
       event.persist();

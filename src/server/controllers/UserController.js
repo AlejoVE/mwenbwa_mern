@@ -4,12 +4,21 @@ const {generateJWT} = require('../helpers/jwt')
 const bcrypt = require('bcrypt');
 import {getLeaves} from '../helpers/getLeaves'
 import {nameByRace} from "fantasy-name-generator";
+import {verifyUser} from '../helpers/verifyUser'
+
 
 const signup = async (req, res) => {
 
     const {userName, email, password, color} = req.body
 
     try {
+        //Check if username or email exist
+        const isExist = await verifyUser(userName, email)
+        console.log(isExist)
+        if(!isExist.ok){
+            res.status(400).json({msg: isExist.msg})
+            return
+        }
 
         //Search trees without owner
         const trees = await TreeModel.find({owner: null}).limit(3)
@@ -37,7 +46,7 @@ const signup = async (req, res) => {
 
         const token = await generateJWT(user._id)
         
-        res.status(201).json({token, message: "Your account is registered"})
+        res.status(201).json({token, userName: user.userName, uid: user._id})
         
     } catch(err){
         console.log(err)

@@ -33,3 +33,24 @@ const login = (user) => ({
         userName: user.userName
     }
 })
+
+export const startRegister = (username, password, email, color) =>{
+    return async (dispatch) => {
+        axios({
+            url: `${process.env.REACT_APP_API_URL}users/signup`,
+            method: "post",
+            withCredentials: true,
+            data: {
+                userName: username,
+                password: password,
+                email: email,
+                color: color
+            }
+
+        }).then(() =>{
+            dispatch(startLogin(username, password))
+        }).catch(err =>{
+            console.log(err.response.data.msg)
+        })
+    }
+}
