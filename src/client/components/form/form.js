@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Login from "./formLogin.js";
 import Register from "./formReg.js";
 
-const Form = () => {
+export const Form = () => {
 
     const [isLog, setIsLog] = useState(true);
 
@@ -20,5 +20,3 @@ const Form = () => {
         </div>
     )
 }
-
-export default Form;

@@ -1,6 +1,6 @@
 import {type} from '../types/types'
 
-const initialState = {uid: null, userName: null}
+const initialState = {uid: null, userName: null, isAuthenticated: false}
 
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -8,7 +8,8 @@ export const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 uid: action.payload.uid,
-                userName: action.payload.userName
+                userName: action.payload.userName,
+                isAuthenticated: true
             }
         default:
             return {...state};

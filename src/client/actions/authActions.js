@@ -54,3 +54,14 @@ export const startRegister = (username, password, email, color) =>{
         })
     }
 }
+
+export const startChecking = () => {
+    return async (dispatch) => {
+
+        const token = localStorage.getItem("authToken")
+
+        if(token){
+            
+        }
+    }
+}
