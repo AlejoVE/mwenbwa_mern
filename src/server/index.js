@@ -18,6 +18,7 @@ app.use("/api/users", require("./routes/UsersRoutes"))
 app.use("/api/trees", require("./routes/TreesRoutes"))
 
 
+
 //Server
 app.listen(PORT, () =>
     console.log(`🚀 Server is listening on port ${PORT}.`),

@@ -14,11 +14,11 @@ export const startLogin = (userName, password) => {
             }
             
         }).then(({data}) =>{
-            const {token, userName, uid} = data
+            const {token, userName, uid, leaves, trees} = data
 
             if(token) {
                 localStorage.setItem("authToken", token)
-                dispatch(login({userName, uid}))
+                dispatch(login({userName, uid, leaves, trees}))
             }
         }).catch((err) =>{
             console.log(err)
@@ -28,10 +28,7 @@ export const startLogin = (userName, password) => {
 
 const login = (user) => ({
     type: type.authLogin,
-    payload: {
-        uid : user.uid,
-        userName: user.userName
-    }
+    payload: user
 })
 
 export const startRegister = (username, password, email, color) =>{
@@ -59,9 +56,20 @@ export const startChecking = () => {
     return async (dispatch) => {
 
         const token = localStorage.getItem("authToken")
-
+        
         if(token){
-            
+            axios({
+                url: `${process.env.REACT_APP_API_URL}users/renew`,
+                method: 'get',
+                headers: {
+                    'x-token': token,
+                },
+            }).then(({data}) => {
+                const {color, token, uid, username, trees, leaves} = data
+                dispatch(login({color, token, uid, username, trees, leaves}))
+            }).catch(err => {
+                console.log(err)
+            })
         }
     }
 }

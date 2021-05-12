@@ -4,7 +4,9 @@ const {generateJWT} = require('../helpers/jwt')
 const bcrypt = require('bcrypt');
 import {getLeaves} from '../helpers/getLeaves'
 import {nameByRace} from "fantasy-name-generator";
-import {verifyUser} from '../helpers/verifyUser'
+import {verifyUser} from '../helpers/verifyUser';
+import {getUser} from '../helpers/getUser';
+
 
 
 const signup = async (req, res) => {
@@ -45,6 +47,7 @@ const signup = async (req, res) => {
         }
 
         const token = await generateJWT(user._id)
+        const decoded = jwt_decode(token)
         
         res.status(201).json({token, userName: user.userName, uid: user._id})
         
@@ -74,7 +77,13 @@ const login = async (req, res) =>{
         }
 
         const token = await generateJWT(user._id, userName)
-        res.status(200).json({token, userName, uid: user._id})
+        res.status(200).json({
+            token, 
+            userName, 
+            uid: user._id, 
+            leaves: user.leaves,
+            trees: user.trees.length 
+        })
 
     } catch (err) {
         console.log(err)
@@ -82,8 +91,23 @@ const login = async (req, res) =>{
     }   
 }
 
+const generateToken = async (req, res) => {
+    const uid = req.uid
+    const username = req.username
+    
+    try{
+            const token = await generateJWT(uid, username)
+            const {color, leaves, trees} = await getUser(uid)
+            res.status(200).json({token, uid, username, color, leaves, trees: trees.length})
+
+    } catch(err){
+        console.log(err)
+    }
+}
+
 
 module.exports = {
     signup,
-    login
+    login,
+    generateToken
 }
