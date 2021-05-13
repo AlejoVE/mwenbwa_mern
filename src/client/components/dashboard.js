@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
+import Logout from './logout'
 
 //SVG
 import arrowsvg from '../assets/svg/arrow-down-svgrepo-com.svg';
@@ -11,18 +12,37 @@ import leafsvg from '../assets/svg/leaf.svg'
 const Dashboard = () => {
     const state = useSelector((state) => state)
 
+    const [logout, setLogout] = useState(false)
+    
     
     const handleArrow = (e) => {
         e.preventDefault()
+        
         const container = document.querySelector(".dashboard-container")
-
         container.classList.contains('active') ?
             container.classList.remove('active') :
             container.classList.add('active')
     }
+    
 
     const toLocaleString = (value) =>{
         return value.toLocaleString('fr-FR');
+    }
+
+    const modalLogout = (e) => {
+        e.preventDefault()
+
+        const container = document.querySelector(".dashboard-container")
+        if(container.classList.contains('active')) {
+            container.classList.remove('active')
+        }
+        
+        setLogout(true)
+    }
+
+    const closeModal = (e) => {
+        e.preventDefault()
+        setLogout(false)
     }
 
     return (
@@ -38,22 +58,25 @@ const Dashboard = () => {
                     <a href="#" className={"user-logo"} title={"Account"}>
                         <img src={usersvg} alt={"logo"} />
                     </a>
-                    <a href="#" className={"logout-logo"} title={"Logout"}>
+                    <a href="#" className={"logout-logo"} title={"Logout"} onClick={modalLogout}>
                         <img src={logoutsvg} alt={"logo"} />
                     </a>
                 </div>
             </div>
-            <div className={"dashboard-info"}>
-                <div className={"dashboard-trees"}>
-                    <img src={treesvg} alt={"logo"} />
-                    <strong>{toLocaleString(state.auth.trees)}</strong>
-                </div>
+                {!logout &&
+                    <div className={"dashboard-info"}>
+                        <div className={"dashboard-trees"}>
+                            <img src={treesvg} alt={"logo"} />
+                            <strong>{toLocaleString(state.auth.trees)}</strong>
+                        </div>
 
-                <div className={"dashboard-leaves"}>
-                    <img src={leafsvg} alt={"logo"} />
-                    <strong>{toLocaleString(state.auth.leaves)}</strong>
-                </div>
-            </div>
+                        <div className={"dashboard-leaves"}>
+                            <img src={leafsvg} alt={"logo"} />
+                            <strong>{toLocaleString(state.auth.leaves)}</strong>
+                        </div> 
+                    </div>
+                }
+                {logout && <Logout closeModal={closeModal}n/>}
         </div>
     )
 }

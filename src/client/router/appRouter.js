@@ -19,23 +19,21 @@ export const AppRouter = () => {
 
     return (
         <Router>
-            <div>
-                <Switch>
-                    <PublicRoutes
-                        exact
-                        path='/'
-                        isAuthenticated={Boolean(uid)}
-                        component={Form}
-                    />
-                    <PrivateRoutes
-                        exact
-                        path='/map'
-                        isAuthenticated={Boolean(uid)}
-                        component={MainScreen}
-                    />
-                    <Redirect to='/' />
-                </Switch>
-            </div>
+            <Switch>
+                <PublicRoutes
+                    exact
+                    path='/'
+                    isAuthenticated={Boolean(uid)}
+                    component={Form}
+                />
+                <PrivateRoutes
+                    exact
+                    path='/map'
+                    isAuthenticated={Boolean(uid)}
+                    component={MainScreen}
+                />
+                <Redirect to='/' />
+            </Switch>
         </Router>
     );
 };

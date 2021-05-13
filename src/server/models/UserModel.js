@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema(
             required: true
         },
         leaves : {
-            type: Number
+            type: Number,
         },
         trees : {
             type: Array

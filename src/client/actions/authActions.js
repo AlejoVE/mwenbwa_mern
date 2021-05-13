@@ -73,3 +73,14 @@ export const startChecking = () => {
         }
     }
 }
+
+export const startLogout = () => {
+    return async (dispatch) => {
+        localStorage.removeItem('authToken')
+        dispatch(logout())
+    }
+}
+
+const logout = () => ({
+    type: type.authLogout
+})

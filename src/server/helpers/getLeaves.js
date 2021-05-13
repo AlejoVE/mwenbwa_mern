@@ -12,7 +12,7 @@ const getLeaves = async () =>  {
             totalLeaves += user.leaves
         }
 
-        const result = totalLeaves / totalUsers
+        const result = Math.round(totalLeaves / totalUsers)
 
         return result
 
