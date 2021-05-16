@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {type} from '../types/types'
 
+
 export const startLogin = (userName, password) => {
     return async (dispatch) => {
         
@@ -16,9 +17,12 @@ export const startLogin = (userName, password) => {
         }).then(({data}) =>{
             const {token, userName, uid, leaves, trees} = data
 
+
             if(token) {
                 localStorage.setItem("authToken", token)
                 dispatch(login({userName, uid, leaves, trees}))
+                
+
             }
         }).catch((err) =>{
             console.log(err)

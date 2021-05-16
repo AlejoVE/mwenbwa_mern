@@ -1,5 +1,9 @@
 export const type = {
     authLogin: "[auth] login",
     authLogout: "[auth] logout",
-    authRegister: "[auth] register"
+    authRegister: "[auth] register",
+    setTrees: "[trees] setTrees",
+    getTrees: " [trees] getTrees" ,
+    treesStartLoading: "[trees] treesStartLoading",
+    treesFinishLoading: "[trees] treesFinishLoading"
 }

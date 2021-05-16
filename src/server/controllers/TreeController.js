@@ -91,10 +91,21 @@ const addComment = async (req,res) => {
     }
 }
 
+const getTreesPositions = async (req, res) => {
+
+    try {
+        const trees = await TreeModel.find({}, { lat: 1, lon: 1 })
+        res.status(200).json({trees})
+    } catch(err) {
+        console.log(err)
+    }
+}
+
 
 module.exports = {
     getAllTrees,
     getOneTree,
     buyTree,
-    addComment
+    addComment,
+    getTreesPositions
 }

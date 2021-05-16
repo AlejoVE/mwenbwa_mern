@@ -3,9 +3,11 @@ const {
     getAllTrees,
     getOneTree,
     buyTree,
-    addComment
+    addComment,
+    getTreesPositions
 } = require('../controllers/TreeController')
 
+router.get('/treesPos', getTreesPositions)
 router.get('/:id', getOneTree)
 router.get('/', getAllTrees)
 router.put('/buy/:id', buyTree)

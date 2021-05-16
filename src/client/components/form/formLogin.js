@@ -1,5 +1,5 @@
 import React from "react";
-import useForm from "../../hooks/hooks";
+import {useForm} from "../../hooks/hooks";
 import {startLogin} from '../../actions/authActions'
 import {useDispatch} from 'react-redux'
 

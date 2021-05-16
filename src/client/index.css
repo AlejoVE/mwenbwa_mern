@@ -180,6 +180,7 @@ height:0;
 .dashboard-container.active>.dashboard-info>.dashboard-trees>strong{
     transform: scaleY(0)
 }
+
 strong{
     font-size: 24px;
     transition: var(--transition);
