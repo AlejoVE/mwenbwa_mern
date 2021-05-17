@@ -5,5 +5,6 @@ export const type = {
     setTrees: "[trees] setTrees",
     getTrees: " [trees] getTrees" ,
     treesStartLoading: "[trees] treesStartLoading",
-    treesFinishLoading: "[trees] treesFinishLoading"
+    treesFinishLoading: "[trees] treesFinishLoading",
+    setActiveTree: "[trees] setActiveTree"
 }

@@ -19,6 +19,11 @@ export const treesReducer = (state = initialState, action) => {
                 ...state,
                 isLoading: false,
             }
+        case type.setActiveTree:
+            return {
+                ...state,
+                activeTree: action.payload
+            }
         default:
             return {...state};
     }

@@ -1,4 +1,4 @@
-import React , {useEffect} from 'react'
+import React , {useEffect, useState} from 'react'
 import Dashboard from './dashboard'
 import Topbar from './topbar/topbar'
 import Loader from './loader'
@@ -6,9 +6,14 @@ import {useGetTreesPos} from '../hooks/hooks'
 import {useDispatch, useSelector} from 'react-redux'
 import {startLoading} from "../actions/treesActions"
 import ViewMap from './map'
+import {getTrees} from '../helpers/getTrees'
+
 
 
 export const MainScreen = () => {
+
+
+
 
     const dispatch = useDispatch()
     const getTrees = useGetTreesPos()

@@ -13,6 +13,6 @@ export const getTrees = async () => {
         }
         treesFormated.push(newTree) 
     });
-
     return treesFormated
 }
+

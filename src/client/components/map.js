@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import {useSelector} from 'react-redux'
+import {useSelector, useDispatch} from 'react-redux'
 import L from 'leaflet'
+import Card from './card'
+import {useFetchTree} from '../hooks/hooks'
+
+
 
 //SVG
 import tree1 from '../assets/svg/tree-svgrepo-com.svg'
@@ -15,6 +19,11 @@ import tree6 from '../assets/svg/aspen-svgrepo-com.svg'
 const ViewMap = () => {
 
     const {trees} = useSelector((state) =>state.trees)
+
+    const handleClick = (id) => {
+        console.log(id, 'handle')
+        // getOneTree(id)
+    }
 
     const treeIcon = () => {
         const treesSVG = [tree1,tree2,tree3,tree4,tree5,tree6]
@@ -30,21 +39,25 @@ const ViewMap = () => {
         });
         return leafletIcon;
     };
-
     
     return (
         <>
-            <MapContainer center={[50.628709, 5.575633]} zoom={10}>
+            <MapContainer center={[50.628709, 5.575633]} zoom={17}>
 
                 <TileLayer 
                 url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"} 
                 attribution={'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
                 />
-                    <MarkerClusterGroup option={markerIcon()}>
+                    <MarkerClusterGroup>
                         {trees.map(tree => (
-                            <Marker position={tree.loc} key={tree.id} icon={treeIcon()}>
+                            <Marker position={tree.loc} key={tree.id} id={tree.id} icon={treeIcon()} 
+                            eventHandlers={{
+                                click: (e) => {
+                                  handleClick(e.target.options.id)
+                                },
+                              }}>
                                 <Popup>
-                                    A pretty CSS3 popup. <br /> Easily customizable.
+                                    <Card/>
                                 </Popup>
                             </Marker>
                         ))}

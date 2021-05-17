@@ -299,3 +299,11 @@ td,th{
     text-decoration: none;
     background-color: var(--grey);
 }
+
+.marker-cluster{
+    background: radial-gradient(#1aad57bd, #1aad5741);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
