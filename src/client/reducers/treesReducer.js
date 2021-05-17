@@ -1,6 +1,6 @@
 import {type} from '../types/types'
 
-const initialState = {trees: []}
+const initialState = {trees: [], activeTree: null, treeIsLoading: true}
 
 export const treesReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -23,6 +23,11 @@ export const treesReducer = (state = initialState, action) => {
             return {
                 ...state,
                 activeTree: action.payload
+            }
+        case type.treeFinishLoading:
+            return {
+                ...state,
+                treeIsLoading: false
             }
         default:
             return {...state};

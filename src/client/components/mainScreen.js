@@ -7,31 +7,25 @@ import {useDispatch, useSelector} from 'react-redux'
 import {startLoading} from "../actions/treesActions"
 import ViewMap from './map'
 import {getTrees} from '../helpers/getTrees'
+import { useAsync } from 'react-async';
 
 
+
+
+const loadTrees = async () => 
+    await fetch(`${process.env.REACT_APP_API_URL}trees/treesPos`)
+    .then(res => (res.ok ? res : Promise.reject(res)))
+    .then(res => res.json())
 
 export const MainScreen = () => {
 
-
-
-
-    const dispatch = useDispatch()
-    const getTrees = useGetTreesPos()
-    const {isLoading} = useSelector((state) => state.trees)
-
-
-    useEffect(() => {
-        dispatch(startLoading())
-        getTrees()
-    },[])
-
-    if(isLoading){
-        return (<Loader />)
-    }
-
+    const { data, error, isLoading } = useAsync({ promiseFn: loadTrees})
+    if (isLoading) return "Loading..."
+    if (error) return `Something went wrong: ${error.message}`
+    if (data)
     return (
         <>
-            <ViewMap />
+            <ViewMap data={data}/>
             <Topbar />
             <Dashboard />
         </>

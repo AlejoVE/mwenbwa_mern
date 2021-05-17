@@ -95,7 +95,16 @@ const getTreesPositions = async (req, res) => {
 
     try {
         const trees = await TreeModel.find({}, { lat: 1, lon: 1 })
-        res.status(200).json({trees})
+        
+        let treesFormated = new Array()
+        trees.forEach(tree => {
+            const newTree = {
+                id: tree._id,
+                loc: [tree.lat, tree.lon]
+            }
+            treesFormated.push(newTree)
+        });
+        res.status(200).json({trees: treesFormated})
     } catch(err) {
         console.log(err)
     }

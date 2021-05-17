@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getTrees} from '../helpers/getTrees'
-import {setTrees, finishLoading, setActiveTree} from "../actions/treesActions"
+import {setTrees, finishLoading, setActiveTree, treeFinishLoading} from "../actions/treesActions"
 import {useDispatch} from 'react-redux'
 
 
@@ -40,10 +40,9 @@ export const useFetchTree = () => {
             const res = await fetch(`${process.env.REACT_APP_API_URL}trees/${id}`)
             const data = await res.json()
         
-            const {nom_complet, owner, name, price, link, comments, history, locked} = data
-            console.log(id)
+            const {nom_complet, owner, name, price, link, comments, history, locked} = data.tree
             dispatch(setActiveTree({nom_complet, owner, name, price, link, comments, history, locked}))
-        
+            dispatch(treeFinishLoading())
         } catch(err){
             console.log(err)
         }

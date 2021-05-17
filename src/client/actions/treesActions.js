@@ -17,3 +17,7 @@ export const setActiveTree = (tree) => ({
     type: type.setActiveTree,
     payload: tree
 })
+
+export const treeFinishLoading = () => ({
+    type: type.treeFinishLoading
+})

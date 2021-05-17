@@ -16,13 +16,13 @@ import tree4 from '../assets/svg/cypress-svgrepo-com.svg'
 import tree5 from '../assets/svg/cherry-tree-svgrepo-com.svg'
 import tree6 from '../assets/svg/aspen-svgrepo-com.svg'
 
-const ViewMap = () => {
+const ViewMap = (data) => {
 
-    const {trees} = useSelector((state) =>state.trees)
+    const [isLoaded, isSetLoaded] = useState(false)
 
+    const getOneTree = useFetchTree()
     const handleClick = (id) => {
-        console.log(id, 'handle')
-        // getOneTree(id)
+        getOneTree(id)
     }
 
     const treeIcon = () => {
@@ -39,6 +39,7 @@ const ViewMap = () => {
         });
         return leafletIcon;
     };
+
     
     return (
         <>
@@ -49,18 +50,25 @@ const ViewMap = () => {
                 attribution={'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
                 />
                     <MarkerClusterGroup>
-                        {trees.map(tree => (
-                            <Marker position={tree.loc} key={tree.id} id={tree.id} icon={treeIcon()} 
-                            eventHandlers={{
-                                click: (e) => {
-                                  handleClick(e.target.options.id)
-                                },
-                              }}>
-                                <Popup>
-                                    <Card/>
-                                </Popup>
-                            </Marker>
-                        ))}
+                        {
+                            data.data.trees.map(tree => (
+                                <Marker 
+                                    position={tree.loc} 
+                                    key={tree.id} 
+                                    id={tree.id} 
+                                    icon={treeIcon()} 
+                                    eventHandlers={{
+                                        click: (e) => {
+                                        handleClick(e.target.options.id)
+                                        },
+                                    }}
+                                >
+                                    <Popup>
+                                        <Card/>
+                                    </Popup>
+                                </Marker>
+                            ))
+                        }
                     </MarkerClusterGroup>
 
             </MapContainer>

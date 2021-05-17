@@ -60,7 +60,7 @@ const treeSchema = new Schema(
             trim: true
 
         },
-        long: {
+        lon: {
             type: Number,
             required: true,
             trim: true
