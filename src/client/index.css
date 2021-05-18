@@ -307,3 +307,13 @@ td,th{
     justify-content: center;
     align-items: center;
 }
+
+/* CARD */
+
+.leaflet-popup-content-wrapper{
+    background-color : var(--grey-light);
+    border: 4px solid var(--grey-dark);
+    color : #fff;
+    width: 400px;
+    height: 250px;
+}

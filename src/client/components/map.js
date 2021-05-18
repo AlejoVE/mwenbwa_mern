@@ -23,6 +23,7 @@ const ViewMap = (data) => {
     const getOneTree = useFetchTree()
     const handleClick = (id) => {
         getOneTree(id)
+        console.log(id)
     }
 
     const treeIcon = () => {
