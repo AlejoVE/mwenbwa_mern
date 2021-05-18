@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { getTrees} from '../helpers/getTrees'
 import {setTrees, finishLoading, setActiveTree, treeFinishLoading} from "../actions/treesActions"
-import {useDispatch} from 'react-redux'
+import {updateDashboardData} from '../actions/authActions'
+import {useDispatch, useSelector} from 'react-redux'
 
 
 
@@ -40,10 +41,36 @@ export const useFetchTree = () => {
             const res = await fetch(`${process.env.REACT_APP_API_URL}trees/${id}`)
             const data = await res.json()
         
-            const {nom_complet, owner, name, price, link, comments, history, locked} = data.tree
-            dispatch(setActiveTree({nom_complet, owner, name, price, link, comments, history, locked}))
+            const {nom_complet, owner, name, price, link, comments, history, locked, _id} = data.tree
+            dispatch(setActiveTree({nom_complet, owner, name, price, link, comments, history, locked, _id}))
             dispatch(treeFinishLoading())
         } catch(err){
+            console.log(err)
+        }
+    }
+}
+
+export const useBuyTree = () =>{
+    const dispatch = useDispatch()
+    return async (activeTree, userName, userTrees, leaves, price) => {
+        const {_id} = activeTree
+        
+        try{
+            
+            const res = await fetch(`${process.env.REACT_APP_API_URL}trees/buy/${_id}`,{
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({userName})
+            })
+            const data = await res.json()
+            if(data.ok){
+                const {nom_complet, name, price: updatedPrice, link, comments, history, locked, _id} = data.tree
+                dispatch(setActiveTree({nom_complet, owner: userName, name, price: updatedPrice, link, comments, history, locked, _id}))
+                dispatch(updateDashboardData({leaves: leaves-price, trees: userTrees + 1}))
+            }
+        } catch(err) {
             console.log(err)
         }
     }

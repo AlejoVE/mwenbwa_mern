@@ -7,5 +7,8 @@ export const type = {
     treesStartLoading: "[trees] treesStartLoading",
     treesFinishLoading: "[trees] treesFinishLoading",
     setActiveTree: "[trees] setActiveTree",
-    treeFinishLoading: "[trees] treeFinishLoading"
+    treeFinishLoading: "[trees] treeFinishLoading",
+    cleanActiveTree: "[trees] cleanActiveTree",
+    updateDashboardData: "[auth] udpateDashboardData",
+    
 }

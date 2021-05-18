@@ -29,6 +29,10 @@ export const treesReducer = (state = initialState, action) => {
                 ...state,
                 treeIsLoading: false
             }
+        case type.cleanActiveTree:
+            return{
+                ...initialState
+            }
         default:
             return {...state};
     }

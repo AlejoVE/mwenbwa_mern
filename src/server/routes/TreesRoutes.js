@@ -9,8 +9,8 @@ const {
 
 router.get('/treesPos', getTreesPositions)
 router.get('/:id', getOneTree)
-router.get('/', getAllTrees)
 router.put('/buy/:id', buyTree)
 router.post('/:id/comments', addComment)
+router.get('/', getAllTrees)
 
 module.exports= router

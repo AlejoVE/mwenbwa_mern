@@ -21,3 +21,7 @@ export const setActiveTree = (tree) => ({
 export const treeFinishLoading = () => ({
     type: type.treeFinishLoading
 })
+
+export const cleanActiveTree = () => ({
+    type: type.cleanActiveTree
+})

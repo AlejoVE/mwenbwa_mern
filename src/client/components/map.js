@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import {useSelector, useDispatch} from 'react-redux'
 import L from 'leaflet'
 import Card from './card'
 import {useFetchTree} from '../hooks/hooks'
@@ -23,7 +22,6 @@ const ViewMap = (data) => {
     const getOneTree = useFetchTree()
     const handleClick = (id) => {
         getOneTree(id)
-        console.log(id)
     }
 
     const treeIcon = () => {

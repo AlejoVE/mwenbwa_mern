@@ -24,7 +24,7 @@ const getOneTree = async (req, res) => {
 
     try{
 
-        const tree = await TreeModel.findById(id).populate("owner").exec()
+        const tree = await TreeModel.findById(id).populate("owner", "userName").exec()
         res.status(200).json({tree})
 
     } catch(err){
@@ -37,6 +37,7 @@ const buyTree = async (req,res) => {
 
     const id = req.params.id
     const userName = req.body.userName
+    
 
     try {
         const randomName = nameByRace("elf", { gender: "female" })
@@ -55,9 +56,9 @@ const buyTree = async (req,res) => {
             history.push({userName, date: new Date().toDateString()})
             userTrees.push(ObjectId(id))
 
-            const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName, history})
+            const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName, history}, {new: true})
             const user = await UserModel.findOneAndUpdate({userName: userName}, {trees: userTrees, leaves: userLeaves - price})
-            res.status(200).json({tree})
+            res.status(200).json({message: "You have a new tree", ok:true, tree})
             return
         }
 

@@ -10,10 +10,17 @@ export const authReducer = (state = initialState, action) => {
                 ...action.payload,
                 isAuthenticated: true
             }
-        case type.authLogout:
-            return{
-                ...initialState
+        case type.updateDashboardData:
+            return {
+                ...state,
+                leaves: action.payload.leaves,
+                trees: action.payload.trees
             }
+        // case type.authLogout:
+        //     return{
+        //         ...initialState
+        //     }
+        
         default:
             return {...state};
     }

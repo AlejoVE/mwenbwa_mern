@@ -1,13 +1,11 @@
 import React from 'react'
-import {startLogout} from '../actions/authActions'
-import {useDispatch} from 'react-redux'
 
 const Logout = (props) => {
-    const dispatch = useDispatch()
 
     const disconnected = (e) => {
         e.preventDefault()
-        dispatch(startLogout())
+        localStorage.removeItem('authToken')
+        document.location.reload();
     }
 
     return (
