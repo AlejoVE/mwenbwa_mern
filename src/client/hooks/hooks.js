@@ -65,6 +65,7 @@ export const useBuyTree = () =>{
                 body: JSON.stringify({userName})
             })
             const data = await res.json()
+            console.log(data)
             if(data.ok){
                 const {nom_complet, name, price: updatedPrice, link, comments, history, locked, _id} = data.tree
                 dispatch(setActiveTree({nom_complet, owner: userName, name, price: updatedPrice, link, comments, history, locked, _id}))

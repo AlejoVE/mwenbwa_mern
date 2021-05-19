@@ -334,13 +334,11 @@ td,th{
     width: 360px;
     height: auto;
     color: #fff;
+    padding: 10px;
     min-height: 200px;
     background-color: var(--grey-light);
 }
-.leaflet-popup{
-    padding: 10px;
-    
-}
+
 
 .leaflet-popup-content{
     width: 100%!important;
@@ -594,6 +592,22 @@ h6{
     text-decoration: none;
 
 }
+
+.container-links>ul{
+    padding: 0 5px;
+}
+.container-links>ul>li{
+    color: #000;
+    font-size: 12px;
+    font-weight: 500;
+}
+.container-links>ul>li>span{
+    color: #000;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+
 
 
 

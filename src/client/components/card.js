@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { useSelector } from 'react-redux'
 import { setActiveTree } from '../actions/treesActions'
 import {useBuyTree} from '../hooks/hooks'
+import moment from 'moment'
 
 const Card = () => {
 
@@ -18,8 +19,10 @@ const Card = () => {
     }
     
     const { nom_complet, owner, name, price, link, comments, history, locked } = activeTree
-    const handleBuyButton = () => {
+    const handleBuyButton = (e) => {
+        e.stopPropagation()
         buyTree(activeTree, userName, userTrees, leaves, price)
+        console.log('buy')
     }
 
     const handleHistory = (e) =>{
@@ -80,9 +83,21 @@ const Card = () => {
                     <a href={"#"} id={"link-comments"} onClick={handleComments}>Comments ({comments.length})</a>
                 </div>
                 <div className={"container-links"}>
+                   <>
                     {activeHistory &&
-                        <h6>History</h6>
-                    }
+                            <>
+                                {history.length >= 1 ?
+                                    <ul>
+                                        {history.map((item, i) => {
+                                            return <li key={i}><span>{item.userName}</span>&nbsp;bought a tree {moment(item.date).fromNow()}</li>
+                                        })}
+                                    </ul>
+                                    :
+                                    <h6>History</h6>
+                                }
+                            </>
+                        }
+                   </>
                     {activeComments &&
                         <>
                         <h6>Comments</h6>
@@ -98,7 +113,7 @@ const Card = () => {
             {!locked &&
                 <div className={"card-buttons"}>
                     {ownerUserName !== userName && owner !== userName && !locked && 
-                        <button className={"btn-card"}onClick={handleBuyButton}>
+                        <button className={"btn-card"} onClick={handleBuyButton}>
                             Buy this tree for&nbsp;&nbsp;<span className={"price"}>{price}</span>&nbsp;&nbsp;leaves
                         </button>
                     }

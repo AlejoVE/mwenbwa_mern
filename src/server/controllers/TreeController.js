@@ -43,21 +43,20 @@ const buyTree = async (req,res) => {
         const randomName = nameByRace("elf", { gender: "female" })
         const {price, locked} = await TreeModel.findById(id)
         const {userLeaves, userId} = await getUserLeaves(userName)
-        const userTrees = await getTreesUser(userName)
+        const {isInclude, userTrees} = await getTreesUser(userName, id)
         const history = await getHistory(id)
-       
-        if(userTrees.includes(id)) {
+
+        console.log(isInclude)
+        if(isInclude) {
             res.status(400).json({message: "You have already this tree."})
             return
         }
 
         if(userLeaves >= price && !locked) {
 
-            history.push({userName, date: new Date().toDateString()})
             userTrees.push(ObjectId(id))
-
-            const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName, history}, {new: true})
             const user = await UserModel.findOneAndUpdate({userName: userName}, {trees: userTrees, leaves: userLeaves - price})
+            const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName, history: [...history, {userName, date: new Date()}]}, {new: true})
             res.status(200).json({message: "You have a new tree", ok:true, tree})
             return
         }
@@ -65,7 +64,8 @@ const buyTree = async (req,res) => {
         res.status(400).json({message: "You don't have the leaves to buy a tree."})
 
     } catch(err) {
-        console.log(err);
+        res.status(400).json({message: err})
+        console.log(err)
     }
 }
 

@@ -1,11 +1,13 @@
 const UserModel = require('../models/UserModel')
 
-const getTreesUser = async (userName) => {
+const getTreesUser = async (userName, id) => {
 
     try{
         const user = await UserModel.findOne({userName: userName})
-        const {trees} = user
-        return trees
+        const userTrees = user.trees
+        const isInclude = userTrees.includes(id)
+
+        return {isInclude, userTrees}
     } catch(err) {
         console.log(err)
     }

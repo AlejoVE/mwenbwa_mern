@@ -66,7 +66,8 @@ const getFile = async () => {
             if(tree.nom_complet === "en cours de détermination") {
                 tree.link = "No link for this tree"
             }
-
+            
+            //Parse float !!! 
             if (size == null) {
                 size = averageSize;
                 tree.hauteur_totale = size;
