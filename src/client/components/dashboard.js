@@ -37,7 +37,7 @@ const Dashboard = () => {
             container.classList.remove('active')
         }
         
-        setLogout(true)
+        logout ? setLogout(false) : setLogout(true)
     }
 
     const closeModal = (e) => {

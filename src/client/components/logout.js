@@ -12,8 +12,8 @@ const Logout = (props) => {
         <div className={"container-logout"}>
             <p>Are you sure you want to log out?</p>
             <div className="link-logout">
-                <a href="#" onClick={disconnected}>Yes</a>
-                <a href="#" onClick={props.closeModal}>No</a>
+                <a className={"blue-link"} href="#" onClick={disconnected}>Yes</a>
+                <a className={"red-link"} href="#" onClick={props.closeModal}>No</a>
             </div>
         </div>
     )
