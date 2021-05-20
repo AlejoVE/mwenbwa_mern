@@ -5,6 +5,10 @@ import {nameByRace} from "fantasy-name-generator";
 import {getUserLeaves} from '../helpers/getUserLeaves';
 import {getTreesUser} from '../helpers/getTreesUser';
 import {getHistory} from '../helpers/getHistory';
+import {getTreesInRadius} from '../helpers/getTreesInRadius'
+import {removeTree} from '../helpers/removeTree'
+
+
 
 
 const getAllTrees = async (req, res) => {
@@ -21,11 +25,12 @@ const getAllTrees = async (req, res) => {
 const getOneTree = async (req, res) => {
 
     const id = req.params.id
-
+    
     try{
-
+        
+        const findTreesInRadius = await getTreesInRadius(id)
         const tree = await TreeModel.findById(id).populate("owner", "userName").exec()
-        res.status(200).json({tree})
+        res.status(200).json({tree, treesInRadius: findTreesInRadius})
 
     } catch(err){
         res.status(404).json({err: "Id not found..."})
@@ -37,26 +42,29 @@ const buyTree = async (req,res) => {
 
     const id = req.params.id
     const userName = req.body.userName
+    const price = req.body.price
     
 
     try {
         const randomName = nameByRace("elf", { gender: "female" })
-        const {price, locked} = await TreeModel.findById(id)
+        const {locked, owner} = await TreeModel.findById(id)
         const {userLeaves, userId} = await getUserLeaves(userName)
         const {isInclude, userTrees} = await getTreesUser(userName, id)
         const history = await getHistory(id)
-
-        console.log(isInclude)
+        
         if(isInclude) {
             res.status(400).json({message: "You have already this tree."})
             return
         }
 
         if(userLeaves >= price && !locked) {
+            if(owner){
+                await removeTree(owner, id)
+            }
 
             userTrees.push(ObjectId(id))
             const user = await UserModel.findOneAndUpdate({userName: userName}, {trees: userTrees, leaves: userLeaves - price})
-            const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName, history: [...history, {userName, date: new Date()}]}, {new: true})
+            const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName, price: price, history: [...history, {userName, date: new Date()}]}, {new: true})
             res.status(200).json({message: "You have a new tree", ok:true, tree})
             return
         }
@@ -111,11 +119,31 @@ const getTreesPositions = async (req, res) => {
     }
 }
 
+const lockTree = async (req, res) => {
+
+    const id = req.params.id
+    const userName = req.username
+    const {isInclude} = await getTreesUser(userName, id)
+
+    try{
+        if(!isInclude){
+            res.status(400).json({msg: "You don't own this tree !"})
+            return
+        }
+
+        await TreeModel.findOneAndUpdate({_id: id}, {locked: true})
+        res.status(200).json({msg: "The tree is locked."})
+
+    } catch (err) {
+        res.status(400).json({msg: err})
+    }
+}
 
 module.exports = {
     getAllTrees,
     getOneTree,
     buyTree,
     addComment,
-    getTreesPositions
+    getTreesPositions,
+    lockTree
 }

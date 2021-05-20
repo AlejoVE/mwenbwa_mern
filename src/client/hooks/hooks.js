@@ -3,6 +3,8 @@ import { getTrees} from '../helpers/getTrees'
 import {setTrees, finishLoading, setActiveTree, treeFinishLoading} from "../actions/treesActions"
 import {updateDashboardData} from '../actions/authActions'
 import {useDispatch, useSelector} from 'react-redux'
+import {getTreesInRadius} from '../helpers/getTreesInRadius'
+import {calculatePrice} from '../helpers/calculatePrice'
 
 
 
@@ -36,12 +38,18 @@ export const useGetTreesPos = () => {
 export const useFetchTree = () => {
     const dispatch = useDispatch()
 
-    return async (id) => {
+    return async (id, uid) => {
         try{
+            
             const res = await fetch(`${process.env.REACT_APP_API_URL}trees/${id}`)
-            const data = await res.json()
+            const {tree, treesInRadius} = await res.json()
+            const {nom_complet, owner, name, link, comments, history, locked, _id} = tree
+
+            let {price} = tree
+            if(tree.owner){
+                price = await calculatePrice(treesInRadius, tree, uid)
+            }
         
-            const {nom_complet, owner, name, price, link, comments, history, locked, _id} = data.tree
             dispatch(setActiveTree({nom_complet, owner, name, price, link, comments, history, locked, _id}))
             dispatch(treeFinishLoading())
         } catch(err){
@@ -56,18 +64,19 @@ export const useBuyTree = () =>{
         const {_id} = activeTree
         
         try{
-            
             const res = await fetch(`${process.env.REACT_APP_API_URL}trees/buy/${_id}`,{
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({userName})
+                body: JSON.stringify({userName, price})
             })
             const data = await res.json()
-            console.log(data)
+
             if(data.ok){
+
                 const {nom_complet, name, price: updatedPrice, link, comments, history, locked, _id} = data.tree
+
                 dispatch(setActiveTree({nom_complet, owner: userName, name, price: updatedPrice, link, comments, history, locked, _id}))
                 dispatch(updateDashboardData({leaves: leaves-price, trees: userTrees + 1}))
             }

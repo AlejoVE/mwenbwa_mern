@@ -5,8 +5,12 @@ const getLeaves = async () =>  {
 
     try{
         const users = await UserModel.find()
-        const totalUsers = users.length
+        let totalUsers = users.length
         let totalLeaves = 0
+
+        if(totalUsers === 0){
+            totalUsers = 1
+        }
 
         for(let user of users){
             totalLeaves += user.leaves

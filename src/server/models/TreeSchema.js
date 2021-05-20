@@ -54,6 +54,10 @@ const treeSchema = new Schema(
             trim: true
 
         },
+        lockedPrice: {
+            type: Number,
+            trim: true
+        },
         lat: {
             type: Number,
             required: true,

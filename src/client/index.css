@@ -595,6 +595,8 @@ h6{
 
 .container-links>ul{
     padding: 0 5px;
+    display: flex;
+    flex-direction: column-reverse;
 }
 .container-links>ul>li{
     color: #000;

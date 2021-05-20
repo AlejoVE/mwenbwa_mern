@@ -19,10 +19,10 @@ const Card = () => {
     }
     
     const { nom_complet, owner, name, price, link, comments, history, locked } = activeTree
+    
     const handleBuyButton = (e) => {
         e.stopPropagation()
         buyTree(activeTree, userName, userTrees, leaves, price)
-        console.log('buy')
     }
 
     const handleHistory = (e) =>{
@@ -89,7 +89,7 @@ const Card = () => {
                                 {history.length >= 1 ?
                                     <ul>
                                         {history.map((item, i) => {
-                                            return <li key={i}><span>{item.userName}</span>&nbsp;bought a tree {moment(item.date).fromNow()}</li>
+                                            return <li key={i}><span>{item.userName}</span>&nbsp;bought this tree {moment(item.date).fromNow()}</li>
                                         })}
                                     </ul>
                                     :

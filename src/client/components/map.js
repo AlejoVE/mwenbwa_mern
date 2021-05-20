@@ -4,6 +4,8 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from 'leaflet'
 import Card from './card'
 import {useFetchTree} from '../hooks/hooks'
+import {useSelector} from 'react-redux'
+import {store} from '../store/store'
 
 
 
@@ -18,10 +20,12 @@ import tree6 from '../assets/svg/aspen-svgrepo-com.svg'
 const ViewMap = (data) => {
 
     const [isLoaded, isSetLoaded] = useState(false)
+    const uid = store.getState().auth.uid
 
     const getOneTree = useFetchTree()
+
     const handleClick = (id) => {
-        getOneTree(id)
+        getOneTree(id, uid)
     }
 
     const treeIcon = () => {
