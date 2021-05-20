@@ -18,11 +18,11 @@ const Card = () => {
         return <p>Loading...</p>
     }
     
-    const { nom_complet, owner, name, price, link, comments, history, locked } = activeTree
+    const { nom_complet, owner, name, price, link, comments, history, locked, lockPrice, treesInRadius} = activeTree
     
     const handleBuyButton = (e) => {
         e.stopPropagation()
-        buyTree(activeTree, userName, userTrees, leaves, price)
+        buyTree(activeTree, userName, userTrees, leaves, price, treesInRadius)
     }
 
     const handleHistory = (e) =>{
@@ -118,7 +118,7 @@ const Card = () => {
                         </button>
                     }
                     {!locked && (owner === userName || ownerUserName === userName) &&
-                        <button className={"btn-card locked"}>Lock this tree for&nbsp;&nbsp;<span className={"price"}>{price}</span>&nbsp;&nbsp;leaves</button>
+                        <button className={"btn-card locked"}>Lock this tree for&nbsp;&nbsp;<span className={"price"}>{lockPrice}</span>&nbsp;&nbsp;leaves</button>
                     }
                 </div>
             }

@@ -5,6 +5,7 @@ import {updateDashboardData} from '../actions/authActions'
 import {useDispatch, useSelector} from 'react-redux'
 import {getTreesInRadius} from '../helpers/getTreesInRadius'
 import {calculatePrice} from '../helpers/calculatePrice'
+import {calculateLockedPrice} from '../helpers/calculateLockedPrice'
 
 
 
@@ -43,14 +44,19 @@ export const useFetchTree = () => {
             
             const res = await fetch(`${process.env.REACT_APP_API_URL}trees/${id}`)
             const {tree, treesInRadius} = await res.json()
-            const {nom_complet, owner, name, link, comments, history, locked, _id} = tree
+            const {nom_complet, owner, name, link, comments, history, locked, _id, value} = tree
 
             let {price} = tree
+            let lockPrice = 0
+            console.log('test')
+
             if(tree.owner){
                 price = await calculatePrice(treesInRadius, tree, uid)
+                lockPrice = await calculateLockedPrice(treesInRadius, tree)
+                
             }
-        
-            dispatch(setActiveTree({nom_complet, owner, name, price, link, comments, history, locked, _id}))
+            
+            dispatch(setActiveTree({nom_complet, owner, name, price, link, lockPrice, comments, history, locked, _id, treesInRadius, value}))
             dispatch(treeFinishLoading())
         } catch(err){
             console.log(err)
@@ -60,8 +66,9 @@ export const useFetchTree = () => {
 
 export const useBuyTree = () =>{
     const dispatch = useDispatch()
-    return async (activeTree, userName, userTrees, leaves, price) => {
+    return async (activeTree, userName, userTrees, leaves, price, treesInRadius) => {
         const {_id} = activeTree
+        
         
         try{
             const res = await fetch(`${process.env.REACT_APP_API_URL}trees/buy/${_id}`,{
@@ -74,10 +81,14 @@ export const useBuyTree = () =>{
             const data = await res.json()
 
             if(data.ok){
+                const {nom_complet, name, price: updatedPrice, link, comments, history, locked, _id, value} = data.tree
+                let lockPrice = 0
+                lockPrice = await calculateLockedPrice(treesInRadius, activeTree)
+                lockPrice -= activeTree.value
+                const valueActiveTree = activeTree.value
+                console.log({valueActiveTree})
 
-                const {nom_complet, name, price: updatedPrice, link, comments, history, locked, _id} = data.tree
-
-                dispatch(setActiveTree({nom_complet, owner: userName, name, price: updatedPrice, link, comments, history, locked, _id}))
+                dispatch(setActiveTree({nom_complet, owner: userName, name, price: updatedPrice, link, comments, history, locked, _id, treesInRadius, value, lockPrice}))
                 dispatch(updateDashboardData({leaves: leaves-price, trees: userTrees + 1}))
             }
         } catch(err) {

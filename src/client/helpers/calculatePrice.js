@@ -13,15 +13,17 @@ export const calculatePrice = async (treesInRadius, targetTree, uid) => {
         const treeOwner = tree.owner
         const treeValue = tree.value
         
-        if(treeOwner === uid){
-            totalValueOfUserTreesInRadius += treeValue
-            return
-        }
-
         if(treeOwner){
+            totalValueOfTreesPlayers += treeValue
+            
+            if(treeOwner === uid){
+                totalValueOfUserTreesInRadius += treeValue
+                return
+            }
+            
             if(targettedPlayer === treeOwner){
                 totalValueOfTreesOfTargettedPlayer += treeValue
-    
+                
                 if(isFirstTime){
                     isFirstTime = false
                     return
@@ -29,7 +31,6 @@ export const calculatePrice = async (treesInRadius, targetTree, uid) => {
                 amountOfTreesOfTargettedPlayer += 1
                 return 
             }
-            totalValueOfTreesPlayers += treeValue
         }
     });
 
@@ -37,7 +38,7 @@ export const calculatePrice = async (treesInRadius, targetTree, uid) => {
 
     const finalPrice = value + (totalValueOfTreesOfTargettedPlayer * (amountOfTreesInRadius / amountOfTreesOfTargettedPlayer)) + totalValueOfTreesPlayers - totalValueOfUserTreesInRadius
     
-    return Math.round(Math.abs(finalPrice))
+    return Math.round(finalPrice)
 
 //     [value of the targetted tree] + ([value of all the targetted player's trees in 100m radius]
 // × ([amount of trees in 100m radius] / [amount of tree of targetted player in 100m radius]))

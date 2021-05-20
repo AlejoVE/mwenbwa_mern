@@ -21,6 +21,7 @@ const ViewMap = (data) => {
 
     const [isLoaded, isSetLoaded] = useState(false)
     const uid = store.getState().auth.uid
+    
 
     const getOneTree = useFetchTree()
 
