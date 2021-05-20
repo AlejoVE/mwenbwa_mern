@@ -1,6 +1,5 @@
 import axios from 'axios'
 import {type} from '../types/types'
-import { cleanActiveTree } from './treesActions'
 
 
 export const startLogin = (userName, password) => {
@@ -83,17 +82,3 @@ export const updateDashboardData = (data) => ({
     type: type.updateDashboardData,
     payload: data
 })
-
-
-// export const startLogout = () => {
-//     return async (dispatch) => {
-        
-//         dispatch(logout())
-//         dispatch(cleanActiveTree())
-        
-//     }
-// }
-
-// const logout = () => ({
-//     type: type.authLogout
-// })

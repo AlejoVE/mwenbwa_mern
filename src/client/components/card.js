@@ -1,7 +1,6 @@
 import React, {useState} from 'react'
 import { useSelector } from 'react-redux'
-import { setActiveTree } from '../actions/treesActions'
-import {useBuyTree} from '../hooks/hooks'
+import {useBuyTree, useLockTree} from '../hooks/hooks'
 import moment from 'moment'
 
 const Card = () => {
@@ -12,6 +11,7 @@ const Card = () => {
     const {userName, leaves, trees: userTrees} = auth
     const {activeTree, treeIsLoading} = trees
     const buyTree = useBuyTree()
+    const lockTree = useLockTree()
     let ownerUserName = ""
     
     if(treeIsLoading) {
@@ -23,6 +23,11 @@ const Card = () => {
     const handleBuyButton = (e) => {
         e.stopPropagation()
         buyTree(activeTree, userName, userTrees, leaves, price, treesInRadius)
+    }
+
+    const handleLockButton = (e) => {
+        e.stopPropagation()
+        lockTree(activeTree, userName, leaves, userTrees)
     }
 
     const handleHistory = (e) =>{
@@ -118,7 +123,7 @@ const Card = () => {
                         </button>
                     }
                     {!locked && (owner === userName || ownerUserName === userName) &&
-                        <button className={"btn-card locked"}>Lock this tree for&nbsp;&nbsp;<span className={"price"}>{lockPrice}</span>&nbsp;&nbsp;leaves</button>
+                        <button className={"btn-card locked"} onClick={handleLockButton}>Lock this tree for&nbsp;&nbsp;<span className={"price"}>{lockPrice}</span>&nbsp;&nbsp;leaves</button>
                     }
                 </div>
             }

@@ -123,7 +123,11 @@ const lockTree = async (req, res) => {
 
     const id = req.params.id
     const userName = req.username
+    const lockedPrice = req.body.price
+
     const {isInclude} = await getTreesUser(userName, id)
+    const {userLeaves} = await getUserLeaves(userName)
+
 
     try{
         if(!isInclude){
@@ -131,8 +135,9 @@ const lockTree = async (req, res) => {
             return
         }
 
-        await TreeModel.findOneAndUpdate({_id: id}, {locked: true})
-        res.status(200).json({msg: "The tree is locked."})
+        await UserModel.findOneAndUpdate({userName: userName}, {leaves: userLeaves - lockedPrice})
+        const tree = await TreeModel.findOneAndUpdate({_id: id}, {locked: true})
+        res.status(200).json({msg: "The tree is locked.", ok:true, tree})
 
     } catch (err) {
         res.status(400).json({msg: err})

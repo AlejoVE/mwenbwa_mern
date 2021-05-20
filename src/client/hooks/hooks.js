@@ -48,7 +48,6 @@ export const useFetchTree = () => {
 
             let {price} = tree
             let lockPrice = 0
-            console.log('test')
 
             if(tree.owner){
                 price = await calculatePrice(treesInRadius, tree, uid)
@@ -67,9 +66,9 @@ export const useFetchTree = () => {
 export const useBuyTree = () =>{
     const dispatch = useDispatch()
     return async (activeTree, userName, userTrees, leaves, price, treesInRadius) => {
-        const {_id} = activeTree
-        
-        
+
+        const {_id} = activeTree   
+
         try{
             const res = await fetch(`${process.env.REACT_APP_API_URL}trees/buy/${_id}`,{
                 method: "PUT",
@@ -82,11 +81,10 @@ export const useBuyTree = () =>{
 
             if(data.ok){
                 const {nom_complet, name, price: updatedPrice, link, comments, history, locked, _id, value} = data.tree
-                let lockPrice = 0
-                lockPrice = await calculateLockedPrice(treesInRadius, activeTree)
+
+                let lockPrice = await calculateLockedPrice(treesInRadius, activeTree)
                 lockPrice -= activeTree.value
-                const valueActiveTree = activeTree.value
-                console.log({valueActiveTree})
+
 
                 dispatch(setActiveTree({nom_complet, owner: userName, name, price: updatedPrice, link, comments, history, locked, _id, treesInRadius, value, lockPrice}))
                 dispatch(updateDashboardData({leaves: leaves-price, trees: userTrees + 1}))
@@ -94,5 +92,36 @@ export const useBuyTree = () =>{
         } catch(err) {
             console.log(err)
         }
+    }
+}
+
+export const useLockTree = () => {
+    const dispatch = useDispatch()
+    return async (activeTree, userName, leaves, userTrees) =>{
+
+        const {_id, lockPrice} = activeTree
+        const token = localStorage.getItem("authToken")
+
+        try{
+            const res = await fetch(`${process.env.REACT_APP_API_URL}trees/lock/${_id}`,{
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-token': token
+                },
+                body: JSON.stringify({userName, price: lockPrice})
+            })
+            const data = await res.json()
+            
+            if(data.ok){
+                const {nom_complet, name,  link, comments, history, _id} = data.tree
+                dispatch(setActiveTree({nom_complet, owner: userName, name,  link, comments, history, locked: true, _id}))
+                dispatch(updateDashboardData({leaves: leaves - lockPrice, trees: userTrees}))
+
+            }
+        } catch (err) {
+            console.log(err)
+        }
+
     }
 }

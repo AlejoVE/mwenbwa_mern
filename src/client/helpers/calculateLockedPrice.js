@@ -27,7 +27,7 @@ export const calculateLockedPrice = async (treesInRadius, targetTree) => {
     }
     const finalLockedPrice = value * 10 + (totalValueOfAllTrees * amountOfPlayersInRadius) - (totalValueOfTreesPlayersInRadius / amountOfPlayersInRadius)
 
-    // console.log({value} , {totalValueOfAllTrees}, {amountOfPlayersInRadius}, {totalValueOfTreesPlayersInRadius})
+    console.log({value} , {totalValueOfAllTrees}, {amountOfPlayersInRadius}, {totalValueOfTreesPlayersInRadius})
     
     return Math.round(finalLockedPrice)
 }
