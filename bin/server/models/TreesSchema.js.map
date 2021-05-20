@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/server/models/TreesSchema.js"],"names":["mongoose","require"],"mappings":";;AAAA,MAAMA,QAAQ,GAAGC,OAAO,CAAC,UAAD,CAAxB","sourcesContent":["const mongoose = require(\"mongoose\");\n\n"],"file":"TreesSchema.js"}

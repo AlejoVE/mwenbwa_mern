@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/server/helpers/getPrice.js"],"names":["TreeModel","require","getPrice","id"],"mappings":";;AAAA,MAAMA,SAAS,GAAGC,OAAO,CAAC,sBAAD,CAAzB;;AAEA,MAAMC,QAAQ,GAAG,MAAOC,EAAP,IAAc,CAG9B,CAHD","sourcesContent":["const TreeModel = require('../models/TreeSchema')\n\nconst getPrice = async (id) => {\n\n    \n}\n"],"file":"getPrice.js"}
