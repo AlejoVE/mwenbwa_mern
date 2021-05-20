@@ -1,7 +1,7 @@
 :root {
-    --color-theme: #1aad57bd;
-    --color-theme-hover: #18e06bb6;
-    --color-theme-marker: radial-gradient(#1aad57bd, #1aad5741);
+    --color-theme: #a29bfe93;
+    --color-theme-hover: #a29bfec2;
+    --color-theme-marker: radial-gradient(#a29bfee1, #a29bfe77);
     
     --grey-light: #34495eec;
     --grey-dark: #2c3e50f6;
@@ -320,7 +320,7 @@ td,th{
 }
 
 .marker-cluster{
-    background: radial-gradient(#1aad57bd, #1aad5741);
+    background: var(--color-theme-marker);
     border-radius: 100%;
     display: flex;
     justify-content: center;

@@ -14,13 +14,16 @@ const Card = () => {
     const lockTree = useLockTree()
     let ownerUserName = ""
     
-    
     if(treeIsLoading) {
         return <p>Loading...</p>
     }
     
     const { nom_complet, owner, name, price, link, comments, history, locked, lockPrice, treesInRadius} = activeTree
-    
+
+    const toLocaleString = (value) =>{
+        return value.toLocaleString('fr-FR');
+    }
+
     const handleBuyButton = (e) => {
         e.stopPropagation()
         buyTree(activeTree, userName, userTrees, leaves, price, treesInRadius, uid)
@@ -63,7 +66,6 @@ const Card = () => {
         target.classList.add('active')
 
     }
-
 
     if(owner){
         ownerUserName = owner.userName
@@ -120,11 +122,11 @@ const Card = () => {
                 <div className={"card-buttons"}>
                     {ownerUserName !== userName && owner !== userName && !locked && 
                         <button className={"btn-card"} onClick={handleBuyButton}>
-                            Buy this tree for&nbsp;&nbsp;<span className={"price"}>{price}</span>&nbsp;&nbsp;leaves
+                            Buy this tree for&nbsp;&nbsp;<span className={"price"}>{toLocaleString(price)}</span>&nbsp;&nbsp;leaves
                         </button>
                     }
                     {!locked && (owner === userName || ownerUserName === userName) &&
-                        <button className={"btn-card locked"} onClick={handleLockButton}>Lock this tree for&nbsp;&nbsp;<span className={"price"}>{lockPrice}</span>&nbsp;&nbsp;leaves</button>
+                        <button className={"btn-card locked"} onClick={handleLockButton}>Lock this tree for&nbsp;&nbsp;<span className={"price"}>{toLocaleString(lockPrice)}</span>&nbsp;&nbsp;leaves</button>
                     }
                 </div>
             }

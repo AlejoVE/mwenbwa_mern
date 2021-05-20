@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import L from 'leaflet'
 import Card from './card'
 import {useFetchTree} from '../hooks/hooks'
-import {useSelector} from 'react-redux'
 import {store} from '../store/store'
 
 
@@ -19,8 +18,31 @@ import tree6 from '../assets/svg/aspen-svgrepo-com.svg'
 
 const ViewMap = (data) => {
 
-    const [isLoaded, isSetLoaded] = useState(false)
+
     const uid = store.getState().auth.uid
+    const userColor = store.getState().auth.color
+    const root = document.querySelector(':root');
+
+    switch (userColor) {
+        case "blue":
+            root.style.setProperty('--color-theme', "#00aaff93");
+            root.style.setProperty('--color-theme-hover', "#00aaffec");
+            root.style.setProperty('--color-theme-marker', "radial-gradient(#00aaffb2, #00aaff67)");
+            break;
+        case "green":
+            root.style.setProperty('--color-theme', "#1aad57bd");
+            root.style.setProperty('--color-theme-hover', "#18e06bb6");
+            root.style.setProperty('--color-theme-marker', "radial-gradient(#1aad57bd, #1aad5741)");
+            break;
+        case "purple":
+            root.style.setProperty('--color-theme', "#a29bfe93");
+            root.style.setProperty('--color-theme-hover', "#a29bfec2");
+            root.style.setProperty('--color-theme-marker', "radial-gradient(#a29bfee1, #a29bfe77)");
+            break;
+    
+        default:
+            break;
+    }
     
 
     const getOneTree = useFetchTree()

@@ -1,12 +1,7 @@
-import React , {useEffect, useState} from 'react'
+import React  from 'react'
 import Dashboard from './dashboard'
 import Topbar from './topbar/topbar'
-import Loader from './loader'
-import {useGetTreesPos} from '../hooks/hooks'
-import {useDispatch, useSelector} from 'react-redux'
-import {startLoading} from "../actions/treesActions"
 import ViewMap from './map'
-import {getTrees} from '../helpers/getTrees'
 import { useAsync } from 'react-async';
 
 
@@ -23,6 +18,7 @@ export const MainScreen = () => {
     if (isLoading) return "Loading..."
     if (error) return `Something went wrong: ${error.message}`
     if (data)
+        
     return (
         <>
             <ViewMap data={data}/>
