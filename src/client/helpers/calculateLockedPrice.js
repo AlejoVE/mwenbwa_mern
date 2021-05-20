@@ -1,10 +1,10 @@
-export const calculateLockedPrice = async (treesInRadius, targetTree) => {
+export const calculateLockedPrice = async (treesInRadius, targetTree, uid) => {
 
-    const {value} = await targetTree
+    const {value, owner} = await targetTree
     let totalValueOfAllTrees = 0
     let totalValueOfTreesPlayersInRadius = 0
+    let amountOfPlayersInRadius = 0
     let playersId = new Array()
-
 
     treesInRadius.forEach(tree => {
         totalValueOfAllTrees += tree.value
@@ -21,10 +21,16 @@ export const calculateLockedPrice = async (treesInRadius, targetTree) => {
         
     });
 
-    let amountOfPlayersInRadius = playersId.length
-    if(amountOfPlayersInRadius === 0){
-        amountOfPlayersInRadius = 1
+    if(!owner){
+        totalValueOfTreesPlayersInRadius += value
     }
+
+    if(!playersId.includes(uid)){
+        amountOfPlayersInRadius += 1
+    }
+
+    amountOfPlayersInRadius += playersId.length
+
     const finalLockedPrice = value * 10 + (totalValueOfAllTrees * amountOfPlayersInRadius) - (totalValueOfTreesPlayersInRadius / amountOfPlayersInRadius)
 
     console.log({value} , {totalValueOfAllTrees}, {amountOfPlayersInRadius}, {totalValueOfTreesPlayersInRadius})

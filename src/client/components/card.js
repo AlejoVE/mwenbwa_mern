@@ -8,11 +8,12 @@ const Card = () => {
     const [activeHistory, setActiveHistory] = useState(false)
     const [activeComments, setActiveComments] = useState(false)
     const { trees, auth } = useSelector(state => state)
-    const {userName, leaves, trees: userTrees} = auth
+    const {userName, leaves, trees: userTrees, uid} = auth
     const {activeTree, treeIsLoading} = trees
     const buyTree = useBuyTree()
     const lockTree = useLockTree()
     let ownerUserName = ""
+    
     
     if(treeIsLoading) {
         return <p>Loading...</p>
@@ -22,7 +23,7 @@ const Card = () => {
     
     const handleBuyButton = (e) => {
         e.stopPropagation()
-        buyTree(activeTree, userName, userTrees, leaves, price, treesInRadius)
+        buyTree(activeTree, userName, userTrees, leaves, price, treesInRadius, uid)
     }
 
     const handleLockButton = (e) => {

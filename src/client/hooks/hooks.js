@@ -51,7 +51,7 @@ export const useFetchTree = () => {
 
             if(tree.owner){
                 price = await calculatePrice(treesInRadius, tree, uid)
-                lockPrice = await calculateLockedPrice(treesInRadius, tree)
+                lockPrice = await calculateLockedPrice(treesInRadius, tree, uid)
                 
             }
             
@@ -65,7 +65,7 @@ export const useFetchTree = () => {
 
 export const useBuyTree = () =>{
     const dispatch = useDispatch()
-    return async (activeTree, userName, userTrees, leaves, price, treesInRadius) => {
+    return async (activeTree, userName, userTrees, leaves, price, treesInRadius, uid) => {
 
         const {_id} = activeTree   
 
@@ -82,8 +82,8 @@ export const useBuyTree = () =>{
             if(data.ok){
                 const {nom_complet, name, price: updatedPrice, link, comments, history, locked, _id, value} = data.tree
 
-                let lockPrice = await calculateLockedPrice(treesInRadius, activeTree)
-                lockPrice -= activeTree.value
+                let lockPrice = await calculateLockedPrice(treesInRadius, activeTree, uid)
+                
 
 
                 dispatch(setActiveTree({nom_complet, owner: userName, name, price: updatedPrice, link, comments, history, locked, _id, treesInRadius, value, lockPrice}))
