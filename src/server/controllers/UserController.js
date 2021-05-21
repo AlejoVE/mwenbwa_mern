@@ -26,12 +26,12 @@ const signup = async (req, res) => {
         const trees = await TreeModel.find({owner: null}).limit(3)
         const [treeOne, treeTwo, treeThree] = trees
         const treesArray = new Array(treeOne._id, treeTwo._id, treeThree._id)
-
+        const treesCount = treesArray.length
         //Give leaves 
         const leaves = await getLeaves();
 
         //Create user
-        const user = await UserModel.create({userName, email, password, trees: treesArray, color, leaves})
+        const user = await UserModel.create({userName, email, password, trees: treesArray, treesCount, color, leaves})
 
 
 

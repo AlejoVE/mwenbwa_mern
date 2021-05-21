@@ -37,6 +37,9 @@ const userSchema = new mongoose.Schema(
         },
         trees : {
             type: Array
+        },
+        treesCount: {
+            type: Number
         }
     },
     {

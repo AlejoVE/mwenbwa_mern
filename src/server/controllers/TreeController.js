@@ -51,6 +51,7 @@ const buyTree = async (req,res) => {
         const {userLeaves, userId} = await getUserLeaves(userName)
         const {isInclude, userTrees} = await getTreesUser(userName, id)
         const history = await getHistory(id)
+        const treesCount = userTrees.length
         
         if(isInclude) {
             res.status(400).json({message: "You have already this tree."})
@@ -63,7 +64,7 @@ const buyTree = async (req,res) => {
             }
 
             userTrees.push(ObjectId(id))
-            const user = await UserModel.findOneAndUpdate({userName: userName}, {trees: userTrees, leaves: userLeaves - price})
+            const user = await UserModel.findOneAndUpdate({userName: userName}, {trees: userTrees, leaves: userLeaves - price, treesCount: treesCount + 1})
             const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName, price: price, history: [...history, {userName, date: new Date()}]}, {new: true})
             res.status(200).json({message: "You have a new tree", ok:true, tree})
             return
