@@ -100,7 +100,17 @@ const generateToken = async (req, res) => {
             res.status(200).json({token, uid, username, color, leaves, trees: trees.length})
 
     } catch(err){
-        console.log(err)
+        res.status(400).json({err: err})
+    }
+}
+
+const getLeaderboard = async (req, res) => {
+
+    try{
+        const users = await UserModel.find().select({trees}).limit(10)
+        console.log(users)
+    } catch (err) {
+        res.status(400).json({err: err})
     }
 }
 
@@ -108,5 +118,6 @@ const generateToken = async (req, res) => {
 module.exports = {
     signup,
     login,
-    generateToken
+    generateToken,
+    getLeaderboard
 }
