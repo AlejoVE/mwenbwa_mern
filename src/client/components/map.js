@@ -22,12 +22,13 @@ const ViewMap = (data) => {
     const uid = store.getState().auth.uid
     const userColor = store.getState().auth.color
     const root = document.querySelector(':root');
+    console.log(userColor)
 
     switch (userColor) {
         case "blue":
             root.style.setProperty('--color-theme', "#00aaff93");
             root.style.setProperty('--color-theme-hover', "#00aaffec");
-            root.style.setProperty('--color-theme-marker', "radial-gradient(#00aaffb2, #00aaff67)");
+            root.style.setProperty('--color-theme-marker', "radial-gradient(#00aaff83, #00aaff3b)");
             break;
         case "green":
             root.style.setProperty('--color-theme', "#1aad57bd");
