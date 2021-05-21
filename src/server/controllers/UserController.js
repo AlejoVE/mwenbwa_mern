@@ -107,8 +107,8 @@ const generateToken = async (req, res) => {
 const getLeaderboard = async (req, res) => {
 
     try{
-        const users = await UserModel.find().select({trees}).limit(10)
-        console.log(users)
+        const users = await UserModel.find().select({userName: 1, treesCount: 1}).sort({treesCount: -1}).limit(10)
+        res.status(200).json({users: users})
     } catch (err) {
         res.status(400).json({err: err})
     }
