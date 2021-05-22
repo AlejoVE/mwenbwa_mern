@@ -636,7 +636,7 @@ h6{
     height: 100%;
     font-family: "Roboto", sans-serif;
     font-size: 14px;
-    background-image: url("../../assets/img/forest4.jpg");
+    background-image: url("./assets/img/forest4.jpg");
     background-size: cover;  
 }
 
@@ -650,7 +650,7 @@ h6{
     height: 200px;
     width: 500px;
     margin: auto;
-    background-image: url("../../assets/img/LogoMwenbwa-removebg-preview.png");
+    background-image: url("./assets/img/LogoMwenbwa-removebg-preview.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -805,7 +805,7 @@ input[type="radio"]+ label{
 }
 
 input[type="radio"]:checked + label {
-  background-image: url("../../assets/img/check-svgrepo-com.svg");
+  background-image: url("./assets/img/check-svgrepo-com.svg");
   background-position: 50%;
   background-repeat: no-repeat;
 }
@@ -830,6 +830,7 @@ label{
 .submitButton {
     background-color: rgb(22, 154, 56);
     width: 70%;
+    height: 40px;
     color: white;
     border: none;
     font-weight: bold;
@@ -840,7 +841,7 @@ label{
 }
 
 .imageBot{
-    background-image: url("../../assets/img/Mwenbwa.jpg");
+    background-image: url("./assets/img/Mwenbwa.jpg");
     height: 330px;
     width: 1000px;
     bottom: 0;

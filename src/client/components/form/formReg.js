@@ -91,7 +91,7 @@ const Register = () => {
                          <label className={"green"} htmlFor={"green"}></label>
                     </div>
                </div>
-               <button type="submit" value="submit">Sign Up</button>
+               <button  className={"submitButton"} type="submit" value="submit">Sign Up</button>
           </form>
      )
 }
