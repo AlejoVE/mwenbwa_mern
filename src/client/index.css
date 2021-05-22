@@ -506,15 +506,12 @@ td,th{
 .container-links.active{
     height: 120px;
     opacity: 1;
-    transform:scaleY(1);
-    transform-origin: top;
-    
+
 }
 
 .container-links{
     position: relative;
     height: 0px;
-    transform:scaleY(0);
     background-color: #fff;
     border: 4px solid var(--grey-dark);
     border-radius: 8px;
@@ -609,6 +606,7 @@ h6{
 .container-links>ul{
     padding: 0 5px;
     display: flex;
+    flex-direction: column;
 }
 .container-links>ul>li{
     color: #000;

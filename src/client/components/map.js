@@ -78,7 +78,7 @@ const ViewMap = (data) => {
  
     return (
         <>
-            <MapContainer center={[50.628709, 5.575633]} zoom={17} minZoom={12}>
+            <MapContainer center={[50.62243069591208, 5.587268755810446]} zoom={18} minZoom={12}>
 
                 <TileLayer 
                 url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"} 
