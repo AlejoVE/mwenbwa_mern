@@ -5,7 +5,7 @@ import {useDispatch} from 'react-redux'
 
 
 
-const formLogin = () => {
+const Login = () => {
 
     const {inputs, handleChange} = useForm({});
     const dispatch = useDispatch()
@@ -17,8 +17,9 @@ const formLogin = () => {
 
      return (
 
-        <form method="POST" action="" onSubmit={handleSubmit}>
+        <form className={"form-login"} method="POST" action="" onSubmit={handleSubmit}>
             <input
+                className={"inputForm"}
                 name="username"
                 type="text"
                 placeholder={"Username"}
@@ -26,15 +27,16 @@ const formLogin = () => {
                 onChange={handleChange}
             />
             <input 
+                className={"inputForm"}
                 name="password"
                 type="password"
                 placeholder={"Password"}
                 value={inputs.password || ""}
                 onChange={handleChange}
             />
-            <button type="submit" value="submit" onClick={handleSubmit}>submit</button>
+            <button type="submit" className={"submitButton"} value="submit" onClick={handleSubmit}>Sign In</button>
         </form>
      )
 }
 
-export default formLogin
+export default Login

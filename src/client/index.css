@@ -627,6 +627,280 @@ h6{
     align-items: center;
 }
 
+/* FORM */
+
+
+
+.container-form {
+    width: 100%;
+    height: 100%;
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+    background-image: url("../../assets/img/forest4.jpg");
+    background-size: cover;  
+}
+
+.overlay{
+  background-color: #34495e80;
+  height: 100%;
+
+}
+
+.logo{
+    height: 200px;
+    width: 500px;
+    margin: auto;
+    background-image: url("../../assets/img/LogoMwenbwa-removebg-preview.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.container-inputs{
+    width: 540px;
+    height: auto;
+    margin: auto;
+    z-index: 1;
+    box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.50);
+    background-color: #34495eec;
+    border: 6px solid #2c3e50f6;
+    border-radius: 8px;
+}
+
+.container-tabs{
+    height: 50px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.tabReg, .tabLog{
+    background-color: #2c3e50f6;
+    color: white;
+    border-radius: 3px;
+    height: 50px;
+    width: 50%;
+    border: none;
+    outline: none;
+}
+
+.tabReg.active, .tabLog.active{
+    background-color: #2c3e50f6;
+    background-color: #34495eec;
+
+}
+
+.inputBox{
+    height: auto;
+    z-index: 10;
+    position: relative;
+
+}
+
+input{
+  width: 70%;
+}
+
+.form-register{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+
+}
+
+.form-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px 0;
+
+}
+
+.inputs-login{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  
+}
+
+.inputForm{
+    margin: 10px 0 10px 0;
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.07);
+    border: 1px solid rgb(22, 154, 56);
+} 
+
+.inputForm:hover {
+    box-shadow: inset 1px 1px 8px rgba(0, 0, 0, 0.02);
+}
+
+.inputForm:focus {
+    color: #4b515d;
+    border: 1px solid #B8B6B6;
+    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0px 0px 8px rgba(0, 0, 0, 0.2);
+}
+
+.colors{
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+}
+
+.colors>h3{
+  color: #fff;
+  font-size: 24px;
+}
+
+.inputs-color{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 40%;
+}
+
+.blue{
+    background-color: #00aaff93;
+    border: 3px solid #2c3e50f6;
+    transition: all .3s ease-in-out;
+}
+
+.blue:hover{
+  background-color: #00aaffd8;
+}
+
+.purple{
+    background-color: #a29bfe93;
+    border: 3px solid #2c3e50f6;
+    transition: all .3s ease-in-out;
+}
+
+.purple:hover{
+  background-color: #a29bfedc;
+
+}
+
+.green{
+    background-color: #1aad57bd;
+    border: 3px solid #2c3e50f6;
+    transition: all .3s ease-in-out;
+
+}
+
+.green:hover{
+  background-color: #1aad57f8;
+
+}
+
+input[type="radio"]+ label{
+  opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.25s ease-in-out, background-color 0.25s ease-in-out;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + label {
+  background-image: url("../../assets/img/check-svgrepo-com.svg");
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+
+input[type="radio"]{
+  position: fixed;
+  width: 0;
+  opacity: 0;
+}
+
+label{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.submitButton {
+    background-color: rgb(22, 154, 56);
+    width: 70%;
+    color: white;
+    border: none;
+    font-weight: bold;
+    border-radius: 3px;
+    padding: 10px;
+    margin-top: 10px;
+
+}
+
+.imageBot{
+    background-image: url("../../assets/img/Mwenbwa.jpg");
+    height: 330px;
+    width: 1000px;
+    bottom: 0;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+
+.slide-container {
+    width: 70%;
+    margin: auto; 
+    z-index: -10;
+}
+  
+h3 {
+    text-align: center; 
+}
+  
+  .each-slide > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    height: 300px;
+  }
+  
+  .each-slide span {
+    padding: 20px;
+    font-size: 20px;
+    background: #efefef;
+    text-align: center;
+  }
+  
+  .each-fade {
+    display: flex;
+  }
+  
+  .each-fade .image-container {
+    width: 75%;
+    overflow: hidden;
+  }
+  
+  .each-fade .image-container img {
+    width: 100%;
+  }
+  
+  .each-fade h2 {
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background: #adceed;
+  }
 
 
 

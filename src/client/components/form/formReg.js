@@ -3,7 +3,7 @@ import {useForm} from "../../hooks/hooks";
 import {startRegister} from "../../actions/authActions"
 import {useDispatch} from 'react-redux'
 
-const formRegister = () => {
+const Register = () => {
      const dispatch = useDispatch()
      const {inputs, handleChange} = useForm({
           username: "",
@@ -25,8 +25,10 @@ const formRegister = () => {
 
      return (
 
-          <form method="POST" action="" onSubmit={handleSubmit}>
+          <form className={"form-register"} method="POST" action="" onSubmit={handleSubmit}>
+
                <input
+                    className={"inputForm"}
                     name="username"
                     type="text"
                     placeholder={"Username"}
@@ -34,6 +36,7 @@ const formRegister = () => {
                     onChange={handleChange}
                />
                <input 
+                    className={"inputForm"}
                     name="email"
                     type="email"
                     placeholder={"Email"}
@@ -41,6 +44,7 @@ const formRegister = () => {
                     onChange={handleChange}
                />
                <input 
+                    className={"inputForm"}
                     name="password"
                     type="password"
                     placeholder={"Password"}
@@ -48,45 +52,48 @@ const formRegister = () => {
                     onChange={handleChange}
                />
                <input 
+                    className={"inputForm"}
                     name="verifypassword"
                     type="password"
                     placeholder={"Confirm password"}
                     value={inputs.confirmPassword}
                     onChange={handleChange}
                />
-               <input 
-                    name="color"
-                    type="radio"
-                    id="red"
-                    value="red"
-                    onChange={handleChange}
-               />
-               <input 
-                    name="color"
-                    type="radio"
-                    id="blue"
-                    value="blue"
-                    onChange={handleChange}
-               />
-               <input 
-                    name="color"
-                    type="radio"
-                    id="yellow"
-                    value="yellow"
-                    onChange={handleChange}
-               />
-               <input 
-                    name="color"
-                    type="radio"
-                    id="purple"
-                    value="purple"
-                    onChange={handleChange}
-               />
-               <button type="submit" value="submit">
-                submit
-            </button>
+               <div className={"colors"}>
+                    <h3>Color :</h3>
+                    <div className={"inputs-color"}>
+                    <input
+                                   name="color"
+                                   type="radio"
+                                   id="blue"
+                                   value="blue"
+                                   onChange={handleChange}
+
+                              />
+                         <label className={"blue"} htmlFor={"blue"}></label>
+                              <input
+                                   name="color"
+                                   type="radio"
+                                   id="purple"
+                                   value="purple"
+                                   onChange={handleChange}
+
+                              />
+                         <label className={"purple"} htmlFor={'purple'}></label>
+                              <input
+                                   name="color"
+                                   type="radio"
+                                   id="green"
+                                   value="green"
+                                   onChange={handleChange}
+
+                              />
+                         <label className={"green"} htmlFor={"green"}></label>
+                    </div>
+               </div>
+               <button type="submit" value="submit">Sign Up</button>
           </form>
      )
 }
 
-export default formRegister
+export default Register
