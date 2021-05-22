@@ -15,6 +15,7 @@ import tree3 from '../assets/svg/lemon-tree-svgrepo-com.svg'
 import tree4 from '../assets/svg/cypress-svgrepo-com.svg'
 import tree5 from '../assets/svg/cherry-tree-svgrepo-com.svg'
 import tree6 from '../assets/svg/aspen-svgrepo-com.svg'
+import lockSvg from '../assets/svg/lock-svgrepo-com.svg'
 
 const ViewMap = (data) => {
 
@@ -22,8 +23,8 @@ const ViewMap = (data) => {
     const uid = store.getState().auth.uid
     const userColor = store.getState().auth.color
     const root = document.querySelector(':root');
-    console.log(userColor)
 
+    
     switch (userColor) {
         case "blue":
             root.style.setProperty('--color-theme', "#00aaff93");
@@ -39,8 +40,12 @@ const ViewMap = (data) => {
             root.style.setProperty('--color-theme', "#a29bfe93");
             root.style.setProperty('--color-theme-hover', "#a29bfec2");
             root.style.setProperty('--color-theme-marker', "radial-gradient(#a29bfee1, #a29bfe77)");
-            break;
-    
+            break;    
+        case "turquoise":
+            root.style.setProperty('--color-theme', "#1abc9ca4");
+            root.style.setProperty('--color-theme-hover', "#1abc9ce8");
+            root.style.setProperty('--color-theme-marker', "radial-gradient(#1abc9cc0, #1abc9c44)");
+            break;    
         default:
             break;
     }
@@ -52,9 +57,12 @@ const ViewMap = (data) => {
         getOneTree(id, uid)
     }
 
-    const treeIcon = () => {
+    const treeIcon = (isLocked) => {
         const treesSVG = [tree1,tree2,tree3,tree4,tree5,tree6]
-        const svg = treesSVG[Math.floor(Math.random()*treesSVG.length)];
+        let svg = treesSVG[Math.floor(Math.random()*treesSVG.length)];
+        if(isLocked)
+            svg = lockSvg
+        
         const leafletIcon = L.icon({
             iconUrl: svg,
             iconSize: [32, 32],
@@ -64,28 +72,28 @@ const ViewMap = (data) => {
             shadowSize: null,
             shadowAnchor: null,
         });
+        
         return leafletIcon;
     };
-
-    
+ 
     return (
         <>
-            <MapContainer center={[50.628709, 5.575633]} zoom={17}>
+            <MapContainer center={[50.628709, 5.575633]} zoom={17} minZoom={12}>
 
                 <TileLayer 
                 url={"https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"} 
                 attribution={'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
                 />
-                    <MarkerClusterGroup>
+                    <MarkerClusterGroup spiderfyOnMaxZoom={false} disableClusteringAtZoom={18}>
                         {
                             data.data.trees.map(tree => (
                                 <Marker 
-                                    position={tree.loc} 
-                                    key={tree.id} 
-                                    id={tree.id} 
-                                    icon={treeIcon()} 
-                                    eventHandlers={{
-                                        click: (e) => {
+                                position={tree.loc} 
+                                key={tree.id} 
+                                id={tree.id} 
+                                icon={treeIcon(tree.locked)} 
+                                eventHandlers={{
+                                    click: (e) => {
                                         handleClick(e.target.options.id)
                                         },
                                     }}

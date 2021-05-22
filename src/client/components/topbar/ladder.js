@@ -1,7 +1,20 @@
 import React from 'react';
 import close from '../../assets/svg/close.svg'
+import { useAsync } from 'react-async';
+
+const loadLeaderboard = async () => 
+await fetch(`${process.env.REACT_APP_API_URL}users/leaderboard`)
+.then(res => (res.ok ? res : Promise.reject(res)))
+.then(res => res.json())
+
 
 const Ladder = (props) => {
+
+
+    const { data, error, isLoading } = useAsync({ promiseFn: loadLeaderboard})
+    if (isLoading) return "Loading..."
+    if (error) return `Something went wrong: ${error.message}`
+    if (data)
 
     return (
         <div className={"modal-topbar"}>
@@ -19,56 +32,15 @@ const Ladder = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>2#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>3#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>4#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>5#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>6#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>7#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>8#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>9#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>10#</td>
-                            <td>Pseudo</td>
-                            <td>0</td>
-                        </tr>
+                        {data.users.map((user, i) =>{
+                            return(
+                                <tr key={i}>
+                                    <td>{i+1}#</td>
+                                    <td>{user.userName}</td>
+                                    <td>{user.treesCount}</td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>

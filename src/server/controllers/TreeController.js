@@ -1,6 +1,7 @@
 const TreeModel = require('../models/TreeSchema');
 const UserModel = require('../models/UserModel');
 const ObjectId = require('mongodb').ObjectId;
+const GamelogModel = require('../models/GamelogSchema')
 import {nameByRace} from "fantasy-name-generator";
 import {getUserLeaves} from '../helpers/getUserLeaves';
 import {getTreesUser} from '../helpers/getTreesUser';
@@ -64,8 +65,9 @@ const buyTree = async (req,res) => {
             }
 
             userTrees.push(ObjectId(id))
-            const user = await UserModel.findOneAndUpdate({userName: userName}, {trees: userTrees, leaves: userLeaves - price, treesCount: treesCount + 1})
+            await UserModel.findOneAndUpdate({userName: userName}, {trees: userTrees, leaves: userLeaves - price, treesCount: treesCount + 1})
             const tree = await TreeModel.findOneAndUpdate({_id: id}, {owner: userId, name: randomName, price: price, history: [...history, {userName, date: new Date()}]}, {new: true})
+            await GamelogModel.create({actions: `${userName} bought a tree 🤑`})
             res.status(200).json({message: "You have a new tree", ok:true, tree})
             return
         }
@@ -81,8 +83,8 @@ const buyTree = async (req,res) => {
 const addComment = async (req,res) => {
 
     const id = req.params.id
+    const userName = req.username
     const message = req.body.message
-    const userName = req.body.userName
 
     try{
         const {comments} = await TreeModel.findById(id)
@@ -90,7 +92,7 @@ const addComment = async (req,res) => {
         
         if(message){
             const tree = await TreeModel.findByIdAndUpdate(id, {comments: [...comments, newMessage]})
-            res.status(200).json({message: "Comment added."})
+            res.status(200).json({message: "Comment added.", ok:true})
             return
         }
 
@@ -104,13 +106,14 @@ const addComment = async (req,res) => {
 const getTreesPositions = async (req, res) => {
 
     try {
-        const trees = await TreeModel.find({}, { lat: 1, lon: 1 })
+        const trees = await TreeModel.find({}, { lat: 1, lon: 1, locked: 1 })
         
         let treesFormated = new Array()
         trees.forEach(tree => {
             const newTree = {
                 id: tree._id,
-                loc: [tree.lat, tree.lon]
+                loc: [tree.lat, tree.lon],
+                locked: tree.locked
             }
             treesFormated.push(newTree)
         });
@@ -138,6 +141,7 @@ const lockTree = async (req, res) => {
 
         await UserModel.findOneAndUpdate({userName: userName}, {leaves: userLeaves - lockedPrice})
         const tree = await TreeModel.findOneAndUpdate({_id: id}, {locked: true})
+        await GamelogModel.create({actions: `${userName} locked a tree 🔒`})
         res.status(200).json({msg: "The tree is locked.", ok:true, tree})
 
     } catch (err) {

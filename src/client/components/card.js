@@ -1,22 +1,26 @@
 import React, {useState} from 'react'
 import { useSelector } from 'react-redux'
-import {useBuyTree, useLockTree} from '../hooks/hooks'
+import {useBuyTree, useLockTree, useAddComment} from '../hooks/hooks'
 import moment from 'moment'
 
 const Card = () => {
 
     const [activeHistory, setActiveHistory] = useState(false)
     const [activeComments, setActiveComments] = useState(false)
+    const [userComments, setUserComments] = useState('')
     const { trees, auth } = useSelector(state => state)
     const {userName, leaves, trees: userTrees, uid} = auth
     const {activeTree, treeIsLoading} = trees
     const buyTree = useBuyTree()
     const lockTree = useLockTree()
+    const addComment = useAddComment()
     let ownerUserName = ""
-    
+
     if(treeIsLoading) {
         return <p>Loading...</p>
     }
+
+
     
     const { nom_complet, owner, name, price, link, comments, history, locked, lockPrice, treesInRadius} = activeTree
 
@@ -66,6 +70,15 @@ const Card = () => {
         target.classList.add('active')
 
     }
+    const getCommentsValue = (e) =>{
+        setUserComments(e.target.value)
+    }
+
+    const handleSendComments = () => {
+        addComment(activeTree, userComments, userName)
+        setUserComments('')
+
+    }
 
     if(owner){
         ownerUserName = owner.userName
@@ -91,30 +104,50 @@ const Card = () => {
                     <a href={"#"} id={"link-comments"} onClick={handleComments}>Comments ({comments.length})</a>
                 </div>
                 <div className={"container-links"}>
-                   <>
                     {activeHistory &&
-                            <>
-                                {history.length >= 1 ?
-                                    <ul>
-                                        {history.map((item, i) => {
-                                            return <li key={i}><span>{item.userName}</span>&nbsp;bought this tree {moment(item.date).fromNow()}</li>
-                                        })}
-                                    </ul>
-                                    :
-                                    <h6>History</h6>
-                                }
-                            </>
-                        }
-                   </>
-                    {activeComments &&
                         <>
-                        <h6>Comments</h6>
-                        <div className={"bottom-bar-comments"}>
-                            <input type={"text"} maxLength={40} name="comments" id="comments" placeholder={"Add comments ..."}></input>
-                            <button className={"btn-add-comments"} type="submit" >Send</button>
-                        </div>
+                            {history.length >= 1 ?
+                                <ul className={"ul-history"}>
+                                    {history.map((item, i) => {
+                                        return <li key={i}><span>{item.userName}</span>&nbsp;bought this tree {moment(item.date).fromNow()}</li>
+                                    })}
+                                </ul>
+                                :
+                                <h6>History</h6>
+                            }
                         </>
                     }
+
+                    {activeComments &&
+                        <>
+                            {comments.length >= 1 ?
+                                <>
+                                    <ul>
+                                        {comments.map((item, i) => {
+                                            return (
+                                                <li key={i}>
+                                                    <span>{item.username}</span>&nbsp;{':'} {item.message}
+                                                </li>
+                                            )
+                                        })}
+                                    </ul>
+
+                                    <div className={"bottom-bar-comments"}>
+                                        <input type={"text"} value={userComments} onChange={getCommentsValue} minLength={1} maxLength={40} name="comments" id="comments" placeholder={"Add comments ..."}></input>
+                                        <button className={"btn-add-comments"} type="submit" onClick={handleSendComments}>Send</button>
+                                    </div>
+                                </>
+                                :
+                                <>
+                                    <h6>Comments</h6>
+                                    <div className={"bottom-bar-comments"}>
+                                        <input type={"text"} value={userComments} onChange={getCommentsValue} minLength={1} maxLength={40} name="comments" id="comments" placeholder={"Add comments ..."}></input>
+                                        <button className={"btn-add-comments"} type="submit" onClick={handleSendComments}>Send</button>
+                                    </div>
+                                </>
+                            }
+                        </>
+                    } 
                 </div>
             </div>
     

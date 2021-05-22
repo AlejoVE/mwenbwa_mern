@@ -2,8 +2,7 @@ import { useState } from "react";
 import { getTrees} from '../helpers/getTrees'
 import {setTrees, finishLoading, setActiveTree, treeFinishLoading} from "../actions/treesActions"
 import {updateDashboardData} from '../actions/authActions'
-import {useDispatch, useSelector} from 'react-redux'
-import {getTreesInRadius} from '../helpers/getTreesInRadius'
+import {useDispatch} from 'react-redux'
 import {calculatePrice} from '../helpers/calculatePrice'
 import {calculateLockedPrice} from '../helpers/calculateLockedPrice'
 
@@ -106,7 +105,7 @@ export const useLockTree = () => {
                     'Content-Type': 'application/json',
                     'x-token': token
                 },
-                body: JSON.stringify({userName, price: lockPrice})
+                body: JSON.stringify({price: lockPrice})
             })
             const data = await res.json()
             
@@ -116,6 +115,37 @@ export const useLockTree = () => {
                 dispatch(updateDashboardData({leaves: leaves - lockPrice, trees: userTrees}))
 
             }
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
+}
+
+export const useAddComment = () => {
+    const dispatch = useDispatch()
+    return async (activeTree, comment, username) =>{
+
+        const {_id} = activeTree
+        const token = localStorage.getItem("authToken")
+
+        try{
+            const res = await fetch(`${process.env.REACT_APP_API_URL}trees/${_id}/comments`,{
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-token': token
+                },
+                body: JSON.stringify({message: comment})
+            })
+            const data = await res.json()
+            
+            if(data.ok){
+                const setComment = {username: username, message: comment}
+                const {nom_complet, name,  link, comments, history, owner, locked, price, treesInRadius, value, lockPrice} = activeTree
+                dispatch(setActiveTree({nom_complet, owner, name,  link, comments: [...comments, setComment], history, locked, _id, price, value, treesInRadius, lockPrice}))
+            }
+
         } catch (err) {
             console.log(err)
         }

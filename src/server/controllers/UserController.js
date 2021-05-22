@@ -1,5 +1,7 @@
 const UserModel = require('../models/UserModel')
 const TreeModel = require('../models/TreeSchema')
+const GamelogModel = require('../models/GamelogSchema')
+
 const {generateJWT} = require('../helpers/jwt')
 const bcrypt = require('bcrypt');
 import {getLeaves} from '../helpers/getLeaves'
@@ -44,9 +46,9 @@ const signup = async (req, res) => {
             }
             const res = await TreeModel.updateOne({ _id:tree._id}, { $set: userObject})
         }
-
+        await GamelogModel.create({actions: `Welcome ${userName} 👋`})
         const token = await generateJWT(user._id)
-       
+        
         
         res.status(201).json({token, userName: user.userName, uid: user._id})
         
@@ -75,6 +77,7 @@ const login = async (req, res) =>{
             return 
         }
 
+        await GamelogModel.create({actions: `${userName} is connected 😎`})
         const token = await generateJWT(user._id, userName)
         res.status(200).json({
             token, 
@@ -97,6 +100,7 @@ const generateToken = async (req, res) => {
     try{
             const token = await generateJWT(uid, username)
             const {color, leaves, trees} = await getUser(uid)
+            await GamelogModel.create({actions: `${username} is connected 😎`})
             res.status(200).json({token, uid, username, color, leaves, trees: trees.length})
 
     } catch(err){
@@ -114,10 +118,21 @@ const getLeaderboard = async (req, res) => {
     }
 }
 
+const getActions = async (req, res) => {
+
+    try {
+        const actions = await GamelogModel.find().select({actions: 1}).sort({createdAt: -1}).limit(10)
+        res.status(200).json({actions})
+    } catch (err) {
+        res.status(400).json({err: err})
+    }
+}
+
 
 module.exports = {
     signup,
     login,
     generateToken,
-    getLeaderboard
+    getLeaderboard,
+    getActions
 }

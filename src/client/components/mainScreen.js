@@ -3,6 +3,7 @@ import Dashboard from './dashboard'
 import Topbar from './topbar/topbar'
 import ViewMap from './map'
 import { useAsync } from 'react-async';
+import ReactLoading from 'react-loading';
 
 
 
@@ -15,7 +16,18 @@ const loadTrees = async () =>
 export const MainScreen = () => {
 
     const { data, error, isLoading } = useAsync({ promiseFn: loadTrees})
-    if (isLoading) return "Loading..."
+    if (isLoading) 
+        return (
+            <div className={"loader"}>
+                <ReactLoading
+                    className='loading-component'
+                    type='spinningBubbles'
+                    color='#2c3e50f6'
+                    height='15%'
+                    width='15%'
+                />
+            </div>
+        );
     if (error) return `Something went wrong: ${error.message}`
     if (data)
         

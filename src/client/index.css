@@ -1,9 +1,9 @@
 :root {
-    --color-theme: #a29bfe93;
-    --color-theme-hover: #a29bfec2;
-    --color-theme-marker: radial-gradient(#a29bfee1, #a29bfe77);
+    --color-theme: #1abc9ca4;
+    --color-theme-hover: #1abc9ce8;
+    --color-theme-marker: radial-gradient(#1abc9cc0, #1abc9c44);
     
-    --grey-light: #34495eec;
+    --grey-light: #34495ee0;
     --grey-dark: #2c3e50f6;
     --grey: #34495e;
     --blue: #318bc780;
@@ -28,6 +28,7 @@ body,
     height: 100%;
     width: 100%;
     overflow: hidden;
+    transform-origin: top;
 
 }
 
@@ -136,7 +137,9 @@ button{
     justify-content: center;
     align-items: center;
 }
-
+.ladder-info{
+    margin-top: 15px;
+}
 h3{
     margin: 0;
     color: #fff;
@@ -221,7 +224,8 @@ strong{
     justify-content: space-around;
     align-items: center;
     width: 380px;
-    height: 400px;
+    height: max-content;
+    padding: 15px 0;
     background-color: var(--grey-light);
     border: 6px solid var(--grey-dark);
     top: 70px;
@@ -373,6 +377,7 @@ td,th{
     text-transform: capitalize;
     font-size: 20px;
     text-decoration: underline;
+    text-align: center;
 }
 
 .info-card{
@@ -499,20 +504,14 @@ td,th{
 }
 
 .container-links.active{
-    background-color: #fff;
-    border: 4px solid var(--grey-dark);
-    border-radius: 8px;
-    width: 260px;
-    height: 100px;
-    margin-top: 5px;
-    overflow-y: scroll;
+    height: 120px;
     opacity: 1;
-    transition: var(--transition);
     transform:scaleY(1);
+    transform-origin: top;
     
 }
 
-.container-link{
+.container-links{
     position: relative;
     height: 0px;
     transform:scaleY(0);
@@ -521,9 +520,16 @@ td,th{
     border-radius: 8px;
     width: 260px;
     margin-top: 5px;
-    overflow-y: scroll;
-    opacity: 1;
+    opacity: 0;
     transition: var(--transition); 
+}
+
+.container-links>ul{
+    overflow-y: scroll;
+    height: 70%;
+}
+.container-links>.ul-history{
+    height: 100%;
 }
 
 h6{
@@ -542,7 +548,7 @@ h6{
     justify-content: flex-end;
     align-items: flex-end;
     width: 100%;
-    height: 30px;
+    height: 30%;
     bottom: 0;
     right: 0;
     border-top: 2px solid var(--grey-light);
@@ -603,7 +609,6 @@ h6{
 .container-links>ul{
     padding: 0 5px;
     display: flex;
-    flex-direction: column-reverse;
 }
 .container-links>ul>li{
     color: #000;
@@ -614,6 +619,14 @@ h6{
     color: #000;
     font-size: 14px;
     font-weight: bold;
+}
+
+.loader{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
