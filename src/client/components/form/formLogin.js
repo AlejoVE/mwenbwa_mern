@@ -1,18 +1,24 @@
 import React from "react";
 import {useForm} from "../../hooks/hooks";
 import {startLogin} from '../../actions/authActions'
-import {useDispatch} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 
 
 
 const Login = () => {
 
-    const {inputs, handleChange} = useForm({});
+    const state = useSelector((state) => state)
     const dispatch = useDispatch()
+
+    const {inputs, handleChange} = useForm({
+        username: "",
+        password: ""
+    });
 
     const handleSubmit = (e) => {
         e.preventDefault()
         dispatch(startLogin(inputs.username, inputs.password))
+        
     }
 
      return (
@@ -23,7 +29,7 @@ const Login = () => {
                 name="username"
                 type="text"
                 placeholder={"Username"}
-                value={inputs.username || ""}
+                value={inputs.username}
                 onChange={handleChange}
             />
             <input 
@@ -31,9 +37,14 @@ const Login = () => {
                 name="password"
                 type="password"
                 placeholder={"Password"}
-                value={inputs.password || ""}
+                value={inputs.password}
                 onChange={handleChange}
             />
+            <div className={"inputs-error"}>
+                {state.errors && 
+                    <p className={"username-err"}>{state.errors.error}</p>
+                }   
+            </div>
             <button type="submit" className={"submitButton"} value="submit" onClick={handleSubmit}>Sign In</button>
         </form>
      )

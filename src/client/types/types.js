@@ -10,5 +10,7 @@ export const type = {
     treeFinishLoading: "[trees] treeFinishLoading",
     cleanActiveTree: "[trees] cleanActiveTree",
     updateDashboardData: "[auth] udpateDashboardData",
+    setError: "[errors] setError",
+    cleanError: "[errors] cleanError" 
     
 }

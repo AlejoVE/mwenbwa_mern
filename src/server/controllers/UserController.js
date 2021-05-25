@@ -20,7 +20,7 @@ const signup = async (req, res) => {
         const isExist = await verifyUser(userName, email)
 
         if(!isExist.ok){
-            res.status(400).json({msg: isExist.msg})
+            res.status(400).json({err: isExist.err})
             return
         }
 
@@ -66,14 +66,14 @@ const login = async (req, res) =>{
         const user = await UserModel.findOne({userName})
 
         if(!user){
-            res.status(404).json({err: "User not found"})
+            res.status(404).json({err: "Wrong username or password."})
             return 
         }
         
         const validPassword = bcrypt.compareSync(password, user.password)
 
         if(!validPassword){
-            res.status(400).json({err: "Bad password"})
+            res.status(400).json({err: "Wrong username or password."})
             return 
         }
 
@@ -84,7 +84,8 @@ const login = async (req, res) =>{
             userName, 
             uid: user._id, 
             leaves: user.leaves,
-            trees: user.trees.length 
+            trees: user.trees.length,
+            color: user.color 
         })
 
     } catch (err) {

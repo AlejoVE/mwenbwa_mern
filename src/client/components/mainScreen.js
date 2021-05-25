@@ -19,13 +19,15 @@ export const MainScreen = () => {
     if (isLoading) 
         return (
             <div className={"loader"}>
-                <ReactLoading
-                    className='loading-component'
-                    type='spinningBubbles'
-                    color='#2c3e50f6'
-                    height='15%'
-                    width='15%'
-                />
+                <div className={"overlay"}>
+                    <ReactLoading
+                        className='loading-component'
+                        type='spinningBubbles'
+                        color='#fff'
+                        height='10%'
+                        width='10%'
+                    />
+                </div>
             </div>
         );
     if (error) return `Something went wrong: ${error.message}`

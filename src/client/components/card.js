@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import { useSelector } from 'react-redux'
 import {useBuyTree, useLockTree, useAddComment} from '../hooks/hooks'
 import moment from 'moment'
+import usersvg from '../assets/svg/user.svg';
+import treesvg from '../assets/svg/treename.svg'
+
 
 const Card = () => {
 
@@ -90,10 +93,10 @@ const Card = () => {
             {owner &&
                 <div className={"info-card"}>
                     {owner && 
-                        <p className={"owner-card"}>Owner :&nbsp;<span>{owner.userName || owner}</span></p>
+                        <p className={"owner-card"}><img src={usersvg} alt={"logo"} />&nbsp;<span>{owner.userName || owner}</span></p>
                     }
                     {name && 
-                        <p className={"name-card"}>Name :&nbsp;<span>{name}</span></p>
+                        <p className={"name-card"}><img src={treesvg} alt={"logo"} />&nbsp;<span>{name}</span></p>
                     }
                 </div>
             }

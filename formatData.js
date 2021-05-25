@@ -3,13 +3,12 @@ const util = require("util");
 const path = require("path");
 const {fetchData} = require("./fetchWikipedia");
 
-// import {fetchData} from './fetchWikipedia'
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
 
 const filetPath = path.join(__dirname, "data", "arbustum.json");
-const targetFile = path.join(__dirname, "data", "arbustumFormat.json");
+const targetFile = path.join(__dirname, "data", "arbustumFormat2.json");
 
 const seeNames = (trees) => {
     let names = [];
@@ -57,17 +56,17 @@ const getFile = async () => {
             let diameter = tree.diametre_cime;
             let size = tree.hauteur_totale;
             
+            if (tree.nom_complet == 'en cours de détermination' || tree.nom_complet == 'A DETERMINER' || tree.nom_complet == 'A SUPPRIMER' || tree.nom_complet == 'ABATTU' || tree.nom_complet == 'Indeterminé')  {
+                tree.nom_complet = "Platanus x acerifolia"
+            }
             for(const item of allLinks){
                 if(tree.nom_complet == item.name){
                     tree.link = item.link;
                 }
             }
 
-            if(tree.nom_complet === "en cours de détermination") {
-                tree.link = "No link for this tree"
-            }
             
-            //Parse float !!! 
+            
             if (size == null) {
                 size = averageSize;
                 tree.hauteur_totale = size;

@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import Login from "./formLogin.js";
 import Register from "./formReg.js";
+import {useDispatch} from 'react-redux'
+import {cleanError} from '../../actions/authActions'
 
 export const Form = () => {
 
 
     const [isLog, setIsLog] = useState(true);
-
+    const dispatch = useDispatch()
     const handleButton = (e) => {
         setIsLog(e);
+        dispatch(cleanError())
     }
 
     return (
@@ -34,33 +37,3 @@ export const Form = () => {
     )
 }
 export default Form;
-
-
-
-
-// import React, { useState } from "react";
-// import Login from "./formLogin.js";
-// import Register from "./formReg.js";
-
-// export const Form = () => {
-
-//     const [isLog, setIsLog] = useState(true);
-
-//     const handleButton = (e) => {
-//         setIsLog(e);
-//     }
-
-//     return (
-
-//         <div className={"modal-form"}>
-//             <button 
-//                 onClick={() => setIsLog(false)}>Register</button>
-//             <button
-//                 onClick={() => setIsLog(true)}>Login</button>
-//             {isLog ?
-//                 <Login /> :
-//                 <Register />
-//             }
-//         </div>
-//     )
-// }

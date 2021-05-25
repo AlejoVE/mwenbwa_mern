@@ -15,12 +15,7 @@ export const authReducer = (state = initialState, action) => {
                 ...state,
                 leaves: action.payload.leaves,
                 trees: action.payload.trees
-            }
-        // case type.authLogout:
-        //     return{
-        //         ...initialState
-        //     }
-        
+            }   
         default:
             return {...state};
     }

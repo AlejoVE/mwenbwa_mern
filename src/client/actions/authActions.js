@@ -2,6 +2,20 @@ import axios from 'axios'
 import {type} from '../types/types'
 
 
+const login = (user) => ({
+    type: type.authLogin,
+    payload: user
+})
+
+const errors = (err) =>({
+    type: type.setError,
+    payload: err
+})
+
+export const cleanError = () =>({
+    type: type.cleanError
+})
+
 export const startLogin = (userName, password) => {
     return async (dispatch) => {
         
@@ -15,25 +29,20 @@ export const startLogin = (userName, password) => {
             }
             
         }).then(({data}) =>{
-            const {token, userName, uid, leaves, trees} = data
+            const {token, userName, uid, leaves, trees, color} = data
 
 
             if(token) {
                 localStorage.setItem("authToken", token)
-                dispatch(login({userName, uid, leaves, trees}))
+                dispatch(login({userName, uid, leaves, trees, color}))
                 
 
             }
         }).catch((err) =>{
-            console.log(err)
+            dispatch(errors(err.response.data.err))
         })
     }
 }
-
-const login = (user) => ({
-    type: type.authLogin,
-    payload: user
-})
 
 export const startRegister = (username, password, email, color) =>{
     return async (dispatch) => {
@@ -51,10 +60,11 @@ export const startRegister = (username, password, email, color) =>{
         }).then(() =>{
             dispatch(startLogin(username, password))
         }).catch(err =>{
-            console.log(err.response.data.msg)
+            dispatch(errors(err.response.data.err))
         })
     }
 }
+
 
 export const startChecking = () => {
     return async (dispatch) => {
