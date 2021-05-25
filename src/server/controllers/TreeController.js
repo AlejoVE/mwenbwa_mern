@@ -106,14 +106,13 @@ const addComment = async (req,res) => {
 const getTreesPositions = async (req, res) => {
 
     try {
-        const trees = await TreeModel.find({}, { lat: 1, lon: 1, locked: 1 })
+        const trees = await TreeModel.find({}, { lat: 1, lon: 1})
         
         let treesFormated = new Array()
         trees.forEach(tree => {
             const newTree = {
                 id: tree._id,
-                loc: [tree.lat, tree.lon],
-                locked: tree.locked
+                loc: [tree.lat, tree.lon]
             }
             treesFormated.push(newTree)
         });

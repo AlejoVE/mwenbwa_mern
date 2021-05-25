@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { BrowserRouter as Router, Switch, Redirect, HashRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Redirect} from 'react-router-dom';
 import { PublicRoutes } from './publicRoute';
 import { PrivateRoutes } from './privateRoute';
 import {Form} from '../components/form/form';
@@ -13,9 +13,11 @@ export const AppRouter = () => {
     const dispatch = useDispatch()
     const uid = useSelector((state) => state.auth.uid);
 
+
     useEffect(() => {
         dispatch(startChecking())
     },[])
+
 
     return (
         <Router>

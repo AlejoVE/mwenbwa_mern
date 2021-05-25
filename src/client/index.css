@@ -90,6 +90,11 @@ button {
     transition: var(--transition);
 }
 
+.link-arrow-down>img{
+    width: 27px;
+    height: 27px;
+}
+
 .dashboard-container.active > .dashboard-topbar > .link-arrow-down {
     transform: rotate(180deg);
 }

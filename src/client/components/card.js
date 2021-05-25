@@ -24,7 +24,7 @@ const Card = () => {
     }
 
 
-    
+
     const { nom_complet, owner, name, price, link, comments, history, locked, lockPrice, treesInRadius} = activeTree
 
     const toLocaleString = (value) =>{

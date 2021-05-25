@@ -1,15 +1,15 @@
 import express from "express";
 import path from "path";
 import {dbConnection} from './database/config';
+// const cors = require('cors')
 require('dotenv').config()
 
 const PORT = process.env.APP_PORT
 const app = express();
 
 dbConnection()
-
+// app.use(cors({credentials: true, origin: 'http://127.0.0.1:5500'}));
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
-
 app.use(express.json())
 
 //Routes

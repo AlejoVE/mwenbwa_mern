@@ -2,6 +2,7 @@ export const type = {
     authLogin: "[auth] login",
     authLogout: "[auth] logout",
     authRegister: "[auth] register",
+    authFinishChecking: "[auth] finishChecking",
     setTrees: "[trees] setTrees",
     getTrees: " [trees] getTrees" ,
     treesStartLoading: "[trees] treesStartLoading",
