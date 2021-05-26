@@ -4,6 +4,7 @@ import App from "./app";
 import "./index.css";
 
 console.log(process.env.REACT_APP_API_URL)
+console.log(process.env.NODE_ENV)
 
 
 ReactDOM.render(<App />, document.querySelector("#app"));
