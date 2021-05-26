@@ -14,9 +14,6 @@ app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 app.use(express.json())
 
 
-setInterval(sendLeaves, 1000*60*15);
-setInterval(removeLeaves, 1000*60*60);
-
 
 
 //Routes
@@ -27,7 +24,7 @@ app.use("/api/trees", require("./routes/TreesRoutes"))
 app.get('/*', function(req, res) {
     res.sendFile(path.join(__dirname, '../../bin/client/'), function(err) {
         if (err) {
-        res.status(500).send(err)
+            res.status(500).send(err)
         }
     })
 })
@@ -35,5 +32,8 @@ app.get('/*', function(req, res) {
 
 //Server
 app.listen(PORT, () =>
-    console.log(`🚀 Server is listening on port ${PORT}.`),
+console.log(`🚀 Server is listening on port ${PORT}.`),
 );
+
+setInterval(sendLeaves, 1000*60*15);
+setInterval(removeLeaves, 1000*60*60);
