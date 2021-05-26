@@ -11,7 +11,8 @@ const Card = () => {
     const [activeHistory, setActiveHistory] = useState(false)
     const [activeComments, setActiveComments] = useState(false)
     const [userComments, setUserComments] = useState('')
-    const { trees, auth } = useSelector(state => state)
+    const state = useSelector(state => state)
+    const {trees, auth } = state
     const {userName, leaves, trees: userTrees, uid} = auth
     const {activeTree, treeIsLoading} = trees
     const buyTree = useBuyTree()
@@ -157,12 +158,28 @@ const Card = () => {
             {!locked &&
                 <div className={"card-buttons"}>
                     {ownerUserName !== userName && owner !== userName && !locked && 
-                        <button className={"btn-card"} onClick={handleBuyButton}>
-                            Buy this tree for&nbsp;&nbsp;<span className={"price"}>{toLocaleString(price)}</span>&nbsp;&nbsp;leaves
-                        </button>
+                        <>
+                            {leaves > price 
+                                ?
+                                <button className={"btn-card"} onClick={handleBuyButton}>
+                                    Buy this tree for&nbsp;&nbsp;<span className={"price"}>{toLocaleString(price)}</span>&nbsp;&nbsp;leaves
+                                </button>
+                                :
+                                <button disabled className={"btn-card islocked"} onClick={handleBuyButton}>
+                                    You need&nbsp;<span className={"price"}>{toLocaleString(price)}</span>&nbsp;leaves to buy this tree
+                                </button>
+                            }
+                        </>
                     }
                     {!locked && (owner === userName || ownerUserName === userName) &&
-                        <button className={"btn-card locked"} onClick={handleLockButton}>Lock this tree for&nbsp;&nbsp;<span className={"price"}>{toLocaleString(lockPrice)}</span>&nbsp;&nbsp;leaves</button>
+                        <>
+                        {leaves > lockPrice
+                            ?
+                            <button className={"btn-card locked"} onClick={handleLockButton}>Lock this tree for&nbsp;&nbsp;<span className={"price"}>{toLocaleString(lockPrice)}</span>&nbsp;&nbsp;leaves</button>
+                            :
+                            <button disabled className={"btn-card islocked"} onClick={handleLockButton}>You need&nbsp;<span className={"price lock"}>{toLocaleString(lockPrice)}</span>&nbsp;leaves to lock this tree</button>
+                        }
+                        </>
                     }
                 </div>
             }

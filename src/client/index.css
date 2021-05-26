@@ -419,7 +419,7 @@ th {
     background-color: var(--color-theme);
     border-radius: 8px;
     color: #fff;
-    font-size: 14px;
+    font-size: 13px;
     outline: none;
     transition: var(--transition);
 }
@@ -447,8 +447,10 @@ th {
 
 .price {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
 }
+
+
 
 .container-buttons-card {
     display: flex;
