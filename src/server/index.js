@@ -5,7 +5,7 @@ import {sendLeaves, removeLeaves} from './helpers/handleLeaves'
 // const cors = require('cors')
 require('dotenv').config()
 
-const PORT = process.env.APP_PORT || 8080
+const PORT = process.env.APP_PORT || 3000
 const app = express();
 
 dbConnection()
