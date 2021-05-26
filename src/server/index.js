@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import {dbConnection} from './database/config';
+import {sendLeaves, removeLeaves} from './helpers/handleLeaves'
 // const cors = require('cors')
 require('dotenv').config()
 
@@ -11,6 +12,12 @@ dbConnection()
 // app.use(cors({credentials: true, origin: 'http://127.0.0.1:5500'}));
 app.use(express.static(path.resolve(__dirname, "../../bin/client")));
 app.use(express.json())
+
+
+setInterval(sendLeaves, 1000*60*15);
+setInterval(removeLeaves, 1000*60*60);
+
+
 
 //Routes
 
