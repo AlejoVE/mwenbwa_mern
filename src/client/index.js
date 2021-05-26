@@ -3,13 +3,8 @@ import ReactDOM from "react-dom";
 import App from "./app";
 import "./index.css";
 
-const result = dotenv.config()
+console.log(process.env.REACT_APP_API_URL)
 
-if (result.error) {
-  throw result.error
-}
-
-console.log(result.parsed)
 
 ReactDOM.render(<App />, document.querySelector("#app"));
 
