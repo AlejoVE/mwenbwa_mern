@@ -12,7 +12,7 @@ var _handleLeaves = require("./helpers/handleLeaves");
 
 require('dotenv').config();
 
-const PORT = process.env.APP_PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const app = (0, _express.default)();
 (0, _config.dbConnection)();
 app.use(_express.default.static(_path.default.resolve(__dirname, "../../bin/client")));

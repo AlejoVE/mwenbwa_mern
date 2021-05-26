@@ -39,6 +39,7 @@ export const startLogin = (userName, password) => {
 
             }
         }).catch((err) =>{
+            console.log(err)
             dispatch(errors(err.response.data.err))
         })
     }
