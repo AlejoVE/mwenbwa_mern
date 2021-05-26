@@ -10,6 +10,10 @@ module.exports = env => {
             VERSION: require("./package.json").version,
             BUILD_TIME: Date.now(),
         }),
+        new webpack.DefinePlugin({           
+            NODE_ENV: JSON.stringify(process.env.NODE_ENV),      
+            API_HOST: JSON.stringify(process.env.API_HOST)
+          }),
         new HtmlWebpackPlugin({
             template: resolve(__dirname, "./src/index.html"),
             path: "../",
