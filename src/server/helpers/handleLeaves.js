@@ -22,7 +22,6 @@ const removeLeaves = async () => {
         for(const user of users){
             await UserModel.findOneAndUpdate({_id: user._id}, {leaves: Math.round(user.leaves / 2)})
         }
-        console.log('toto')
 
     } catch (err) {
         console.log(err)
