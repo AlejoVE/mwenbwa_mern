@@ -1,16 +1,7 @@
-/* becodeorg/mwenbwa
- *
- * /webpack.config.js - Webpack configuration
- *
- * coded by leny@BeCode
- * started at 18/05/2020
- */
-
-/* eslint-disable */
-
 const webpack = require("webpack");
 const {resolve} = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require('dotenv-webpack');
 
 module.exports = env => {
     const plugins = [
@@ -23,6 +14,7 @@ module.exports = env => {
             template: resolve(__dirname, "./src/index.html"),
             path: "../",
         }),
+        new Dotenv(),
     ];
 
     let optimization = {};
@@ -58,11 +50,14 @@ module.exports = env => {
                 ? "cheap-module-eval-source-map"
                 : "hidden-source-map",
         context: resolve(__dirname, "./src/client"),
-        entry: ["./app.js"],
+        entry: ["./index.js"],
+        node: {
+            fs: "empty"
+        },         
         module: {
             rules: [
                 {
-                    test: /\.(png|jpg|gif)$/,
+                    test: /\.(png|jpg|gif|svg)$/,
                     use: [
                         {
                             loader: "file-loader",
@@ -71,6 +66,10 @@ module.exports = env => {
                             },
                         },
                     ],
+                },
+                {
+                    test: /\.css$/i,
+                    use: ["style-loader", "css-loader"],
                 },
                 {
                     test: /\.js$/,
@@ -112,6 +111,7 @@ module.exports = env => {
             path: resolve(__dirname, "./bin/client"),
             filename: env === "dev" ? "js/bundle.js" : "js/[chunkhash].js",
         },
+       
         watch: env === "dev",
     };
 };
