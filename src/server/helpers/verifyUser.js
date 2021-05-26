@@ -8,7 +8,7 @@ const verifyUser = async (userName, email) => {
     if(user.length === 1 && mail.length === 1){
         return {ok : false, err: "This username and email already exist."}
     }
-    if(user.length === 1) {
+    if(user.length === 1 && user.userName) {
         return {ok : false, err: "This username already exist." }
     }
 

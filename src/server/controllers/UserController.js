@@ -49,7 +49,6 @@ const signup = async (req, res) => {
         await GamelogModel.create({actions: `Welcome ${userName} 👋`})
         const token = await generateJWT(user._id)
         
-        
         res.status(201).json({token, userName: user.userName, uid: user._id})
         
     } catch(err){
@@ -62,8 +61,10 @@ const login = async (req, res) =>{
 
     const {userName, password} = req.body
 
+
     try{
         const user = await UserModel.findOne({userName})
+
 
         if(!user){
             res.status(404).json({err: "Wrong username or password."})
@@ -77,11 +78,11 @@ const login = async (req, res) =>{
             return 
         }
 
-        await GamelogModel.create({actions: `${userName} is connected 😎`})
-        const token = await generateJWT(user._id, userName)
+        await GamelogModel.create({actions: `${user.userName} is connected 😎`})
+        const token = await generateJWT(user._id, user.userName)
         res.status(200).json({
             token, 
-            userName, 
+            userName: user.userName,
             uid: user._id, 
             leaves: user.leaves,
             trees: user.trees.length,

@@ -19,7 +19,7 @@ const verifyUser = async (userName, email) => {
     };
   }
 
-  if (user.length === 1) {
+  if (user.length === 1 && user.userName) {
     return {
       ok: false,
       err: "This username already exist."

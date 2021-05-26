@@ -117,12 +117,12 @@ const login = async (req, res) => {
     }
 
     await GamelogModel.create({
-      actions: `${userName} is connected 😎`
+      actions: `${user.userName} is connected 😎`
     });
-    const token = await generateJWT(user._id, userName);
+    const token = await generateJWT(user._id, user.userName);
     res.status(200).json({
       token,
-      userName,
+      userName: user.userName,
       uid: user._id,
       leaves: user.leaves,
       trees: user.trees.length,

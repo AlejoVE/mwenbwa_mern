@@ -25,7 +25,6 @@ const ViewMap = () => {
 
     const handleClick = (id) => {
         getOneTree(id, uid)
-
     }
 
     const uid = store.getState().auth.uid
