@@ -137,6 +137,10 @@ const lockTree = async (req, res) => {
             res.status(400).json({msg: "You don't own this tree !"})
             return
         }
+        if(userLeaves < lockedPrice){
+            res.status(400).json({msg: "You don't have the money to lock this tree !"})
+            return
+        }
 
         await UserModel.findOneAndUpdate({userName: userName}, {leaves: userLeaves - lockedPrice})
         const tree = await TreeModel.findOneAndUpdate({_id: id}, {locked: true})

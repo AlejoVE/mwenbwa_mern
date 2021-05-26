@@ -205,6 +205,13 @@ const lockTree = async (req, res) => {
       return;
     }
 
+    if (userLeaves < lockedPrice) {
+      res.status(400).json({
+        msg: "You don't have the money to lock this tree !"
+      });
+      return;
+    }
+
     await UserModel.findOneAndUpdate({
       userName: userName
     }, {
