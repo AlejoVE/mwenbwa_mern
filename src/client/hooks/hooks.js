@@ -5,6 +5,9 @@ import {updateDashboardData} from '../actions/authActions'
 import {useDispatch} from 'react-redux'
 import {calculatePrice} from '../helpers/calculatePrice'
 import {calculateLockedPrice} from '../helpers/calculateLockedPrice'
+import {Howl} from 'howler';
+import leafSong from '../assets/sounds/leaf_song.mp3'
+import lockSong from '../assets/sounds/lock.mp3'
 
 
 
@@ -62,10 +65,15 @@ export const useFetchTree = () => {
 }
 
 export const useBuyTree = () =>{
-    const dispatch = useDispatch()
-    return async (activeTree, userName, userTrees, leaves, price, treesInRadius, uid) => {
 
-        const {_id} = activeTree   
+    const dispatch = useDispatch()
+    const sound = new Howl({
+        src: [leafSong],
+        volume: 0.5
+    });
+
+    return async (activeTree, userName, userTrees, leaves, price, treesInRadius, uid) => {
+        const {_id} = activeTree
 
         try{
             const res = await fetch(`${process.env.REACT_APP_API_URL}trees/buy/${_id}`,{
@@ -78,10 +86,9 @@ export const useBuyTree = () =>{
             const data = await res.json()
 
             if(data.ok){
+                sound.play();
                 const {nom_complet, name, price: updatedPrice, link, comments, history, locked, _id, value} = data.tree
-
                 const lockPrice = await calculateLockedPrice(treesInRadius, activeTree, uid)
-                
                 dispatch(setActiveTree({nom_complet, owner: userName, name, price: updatedPrice, link, comments, history, locked, _id, treesInRadius, value, lockPrice}))
                 dispatch(updateDashboardData({leaves: leaves-price, trees: userTrees + 1}))
             }
@@ -93,6 +100,10 @@ export const useBuyTree = () =>{
 
 export const useLockTree = () => {
     const dispatch = useDispatch()
+    const sound = new Howl({
+        src: [lockSong],
+        volume: 0.5
+    });
     return async (activeTree, userName, leaves, userTrees) =>{
 
         const {_id, lockPrice} = activeTree
@@ -110,6 +121,7 @@ export const useLockTree = () => {
             const data = await res.json()
             
             if(data.ok){
+                sound.play();
                 const {nom_complet, name,  link, comments, history, _id} = data.tree
                 dispatch(setActiveTree({nom_complet, owner: userName, name,  link, comments, history, locked: true, _id}))
                 dispatch(updateDashboardData({leaves: leaves - lockPrice, trees: userTrees}))

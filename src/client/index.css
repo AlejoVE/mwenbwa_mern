@@ -109,7 +109,8 @@ button {
 }
 
 .user-logo,
-.logout-logo {
+.logout-logo,
+.sound-logo {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,12 +120,17 @@ button {
     border-radius: 4px;
     margin: 0 5px;
 }
-
 .user-logo > img,
 .logout-logo > img {
     display: inline-block;
     width: 20px;
     height: 20px;
+}
+
+.sound-logo >img {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
 }
 
 .topbar-info {

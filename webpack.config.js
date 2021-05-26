@@ -59,7 +59,7 @@ module.exports = env => {
         module: {
             rules: [
                 {
-                    test: /\.(png|jpg|gif|svg)$/,
+                    test: /\.(png|jpg|gif|svg|mp3)$/,
                     use: [
                         {
                             loader: "file-loader",
