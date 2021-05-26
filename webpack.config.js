@@ -12,6 +12,8 @@ module.exports = env => {
           }),
         new webpack.EnvironmentPlugin({
             NODE_ENV: env === "dev" ? "development" : "production",
+            REACT_APP_API_URL: JSON.stringify(process.env.REACT_APP_API_URL),
+            
             VERSION: require("./package.json").version,
             BUILD_TIME: Date.now(),
         }),
