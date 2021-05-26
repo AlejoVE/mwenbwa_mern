@@ -590,13 +590,13 @@ h6{
 }
 
 .wikilink > a {
-    color: var(--blue-hover);
+    color: #fff;
     transition: var(--transition);
 }
 
 .wikilink > a:hover {
-    color: #00aeff;
-    text-decoration: none;
+    color: #fff;
+    text-decoration: underline;
 }
 
 .container-links > ul {

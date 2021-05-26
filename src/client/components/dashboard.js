@@ -55,7 +55,7 @@ const Dashboard = () => {
                     <h3>{state.auth.userName}</h3>
                 </div>
                 <div className={"topbar-logo"}>
-                    <a href="#" className={"user-logo"} title={"Account"}>
+                    <a href="#" className={"user-logo"} title={"Account"} onClick={closeModal}>
                         <img src={usersvg} alt={"logo"} />
                     </a>
                     <a href="#" className={"logout-logo"} title={"Logout"} onClick={modalLogout}>
