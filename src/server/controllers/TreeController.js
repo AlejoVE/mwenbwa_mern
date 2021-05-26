@@ -144,7 +144,7 @@ const lockTree = async (req, res) => {
         res.status(200).json({msg: "The tree is locked.", ok:true, tree})
 
     } catch (err) {
-        res.status(400).json({msg: err})
+        console.log(err)
     }
 }
 

@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    minLength: 3,
+    minLength: 4,
     maxLength: 10,
     lowercase: true,
     trim: true
@@ -42,6 +42,9 @@ const userSchema = new mongoose.Schema({
   },
   trees: {
     type: Array
+  },
+  treesCount: {
+    type: Number
   }
 }, {
   timestamps: true

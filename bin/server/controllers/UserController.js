@@ -12,6 +12,8 @@ const UserModel = require('../models/UserModel');
 
 const TreeModel = require('../models/TreeSchema');
 
+const GamelogModel = require('../models/GamelogSchema');
+
 const {
   generateJWT
 } = require('../helpers/jwt');
@@ -31,7 +33,7 @@ const signup = async (req, res) => {
 
     if (!isExist.ok) {
       res.status(400).json({
-        msg: isExist.msg
+        err: isExist.err
       });
       return;
     }
@@ -41,12 +43,14 @@ const signup = async (req, res) => {
     }).limit(3);
     const [treeOne, treeTwo, treeThree] = trees;
     const treesArray = new Array(treeOne._id, treeTwo._id, treeThree._id);
+    const treesCount = treesArray.length;
     const leaves = await (0, _getLeaves.getLeaves)();
     const user = await UserModel.create({
       userName,
       email,
       password,
       trees: treesArray,
+      treesCount,
       color,
       leaves
     });
@@ -61,13 +65,16 @@ const signup = async (req, res) => {
           name: randomName
         }]
       };
-      const res = await TreeModel.updateOne({
+      await TreeModel.updateOne({
         _id: tree._id
       }, {
         $set: userObject
       });
     }
 
+    await GamelogModel.create({
+      actions: `Welcome ${userName} 👋`
+    });
     const token = await generateJWT(user._id);
     res.status(201).json({
       token,
@@ -76,8 +83,8 @@ const signup = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(400).json({
-      err: err.message
+    res.status(500).json({
+      err: "Server error, Try again later"
     });
   }
 };
@@ -95,7 +102,7 @@ const login = async (req, res) => {
 
     if (!user) {
       res.status(404).json({
-        err: "User not found"
+        err: "Wrong username or password."
       });
       return;
     }
@@ -104,23 +111,27 @@ const login = async (req, res) => {
 
     if (!validPassword) {
       res.status(400).json({
-        err: "Bad password"
+        err: "Wrong username or password."
       });
       return;
     }
 
+    await GamelogModel.create({
+      actions: `${userName} is connected 😎`
+    });
     const token = await generateJWT(user._id, userName);
     res.status(200).json({
       token,
       userName,
       uid: user._id,
       leaves: user.leaves,
-      trees: user.trees.length
+      trees: user.trees.length,
+      color: user.color
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({
-      err: err.message
+      err: "Server error, Try again later"
     });
   }
 };
@@ -136,6 +147,9 @@ const generateToken = async (req, res) => {
       leaves,
       trees
     } = await (0, _getUser.getUser)(uid);
+    await GamelogModel.create({
+      actions: `${username} is connected 😎`
+    });
     res.status(200).json({
       token,
       uid,
@@ -145,13 +159,52 @@ const generateToken = async (req, res) => {
       trees: trees.length
     });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({
+      err: "Server error, Try again later"
+    });
+  }
+};
+
+const getLeaderboard = async (req, res) => {
+  try {
+    const users = await UserModel.find().select({
+      userName: 1,
+      treesCount: 1
+    }).sort({
+      treesCount: -1
+    }).limit(10);
+    res.status(200).json({
+      users: users
+    });
+  } catch (err) {
+    res.status(500).json({
+      err: "Server error, Try again later"
+    });
+  }
+};
+
+const getActions = async (req, res) => {
+  try {
+    const actions = await GamelogModel.find().select({
+      actions: 1
+    }).sort({
+      createdAt: -1
+    }).limit(10);
+    res.status(200).json({
+      actions
+    });
+  } catch (err) {
+    res.status(500).json({
+      err: "Server error, Try again later"
+    });
   }
 };
 
 module.exports = {
   signup,
   login,
-  generateToken
+  generateToken,
+  getLeaderboard,
+  getActions
 };
 //# sourceMappingURL=UserController.js.map

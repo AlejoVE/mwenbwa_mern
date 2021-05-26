@@ -17,7 +17,7 @@ router.get('/treesPos', getTreesPositions);
 router.get('/:id', getOneTree);
 router.put('/buy/:id', buyTree);
 router.put('/lock/:id', _validateToken.validateJWT, lockTree);
-router.post('/:id/comments', addComment);
+router.post('/:id/comments', _validateToken.validateJWT, addComment);
 router.get('/', getAllTrees);
 module.exports = router;
 //# sourceMappingURL=TreesRoutes.js.map

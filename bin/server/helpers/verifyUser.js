@@ -15,21 +15,21 @@ const verifyUser = async (userName, email) => {
   if (user.length === 1 && mail.length === 1) {
     return {
       ok: false,
-      msg: "This username and email already exist."
+      err: "This username and email already exist."
     };
   }
 
   if (user.length === 1) {
     return {
       ok: false,
-      msg: "This username already exist."
+      err: "This username already exist."
     };
   }
 
   if (mail.length === 1) {
     return {
       ok: false,
-      msg: "This email already exist."
+      err: "This email already exist."
     };
   }
 

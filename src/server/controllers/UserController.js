@@ -44,7 +44,7 @@ const signup = async (req, res) => {
                 owner: user._id,
                 history: [...tree.history, { username: user.userName, date: new Date().toDateString(), name: randomName}]
             }
-            const res = await TreeModel.updateOne({ _id:tree._id}, { $set: userObject})
+            await TreeModel.updateOne({ _id:tree._id}, { $set: userObject})
         }
         await GamelogModel.create({actions: `Welcome ${userName} 👋`})
         const token = await generateJWT(user._id)
@@ -54,7 +54,7 @@ const signup = async (req, res) => {
         
     } catch(err){
         console.log(err)
-        res.status(400).json({err:err.message});
+        res.status(500).json({err: "Server error, Try again later"});
     }
 }
 
@@ -90,7 +90,7 @@ const login = async (req, res) =>{
 
     } catch (err) {
         console.log(err)
-        res.status(500).json({err: err.message})
+        res.status(500).json({err: "Server error, Try again later"})
     }   
 }
 
@@ -105,7 +105,7 @@ const generateToken = async (req, res) => {
             res.status(200).json({token, uid, username, color, leaves, trees: trees.length})
 
     } catch(err){
-        res.status(400).json({err: err})
+        res.status(500).json({err: "Server error, Try again later"})
     }
 }
 
@@ -115,7 +115,7 @@ const getLeaderboard = async (req, res) => {
         const users = await UserModel.find().select({userName: 1, treesCount: 1}).sort({treesCount: -1}).limit(10)
         res.status(200).json({users: users})
     } catch (err) {
-        res.status(400).json({err: err})
+        res.status(500).json({err: "Server error, Try again later"})
     }
 }
 
@@ -125,7 +125,7 @@ const getActions = async (req, res) => {
         const actions = await GamelogModel.find().select({actions: 1}).sort({createdAt: -1}).limit(10)
         res.status(200).json({actions})
     } catch (err) {
-        res.status(400).json({err: err})
+        res.status(500).json({err: "Server error, Try again later"})
     }
 }
 

@@ -18,6 +18,8 @@ const UserModel = require('../models/UserModel');
 
 const ObjectId = require('mongodb').ObjectId;
 
+const GamelogModel = require('../models/GamelogSchema');
+
 const getAllTrees = async (req, res) => {
   try {
     const trees = await TreeModel.find();
@@ -72,6 +74,7 @@ const buyTree = async (req, res) => {
       userTrees
     } = await (0, _getTreesUser.getTreesUser)(userName, id);
     const history = await (0, _getHistory.getHistory)(id);
+    const treesCount = userTrees.length;
 
     if (isInclude) {
       res.status(400).json({
@@ -86,11 +89,12 @@ const buyTree = async (req, res) => {
       }
 
       userTrees.push(ObjectId(id));
-      const user = await UserModel.findOneAndUpdate({
+      await UserModel.findOneAndUpdate({
         userName: userName
       }, {
         trees: userTrees,
-        leaves: userLeaves - price
+        leaves: userLeaves - price,
+        treesCount: treesCount + 1
       });
       const tree = await TreeModel.findOneAndUpdate({
         _id: id
@@ -104,6 +108,9 @@ const buyTree = async (req, res) => {
         }]
       }, {
         new: true
+      });
+      await GamelogModel.create({
+        actions: `${userName} bought a tree 🤑`
       });
       res.status(200).json({
         message: "You have a new tree",
@@ -126,8 +133,8 @@ const buyTree = async (req, res) => {
 
 const addComment = async (req, res) => {
   const id = req.params.id;
+  const userName = req.username;
   const message = req.body.message;
-  const userName = req.body.userName;
 
   try {
     const {
@@ -143,7 +150,8 @@ const addComment = async (req, res) => {
         comments: [...comments, newMessage]
       });
       res.status(200).json({
-        message: "Comment added."
+        message: "Comment added.",
+        ok: true
       });
       return;
     }
@@ -181,9 +189,13 @@ const getTreesPositions = async (req, res) => {
 const lockTree = async (req, res) => {
   const id = req.params.id;
   const userName = req.username;
+  const lockedPrice = req.body.price;
   const {
     isInclude
   } = await (0, _getTreesUser.getTreesUser)(userName, id);
+  const {
+    userLeaves
+  } = await (0, _getUserLeaves.getUserLeaves)(userName);
 
   try {
     if (!isInclude) {
@@ -193,18 +205,26 @@ const lockTree = async (req, res) => {
       return;
     }
 
-    await TreeModel.findOneAndUpdate({
+    await UserModel.findOneAndUpdate({
+      userName: userName
+    }, {
+      leaves: userLeaves - lockedPrice
+    });
+    const tree = await TreeModel.findOneAndUpdate({
       _id: id
     }, {
       locked: true
     });
+    await GamelogModel.create({
+      actions: `${userName} locked a tree 🔒`
+    });
     res.status(200).json({
-      msg: "The tree is locked."
+      msg: "The tree is locked.",
+      ok: true,
+      tree
     });
   } catch (err) {
-    res.status(400).json({
-      msg: err
-    });
+    console.log(err);
   }
 };
 
