@@ -179,10 +179,9 @@ export const useSetColor = () => {
                 body: JSON.stringify({uid, color})
             })
             const data = await res.json()
-            console.log(data)
             if(data.ok){
                 
-                dispatch(setColor({color: color}))
+                dispatch(setColor({color}))
             }
         } catch(err){
             console.log(err)
