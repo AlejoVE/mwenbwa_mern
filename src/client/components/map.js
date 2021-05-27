@@ -7,6 +7,9 @@ import Card from './card'
 import { useFetchTree } from '../hooks/hooks'
 import { store } from '../store/store'
 import { treesPos } from '../assets/getTreesPos'
+import {useDispatch} from 'react-redux'
+import {startLoading} from "../actions/treesActions"
+
 
 //SVG
 import tree1 from '../assets/svg/tree-svgrepo-com.svg'
@@ -22,8 +25,10 @@ import lockSvg from '../assets/svg/lock-svgrepo-com.svg'
 const ViewMap = () => {
     const treesPositions = treesPos
     const getOneTree = useFetchTree()
+    const dispatch = useDispatch()
 
     const handleClick = (id) => {
+        dispatch(startLoading())
         getOneTree(id, uid)
     }
 
@@ -47,11 +52,6 @@ const ViewMap = () => {
             root.style.setProperty('--color-theme', "#a29bfe93");
             root.style.setProperty('--color-theme-hover', "#a29bfec2");
             root.style.setProperty('--color-theme-marker', "radial-gradient(#a29bfee1, #a29bfe77)");
-            break;
-        case "turquoise":
-            root.style.setProperty('--color-theme', "#1abc9ca4");
-            root.style.setProperty('--color-theme-hover', "#1abc9ce8");
-            root.style.setProperty('--color-theme-marker', "radial-gradient(#1abc9cc0, #1abc9c44)");
             break;
         default:
             break;
@@ -80,7 +80,6 @@ const ViewMap = () => {
         corner2 = L.latLng(50.58101346654444, 5.845878424682091),
         bounds = L.latLngBounds(corner1, corner2);
 
-    
     return (
         <>
             <MapContainer preferCanvas={true} maxBounds={bounds} center={[50.62243069591208, 5.587268755810446]} zoom={18} minZoom={12}>

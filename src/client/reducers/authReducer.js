@@ -16,6 +16,11 @@ export const authReducer = (state = initialState, action) => {
                 leaves: action.payload.leaves,
                 trees: action.payload.trees
             }   
+        case type.setColor:
+            return {
+                ...state,
+                color: action.payload.color,
+            }   
         default:
             return {...state};
     }

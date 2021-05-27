@@ -12,6 +12,7 @@ export const type = {
     cleanActiveTree: "[trees] cleanActiveTree",
     updateDashboardData: "[auth] udpateDashboardData",
     setError: "[errors] setError",
-    cleanError: "[errors] cleanError" 
+    cleanError: "[errors] cleanError",
+    setColor: "[auth] setColor"
     
 }

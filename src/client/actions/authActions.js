@@ -16,6 +16,17 @@ export const cleanError = () =>({
     type: type.cleanError
 })
 
+export const updateDashboardData = (data) => ({
+    type: type.updateDashboardData,
+    payload: data
+})
+
+export const setColor = (color) =>({
+    type: type.setColor,
+    payload: color
+})
+
+
 export const startLogin = (userName, password) => {
     return async (dispatch) => {
         
@@ -88,7 +99,3 @@ export const startChecking = () => {
     }
 }
 
-export const updateDashboardData = (data) => ({
-    type: type.updateDashboardData,
-    payload: data
-})

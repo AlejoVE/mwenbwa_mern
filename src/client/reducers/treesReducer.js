@@ -12,7 +12,7 @@ export const treesReducer = (state = initialState, action) => {
         case type.treesStartLoading:
             return {
                 ...state,
-                isLoading: true,
+                treeIsLoading: true,
             }
         case type.treesFinishLoading:
             return {

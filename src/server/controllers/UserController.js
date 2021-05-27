@@ -130,11 +130,32 @@ const getActions = async (req, res) => {
     }
 }
 
+const editColor = async (req, res) => {
+
+    const {uid, color} = req.body
+
+    
+    try {
+        const user = await UserModel.findByIdAndUpdate(
+            { _id: uid }, 
+            { $set: {color: color} },
+            { new: true }
+        ).select({color: 1})
+
+        res.status(200).json({user, ok:true})
+
+    } catch(err) {
+        console.log(err)
+        res.status(500).json({err: "Server error, Try again later"})
+    }
+}
+
 
 module.exports = {
     signup,
     login,
     generateToken,
     getLeaderboard,
-    getActions
+    getActions,
+    editColor
 }

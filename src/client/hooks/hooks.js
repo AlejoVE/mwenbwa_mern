@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { getTrees} from '../helpers/getTrees'
 import {setTrees, finishLoading, setActiveTree, treeFinishLoading} from "../actions/treesActions"
-import {updateDashboardData} from '../actions/authActions'
+import {updateDashboardData, setColor} from '../actions/authActions'
 import {useDispatch} from 'react-redux'
 import {calculatePrice} from '../helpers/calculatePrice'
 import {calculateLockedPrice} from '../helpers/calculateLockedPrice'
@@ -69,7 +69,7 @@ export const useBuyTree = () =>{
     const dispatch = useDispatch()
     const sound = new Howl({
         src: [leafSong],
-        volume: 0.5
+        volume: 0.1
     });
 
     return async (activeTree, userName, userTrees, leaves, price, treesInRadius, uid) => {
@@ -86,11 +86,12 @@ export const useBuyTree = () =>{
             const data = await res.json()
 
             if(data.ok){
-                sound.play();
                 const {nom_complet, name, price: updatedPrice, link, comments, history, locked, _id, value} = data.tree
                 const lockPrice = await calculateLockedPrice(treesInRadius, activeTree, uid)
                 dispatch(setActiveTree({nom_complet, owner: userName, name, price: updatedPrice, link, comments, history, locked, _id, treesInRadius, value, lockPrice}))
                 dispatch(updateDashboardData({leaves: leaves-price, trees: userTrees + 1}))
+                sound.play();
+
             }
         } catch(err) {
             console.log(err)
@@ -102,7 +103,7 @@ export const useLockTree = () => {
     const dispatch = useDispatch()
     const sound = new Howl({
         src: [lockSong],
-        volume: 0.5
+        volume: 0.1
     });
     return async (activeTree, userName, leaves, userTrees) =>{
 
@@ -121,10 +122,10 @@ export const useLockTree = () => {
             const data = await res.json()
             
             if(data.ok){
-                sound.play();
                 const {nom_complet, name,  link, comments, history, _id} = data.tree
                 dispatch(setActiveTree({nom_complet, owner: userName, name,  link, comments, history, locked: true, _id}))
                 dispatch(updateDashboardData({leaves: leaves - lockPrice, trees: userTrees}))
+                sound.play();
 
             }
         } catch (err) {
@@ -162,5 +163,29 @@ export const useAddComment = () => {
             console.log(err)
         }
 
+    }
+}
+
+export const useSetColor = () => {
+    const dispatch = useDispatch()
+    return async (uid, color) => {
+
+        try{
+            const res = await fetch(`${process.env.REACT_APP_API_URL}users/editcolor`,{
+                method: "PUT",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({uid, color})
+            })
+            const data = await res.json()
+            console.log(data)
+            if(data.ok){
+                
+                dispatch(setColor({color: color}))
+            }
+        } catch(err){
+            console.log(err)
+        }
     }
 }
