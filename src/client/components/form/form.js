@@ -24,7 +24,7 @@ export const Form = () => {
     return (
         <div className={"container-form"}>
             <div className={"overlay"}>
-                <div className={"logo"}></div>
+                <div className={"logo"}><img></img></div>
                 <div className={"container-inputs"}>
                     <div className={"inputBox"}>
                         <div className={"container-tabs"}>
