@@ -56,7 +56,9 @@ export const useBuyTree = () =>{
         src: [leafSong],
         volume: 0.1
     });
-
+    
+    const token = localStorage.getItem("authToken");
+    
     return async (activeTree, userName, userTrees, leaves, price, treesInRadius, uid) => {
         const {_id} = activeTree
 
@@ -64,7 +66,8 @@ export const useBuyTree = () =>{
             const res = await fetch(`${process.env.REACT_APP_API_URL}trees/buy/${_id}`,{
                 method: "PUT",
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'x-token': token
                 },
                 body: JSON.stringify({userName, price})
             })
