@@ -58,7 +58,7 @@ export const useBuyTree = () =>{
     });
     
     const token = localStorage.getItem("authToken");
-    
+
     return async (activeTree, userName, userTrees, leaves, price, treesInRadius, uid) => {
         const {_id} = activeTree
 
@@ -69,7 +69,7 @@ export const useBuyTree = () =>{
                     'Content-Type': 'application/json',
                     'x-token': token
                 },
-                body: JSON.stringify({userName, price})
+                body: JSON.stringify({price})
             })
             const data = await res.json()
 
