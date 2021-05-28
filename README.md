@@ -39,7 +39,6 @@ Mwenbwa is a  WebApp that consist in an online IDLE Game, based in Liège. We de
 - HTML5
 - CSS
 - React
-- Bootstrap
 - NodeJS
 - Express
 - JWT
