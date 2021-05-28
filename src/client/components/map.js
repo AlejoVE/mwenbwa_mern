@@ -34,10 +34,6 @@ const ViewMap = () => {
     const userColor = store.getState().auth.color
     const root = document.querySelector(':root');
 
-    const uid = store.getState().auth.uid;
-    const userColor = store.getState().auth.color;
-    const root = document.querySelector(":root");
-
     switch (userColor) {
         case "blue":
             root.style.setProperty("--color-theme", "#00aaff93");
