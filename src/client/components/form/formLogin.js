@@ -17,6 +17,7 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        console.log('e')
         dispatch(startLogin(inputs.username, inputs.password))
         
     }

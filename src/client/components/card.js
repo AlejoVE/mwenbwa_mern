@@ -4,7 +4,6 @@ import {useBuyTree, useLockTree, useAddComment} from '../hooks/hooks'
 import moment from 'moment'
 import usersvg from '../assets/svg/user.svg';
 import treesvg from '../assets/svg/treename.svg'
-import Loader from './loader'
 
 
 const Card = () => {
@@ -22,7 +21,11 @@ const Card = () => {
     let ownerUserName = ""
     
     if(treeIsLoading) {
-        return <Loader />
+        return (
+            <div className={"loader card-loader"}>
+                <p>Loading ...</p>
+            </div>
+        )
     }
     
 

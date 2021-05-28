@@ -9,15 +9,10 @@ export const treesReducer = (state = initialState, action) => {
                 ...state,
                 trees: [...action.payload]
             }
-        case type.treesStartLoading:
+        case type.treeStartLoading:
             return {
                 ...state,
                 treeIsLoading: true,
-            }
-        case type.treesFinishLoading:
-            return {
-                ...state,
-                isLoading: false,
             }
         case type.setActiveTree:
             return {

@@ -11,6 +11,7 @@ export const Form = () => {
     const [isLog, setIsLog] = useState(true);
     const [isRules, setIsRules] = useState(true);
     const dispatch = useDispatch()
+
     const handleButton = (e) => {
         setIsLog(e);
         dispatch(cleanError())

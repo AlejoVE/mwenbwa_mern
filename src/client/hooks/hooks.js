@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { getTrees} from '../helpers/getTrees'
-import {setTrees, finishLoading, setActiveTree, treeFinishLoading} from "../actions/treesActions"
+import {setActiveTree, treeFinishLoading} from "../actions/treesActions"
 import {updateDashboardData, setColor} from '../actions/authActions'
 import {useDispatch} from 'react-redux'
 import {calculatePrice} from '../helpers/calculatePrice'
@@ -22,20 +21,6 @@ export const useForm = (initialstate) => {
         handleChange,
         inputs
     };
-}
-
-export const useGetTreesPos = () => {
-    const dispatch = useDispatch()
-    return async () => {
-        try{
-            const fetchTrees = await getTrees()
-            dispatch(setTrees(fetchTrees))
-            dispatch(finishLoading())
-
-        } catch(err){
-            console.log(err)
-        }
-    } 
 }
 
 export const useFetchTree = () => {

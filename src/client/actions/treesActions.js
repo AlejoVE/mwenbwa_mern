@@ -6,11 +6,7 @@ export const setTrees = (trees) => ({
 })
 
 export const startLoading = () => ({
-    type: type.treesStartLoading
-})
-
-export const finishLoading = () => ({
-    type: type.treesFinishLoading
+    type: type.treeStartLoading
 })
 
 export const setActiveTree = (tree) => ({

@@ -633,6 +633,14 @@ h6{
     display: flex;
     justify-content: center;
     align-items: center;
+    background: url('./assets/img/wp5758326-anime-trees-4k-wallpapers.jpg');
+
+}
+
+.loader-page>.overlay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* FORM */
@@ -650,14 +658,6 @@ h6{
     font-family: "Roboto", sans-serif;
     font-size: 14px;
 }
-
-
-
-/* .loader>.overlay{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-} */
 
 .overlay {
     background-color: #34495e60;
@@ -1072,6 +1072,18 @@ h3 {
 
 .span-red{
     font-weight: bold;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus{
+    transition: 0s;
 }
 
 

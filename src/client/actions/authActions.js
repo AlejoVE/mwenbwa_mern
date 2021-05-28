@@ -79,7 +79,8 @@ export const startRegister = (username, password, email, color) =>{
 
 export const startChecking = () => {
     return async (dispatch) => {
-
+        
+        dispatch(setChecking({isChecking: true}))
         const token = localStorage.getItem("authToken")
         
         if(token){
@@ -92,10 +93,19 @@ export const startChecking = () => {
             }).then(({data}) => {
                 const {color, token, uid, username, trees, leaves} = data
                 dispatch(login({color, token, uid, userName: username, trees, leaves}))
+                dispatch(setChecking({isChecking: false}))
             }).catch(err => {
                 console.log(err)
+                dispatch(setChecking({isChecking: false}))
             })
+        } else {
+            dispatch(setChecking({isChecking: false}))
         }
     }
 }
+
+export const setChecking = (isChecking) => ({
+    type: type.authSetChecking,
+    payload: isChecking
+})
 
