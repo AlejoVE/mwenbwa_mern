@@ -2,7 +2,7 @@
 
 Mwenbwa is a WebApp that consist in an online IDLE Game, based in Liège. We developed this app as part of the web development training at [BeCode - Liège](https://becode.org/learn/junior-web-developer/).
 
--       [Frontend](https://github.com/Maxime-Bott/mwenbwa_mern)
+-   [Front end](https://github.com/Maxime-Bott/mwenbwa_mern)
 
 # **Backend architecture**
 
@@ -32,7 +32,7 @@ REACT_APP_API_URL=$http://localhost:12345/
 
 ---
 
-#### **Add an user**
+#### **Register an user**
 
 **`POST /api/users//signup`**
 
@@ -92,6 +92,128 @@ A json object for the logged in account with `userName`, `token`, `uid`, `leaves
 
 }
 ```
+
+#### **Leaderboard**
+
+**`GET /api/users/leaderboard`**
+
+##### \***\*Response `200`\*\***
+
+A json object with an array of  10  `users`, each one with `_id`, `userName` and `treesCount`.
+
+```
+{  
+  "users": [
+    {
+      "_id": "60af497de73f460004738a7e",
+      "userName": "_-nick-_",
+      "treesCount": 249
+    },
+    {
+      "_id": "60ae0d16c3d2f719c4624e65",
+      "userName": "maxime",
+      "treesCount": 147
+    },
+    {
+      "_id": "60af4b5ee73f460004738aaa",
+      "userName": "nana",
+      "treesCount": 115
+    },
+    {
+      "_id": "60af46bbe73f460004738a47",
+      "userName": "jimmy",
+      "treesCount": 107
+    },
+    {
+      "_id": "60ae6ddaa3e9450004e1cfb7",
+      "userName": "alejo",
+      "treesCount": 56
+    },
+    {
+      "_id": "60ae8f84d282ea00043dfce7",
+      "userName": "fickdich",
+      "treesCount": 53
+    },
+    {
+      "_id": "60af4765e73f460004738a5f",
+      "userName": "josue",
+      "treesCount": 36
+    },
+    {
+      "_id": "60ae9223d282ea00043dfd08",
+      "userName": "charlotte",
+      "treesCount": 21
+    },
+    {
+      "_id": "60ae7e7a3daf6700049e6f7d",
+      "userName": "roxell",
+      "treesCount": 18
+    },
+    {
+      "_id": "60af4935e73f460004738a75",
+      "userName": "tanya",
+      "treesCount": 12
+    }
+  ]
+}
+```
+
+#### **Gamelog**
+
+**`GET /api/users/gamelog`**
+
+##### \***\*Response `200`\*\***
+
+A json object with an array of  10  `actions`, each one with `_id` and `actions`.
+
+```
+{
+  "actions": [
+    {
+      "_id": "60b0c1d6c691652c6d26049a",
+      "actions": "maxime is connected 😎"
+    },
+    {
+      "_id": "60b0c19284f4da0004e45bcf",
+      "actions": "maxime bought a tree 🤑"
+    },
+    {
+      "_id": "60b0c18084f4da0004e45bce",
+      "actions": "maxime bought a tree 🤑"
+    },
+    {
+      "_id": "60b0c17c84f4da0004e45bcd",
+      "actions": "maxime bought a tree 🤑"
+    },
+    {
+      "_id": "60b0c17b84f4da0004e45bcc",
+      "actions": "maxime bought a tree 🤑"
+    },
+    {
+      "_id": "60b0c17884f4da0004e45bcb",
+      "actions": "maxime bought a tree 🤑"
+    },
+    {
+      "_id": "60b0c17584f4da0004e45bca",
+      "actions": "maxime bought a tree 🤑"
+    },
+    {
+      "_id": "60b0c17384f4da0004e45bc9",
+      "actions": "maxime bought a tree 🤑"
+    },
+    {
+      "_id": "60b0c17184f4da0004e45bc8",
+      "actions": "maxime bought a tree 🤑"
+    },
+    {
+      "_id": "60b0c16e84f4da0004e45bc7",
+      "actions": "maxime bought a tree 🤑"
+    }
+  ]
+}
+```
+
+
 
 <!-- #### **Update an user**
 
