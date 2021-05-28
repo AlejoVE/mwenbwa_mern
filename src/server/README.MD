@@ -76,7 +76,6 @@ A json object for the account to login with either **`userName`** and **`passwor
   "password": "password"
 }
 ```
-
 ##### \***\*Response `200`\*\***
 
 A json object for the logged in account with `userName`, `token`, `uid`, `leaves`, `trees` and `color`.
@@ -92,7 +91,6 @@ A json object for the logged in account with `userName`, `token`, `uid`, `leaves
 
 }
 ```
-
 #### **Leaderboard**
 
 **`GET /api/users/leaderboard`**
@@ -212,144 +210,154 @@ A json object with an array of  10  `actions`, each one with `_id` and `actions`
   ]
 }
 ```
+#### **Get a tree**
 
-
-
-<!-- #### **Update an user**
-
-**`PUT /api/users/:id`**
-
-##### **Request**
-
-A json object for the user to update with any of `username`, `email`, `password`, `phone`, `role`.
-
-```
-{
-  "phone": "+xx xxx xx xx xx",
-  "role": "teacher"
-}
-```
+**`GET /api/trees/:id`**
 
 ##### **Response `200`**
 
-A json object for the updated user with `msg`.
+A json object with the details of `tree`, with `history`, `comments`, `_id`,`hauteur_totale`, `nom_complet`, `diametre_cime`, `link`, `value`, `owner`, `name`, 
+`locked`, `price`,`lat`, `lon` and `treesInRadius`.
 
 ```
 {
-  "msg": "User updated successfully"
-}
-``` -->
-
-<!-- #### For users with role of type `admin`: Get a list of all the users -->
-
-<!-- TODO: m leaderboard -gamelog and trees endpoints documentation  -->
-
-#### **Update a classroom**
-
-**`PUT /api/classrooms/:id`**
-
-##### **Request**
-
-A json object for the classroom to update with any of `title`, `description`, `teachers_usernames`, `students_usernames` and `msgs`.
-
-```
-{
-  "title": "Class 9",
-  "description": "My new description"
-}
-```
-
-##### **Response `200`**
-
-A json object for the updated classroom with `msg`.
-
-```
-{
- "msg": "Classroom updated successfully"
-}
-```
-
-#### **Delete a classroom**
-
-**`DELETE /api/classrooms/:id`**
-
-##### **Response `200`**
-
-A json object for the deleted meeting with `msg`.
-
-```
-{
-  "msg": "Classroom deleted successfully"
-}
-```
-
-#### **For users with role `admin`: Get a list of all the classrooms**
-
-**`GET /api/classrooms/`**
-
-##### **Response `200`**
-
-A json object with and an array of `classrooms`.
-
-```
-{
-  "classrooms": [
-          {
-          "id": "5f9ed5ce47c42738d03d178d",
-          "title": "Class 8",
-          "description": "My class 8",
-        },
-        {
-          "id": "5f9ed5ce47c4558d03d178d",
-          "title": "Class 10",
-          "description": "My new description",
-
-        },
-        {
-          "id": "5f9ed5ce47c42738d03d178d",
-          "title": "Class 9",
-          "description": "My new description"
-        }
-      ]
+  "tree": {
+    "history": [
+      {
+        "userName": "alejo",
+        "date": "2021-05-28T13:19:32.063Z"
+      }
+    ],
+    "comments": [],
+    "_id": "60ae0c88efd0a43ef0b09aa2",
+    "hauteur_totale": 7.5,
+    "nom_complet": "Sophora japonica",
+    "diametre_cime": 4,
+    "link": "https://en.wikipedia.org/wiki/Sophora_japonica",
+    "value": 30,
+    "owner": {
+      "_id": "60ae6ddaa3e9450004e1cfb7",
+      "userName": "alejo"
+    },
+    "name": "Ciredsil",
+    "locked": false,
+    "price": 30,
+    "lat": 50.62235,
+    "lon": 5.584901
+  },
+  "treesInRadius": [...trees in 100m radius]
 }
 
 ```
 
-#### **For users with role `admin`: Get details of a classroom**
 
-**`GET /api/classrooms/:id`**
-
-##### **Response `200`**
-
-A json object with the details of the classroom with `title`, `description`, `teachers_ids`, `students_ids` and`messages`.
-
-```
-{
-  "classroom":
-    {
-      "title": "Class 8",
-      "description": "My class 8",
-      "teachers_ids": ["teacher1", "teacher2"],
-      "students_ids": ["fisherAi", "BoydH", "jaoBel"],
-      "messages": [
-        {
-          title: "first msg",
-          description: "This is the fist msg for this class",
-          author_username: "teacher1"
-        }
-      ],
-    }
-}
-```
 #### **Buy a tree**
 
 **`PUT /api/trees/buy/:id`**
 
-A json object with  `price` and `userName`.
+A json object with  `price`.
 
 ```
 {
   "price": 32,
-  "userName": "alejo"
 }
 ```
+
+##### **Response `200`**
+
+A json object with `message`, `ok` and the details of the `tree`.
+
+```
+{
+  "message": "You have a new tree",
+  "ok": true,
+  "tree": {
+    "history": [
+      {
+        "userName": "alejo",
+        "date": "2021-05-28T13:19:32.063Z"
+      }
+    ],
+    "comments": [],
+    "_id": "60ae0c88efd0a43ef0b09aa2",
+    "hauteur_totale": 7.5,
+    "nom_complet": "Sophora japonica",
+    "diametre_cime": 4,
+    "link": "https://en.wikipedia.org/wiki/Sophora_japonica",
+    "value": 30,
+    "owner": "60ae6ddaa3e9450004e1cfb7",
+    "name": "Ciredsil",
+    "locked": false,
+    "price": 30,
+    "lat": 50.62235,
+    "lon": 5.584901
+  }
+}
+```
+#### **Lock a tree**
+
+**`PUT /api/trees/lock/:id`**
+
+A json object with  `price`.
+
+```
+{
+  "price": 323,
+}
+```
+##### **Response `200`**
+
+A json object with `msg`, `ok` and the details of the `tree`.
+
+```
+{
+  "msg": "The tree is locked.",
+  "ok": true,
+  "tree": {
+    "history": [
+      {
+        "userName": "alejo",
+        "date": "2021-05-28T13:19:32.063Z"
+      }
+    ],
+    "comments": [],
+    "_id": "60ae0c88efd0a43ef0b09aa2",
+    "hauteur_totale": 7.5,
+    "nom_complet": "Sophora japonica",
+    "diametre_cime": 4,
+    "link": "https://en.wikipedia.org/wiki/Sophora_japonica",
+    "value": 30,
+    "owner": "60ae6ddaa3e9450004e1cfb7",
+    "name": "Ciredsil",
+    "locked": true,
+    "price": 30,
+    "lat": 50.62235,
+    "lon": 5.584901
+  }
+}
+```
+
+#### **Add comment to tree**
+
+**`POST /api/trees/:id/comments`**
+
+A json object with `message`.
+
+```
+{
+  "message": "this is my comment"
+}
+```
+
+##### **Response `200`**
+
+A json object with `message` and `ok`.
+
+```
+{
+  "message": "Comment added.",
+  "ok" true
+}
+
+```
+
