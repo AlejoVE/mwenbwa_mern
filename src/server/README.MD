@@ -341,3 +341,15 @@ A json object with the details of the classroom with `title`, `description`, `te
     }
 }
 ```
+#### **Buy a tree**
+
+**`PUT /api/trees/buy/:id`**
+
+A json object with  `price` and `userName`.
+
+```
+{
+  "price": 32,
+  "userName": "alejo"
+}
+```
