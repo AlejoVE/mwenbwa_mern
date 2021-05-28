@@ -89,23 +89,24 @@ const ViewMap = () => {
                     attribution={'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'}
                 />
                 <MarkerClusterGroup chunkedLoading={true} spiderfyOnMaxZoom={false} disableClusteringAtZoom={18}>
-                    {treesPositions.map(tree => (
-                        <Marker
-                            position={tree.loc}
-                            key={tree.id}
-                            id={tree.id}
-                            icon={treeIcon(tree.locked)}
-                            eventHandlers={{
-                                click: (e) => {
-                                    handleClick(e.target.options.id)},
-                            }}
-                        >
-                            <Popup>
-                                <Card />
-                            </Popup>
-                        </Marker>
-                    ))
-                    }
+                        {treesPositions.map(tree => {
+                            return (
+                                <Marker
+                                    position={tree.loc}
+                                    key={tree.id}
+                                    id={tree.id}
+                                    icon={treeIcon(tree.locked)}
+                                    eventHandlers={{
+                                        click: (e) => {
+                                            handleClick(e.target.options.id)},
+                                    }}
+                                >
+                                    <Popup>
+                                        <Card />
+                                    </Popup>
+                                </Marker>
+                            )
+                        })}
                 </MarkerClusterGroup>
             </MapContainer>
         </>
