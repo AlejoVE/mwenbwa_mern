@@ -7,17 +7,23 @@ import {MainScreen} from '../components/mainScreen';
 import {useSelector } from 'react-redux';
 import {startChecking} from '../actions/authActions';
 import {useDispatch} from 'react-redux';
+import Loader from '../components/loader'
+import { store } from '../store/store'
+
 
 export const AppRouter = () => {
 
     const dispatch = useDispatch()
-    const uid = useSelector((state) => state.auth.uid);
-
+    const uid = useSelector((state) => state.auth.uid)
+    const isChecking = useSelector((state) => state.auth.isChecking)
 
     useEffect(() => {
         dispatch(startChecking())
     },[])
 
+    if(isChecking){
+        return <Loader />
+    }
 
     return (
         <Router>

@@ -9,9 +9,11 @@ const {
   login,
   generateToken,
   getLeaderboard,
-  getActions
+  getActions,
+  editColor
 } = require('../controllers/UserController');
 
+router.put('/editcolor', editColor);
 router.post('/signup', signup);
 router.post('/login', login);
 router.get('/renew', _validateToken.validateJWT, generateToken);

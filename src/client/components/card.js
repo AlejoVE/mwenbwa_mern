@@ -19,15 +19,19 @@ const Card = () => {
     const lockTree = useLockTree()
     const addComment = useAddComment()
     let ownerUserName = ""
-
+    
     if(treeIsLoading) {
-        return <p>Loading...</p>
+        return (
+            <div className={"loader card-loader"}>
+                <p>Loading ...</p>
+            </div>
+        )
     }
+    
 
 
 
     const { nom_complet, owner, name, price, link, comments, history, locked, lockPrice, treesInRadius} = activeTree
-
     const toLocaleString = (value) =>{
         return value.toLocaleString('fr-FR');
     }
@@ -84,6 +88,7 @@ const Card = () => {
 
     }
 
+    
     if(owner){
         ownerUserName = owner.userName
     }
@@ -159,7 +164,7 @@ const Card = () => {
                 <div className={"card-buttons"}>
                     {ownerUserName !== userName && owner !== userName && !locked && 
                         <>
-                            {leaves > price 
+                            {leaves >= price 
                                 ?
                                 <button className={"btn-card"} onClick={handleBuyButton}>
                                     Buy this tree for&nbsp;&nbsp;<span className={"price"}>{toLocaleString(price)}</span>&nbsp;&nbsp;leaves
@@ -173,7 +178,7 @@ const Card = () => {
                     }
                     {!locked && (owner === userName || ownerUserName === userName) &&
                         <>
-                        {leaves > lockPrice
+                        {leaves >= lockPrice
                             ?
                             <button className={"btn-card locked"} onClick={handleLockButton}>Lock this tree for&nbsp;&nbsp;<span className={"price"}>{toLocaleString(lockPrice)}</span>&nbsp;&nbsp;leaves</button>
                             :

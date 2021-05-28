@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Login from "./formLogin.js";
 import Register from "./formReg.js";
+import Rules from "../rules"
 import {useDispatch} from 'react-redux'
 import {cleanError} from '../../actions/authActions'
 
@@ -8,10 +9,16 @@ export const Form = () => {
 
 
     const [isLog, setIsLog] = useState(true);
+    const [isRules, setIsRules] = useState(true);
     const dispatch = useDispatch()
+
     const handleButton = (e) => {
         setIsLog(e);
         dispatch(cleanError())
+    }
+
+    const handleRules = () => {
+        setIsRules(false)
     }
 
     return (
@@ -27,8 +34,15 @@ export const Form = () => {
                                 onClick={() => handleButton(true)}>Login</button>
                         </div>
                         {isLog ?
-                            <Login /> :
+                        <Login /> 
+                        :
+                        <>
+                        {isRules ? 
+                            <Rules handleRules={handleRules}/>
+                            :
                             <Register />
+                        }
+                        </>
                         }
                     </div>
                 </div>

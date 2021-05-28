@@ -2,11 +2,14 @@ import React from "react";
 import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import Card from "./card";
-import {useFetchTree} from "../hooks/hooks";
-import {store} from "../store/store";
-import {treesPos} from "../assets/getTreesPos";
+import L from 'leaflet'
+import Card from './card'
+import { useFetchTree } from '../hooks/hooks'
+import { store } from '../store/store'
+import { treesPos } from '../assets/getTreesPos'
+import {useDispatch} from 'react-redux'
+import {startLoading} from "../actions/treesActions"
+
 
 //SVG
 import tree1 from "../assets/svg/tree-svgrepo-com.svg";
@@ -18,12 +21,18 @@ import tree6 from "../assets/svg/aspen-svgrepo-com.svg";
 import lockSvg from "../assets/svg/lock-svgrepo-com.svg";
 
 const ViewMap = () => {
-    const treesPositions = treesPos;
-    const getOneTree = useFetchTree();
+    const treesPositions = treesPos
+    const getOneTree = useFetchTree()
+    const dispatch = useDispatch()
 
     const handleClick = (id) => {
-        getOneTree(id, uid);
-    };
+        dispatch(startLoading())
+        getOneTree(id, uid)
+    }
+
+    const uid = store.getState().auth.uid
+    const userColor = store.getState().auth.color
+    const root = document.querySelector(':root');
 
     const uid = store.getState().auth.uid;
     const userColor = store.getState().auth.color;
@@ -52,14 +61,6 @@ const ViewMap = () => {
             root.style.setProperty(
                 "--color-theme-marker",
                 "radial-gradient(#a29bfee1, #a29bfe77)",
-            );
-            break;
-        case "turquoise":
-            root.style.setProperty("--color-theme", "#1abc9ca4");
-            root.style.setProperty("--color-theme-hover", "#1abc9ce8");
-            root.style.setProperty(
-                "--color-theme-marker",
-                "radial-gradient(#1abc9cc0, #1abc9c44)",
             );
             break;
         default:
@@ -102,26 +103,25 @@ const ViewMap = () => {
                         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     }
                 />
-                <MarkerClusterGroup
-                    chunkedLoading={true}
-                    spiderfyOnMaxZoom={false}
-                    disableClusteringAtZoom={18}>
-                    {treesPositions.map((tree) => (
-                        <Marker
-                            position={tree.loc}
-                            key={tree.id}
-                            id={tree.id}
-                            icon={treeIcon(tree.locked)}
-                            eventHandlers={{
-                                click: (e) => {
-                                    handleClick(e.target.options.id);
-                                },
-                            }}>
-                            <Popup>
-                                <Card />
-                            </Popup>
-                        </Marker>
-                    ))}
+                <MarkerClusterGroup chunkedLoading={true} spiderfyOnMaxZoom={false} disableClusteringAtZoom={18}>
+                        {treesPositions.map(tree => {
+                            return (
+                                <Marker
+                                    position={tree.loc}
+                                    key={tree.id}
+                                    id={tree.id}
+                                    icon={treeIcon(tree.locked)}
+                                    eventHandlers={{
+                                        click: (e) => {
+                                            handleClick(e.target.options.id)},
+                                    }}
+                                >
+                                    <Popup>
+                                        <Card />
+                                    </Popup>
+                                </Marker>
+                            )
+                        })}
                 </MarkerClusterGroup>
             </MapContainer>
         </>

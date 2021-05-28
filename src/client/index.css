@@ -110,7 +110,7 @@ button {
 
 .user-logo,
 .logout-logo,
-.sound-logo {
+.sound-logo{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,6 +119,14 @@ button {
     border: 4px solid var(--grey-dark);
     border-radius: 4px;
     margin: 0 5px;
+}
+
+.topbar > .github-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
 }
 .user-logo > img,
 .logout-logo > img {
@@ -174,6 +182,7 @@ h3 {
     transition: var(--transition);
 }
 
+.dashboard-container.active > .edit-color,
 .dashboard-container.active > .dashboard-info,
 .dashboard-container.active > .dashboard-info > .dashboard-trees,
 .dashboard-container.active > .dashboard-info > .dashboard-leaves,
@@ -182,12 +191,14 @@ h3 {
     height: 0;
 }
 
+.dashboard-container.active > .edit-color,
 .dashboard-container.active > .container-logout,
 .dashboard-container.active > .container-logout > .link-logout,
 .dashboard-container.active > .container-logout > .link-logout > a,
 .dashboard-container.active > .dashboard-info > .dashboard-leaves > strong,
 .dashboard-container.active > .dashboard-info > .dashboard-trees > strong {
     transform: scaleY(0);
+    opacity: 0;
 }
 
 strong {
@@ -201,7 +212,7 @@ strong {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 240px;
+    width: 260px;
     height: 40px;
     background-color: var(--grey-light);
     border: 4px solid var(--grey-dark);
@@ -626,12 +637,30 @@ h6{
 .loader {
     width: 100%;
     height: 100%;
+    min-height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.loader-page{
+    background: url('./assets/img/wp5758326-anime-trees-4k-wallpapers.jpg');
+}
+
+.loader-page>.overlay{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 /* FORM */
+.container-form{
+    background: url('./assets/img/wp5758326-anime-trees-4k-wallpapers.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 .container-form,
 .loader {
@@ -639,14 +668,6 @@ h6{
     height: 100%;
     font-family: "Roboto", sans-serif;
     font-size: 14px;
-    background-image: url("./assets/img/wp5758326-anime-trees-4k-wallpapers.jpg");
-    background-size: cover;
-}
-
-.loader>.overlay{
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .overlay {
@@ -657,7 +678,7 @@ h6{
 }
 
 .logo {
-    height: 200px;
+    height: 180px;
     width: 500px;
     margin: auto;
     background-image: url("./assets/img/LogoMwenbwa-removebg-preview.png");
@@ -666,7 +687,7 @@ h6{
 }
 
 .container-inputs {
-    width: 540px;
+    width: 600px;
     height: auto;
     margin: auto;
     z-index: 1;
@@ -915,3 +936,165 @@ h3 {
     font-weight: bold;
     color: rgb(173, 58, 58);
 }
+
+.edit-color{
+    height: calc(80% - 8px);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 1;
+    transition: var(--transition);
+
+}
+
+.edit-inputs{
+    width: 100%;
+    justify-content: space-around;
+}
+
+.btn-theme{
+    background-color: var(--color-theme);
+}
+
+.btn-theme:hover{
+    background-color: var(--color-theme-hover);
+}
+
+.change-color{
+    margin-top: 10px;
+}
+
+/* RULES */
+
+.container-rules{
+    color: #fff;
+    font-size: 16px;
+    z-index: 20;
+    padding: 10px;
+}
+
+.rules-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.rules-info > p,
+.rules-info > p > strong,
+.rules-info > ul > li ,
+.rules-info > ul > li > strong {
+    font-size: 13px;
+    margin: 0;
+    font-weight: normal;
+    text-align: justify;
+
+}
+
+.title-rules > h1,
+.title-rules > p{
+    font-size: 24px;
+    margin: 0;
+}
+
+.title-rules{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 10px;
+}
+.title-rules::after{
+    content: '';
+    height: 2px;
+    width: 270px;
+    background-color: rgba(255, 160, 17, 0.89);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform:translateX(-50%);
+
+}
+
+.overlay-rules{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 19;
+    background-color: #34495e3a;
+}
+
+.span-blue,
+#city{
+    color: #fff;
+    font-weight: bold;
+}
+
+.span-red{
+    color: rgb(255, 160, 17);
+    font-weight: bold;
+}
+
+.button-rules{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    height: 50px;
+    margin-top: 10px;
+    border: 4px solid var(--grey-dark);
+    background-color: rgba(255, 160, 17, 0.692);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 13px;
+    outline: none;
+    transition: var(--transition);
+}
+
+.button-rules:hover{
+    background-color: rgba(255, 160, 17, 0.979);
+
+}
+#p-summary{
+    text-decoration: underline;
+    margin-bottom: 10px;
+}
+#p-summary,
+.bold{
+    font-weight: bold;
+    font-size: 16px;
+
+}
+
+#p-rules-middle{
+    margin: 10px 0;
+}
+
+.summary-ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.span-red{
+    font-weight: bold;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus{
+    transition: 0s;
+}
+
+
