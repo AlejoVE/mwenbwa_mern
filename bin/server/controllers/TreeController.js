@@ -54,7 +54,7 @@ const getOneTree = async (req, res) => {
 
 const buyTree = async (req, res) => {
   const id = req.params.id;
-  const userName = req.body.userName;
+  const userName = req.username;
   const price = req.body.price;
 
   try {

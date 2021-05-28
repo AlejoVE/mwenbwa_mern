@@ -13,7 +13,7 @@ const {
 router.get('/treesPos', getTreesPositions)
 router.get('/:id', getOneTree)
 
-router.put('/buy/:id', buyTree)
+router.put('/buy/:id', validateJWT, buyTree)
 router.put('/lock/:id', validateJWT, lockTree)
 router.post('/:id/comments', validateJWT, addComment)
 router.get('/', getAllTrees)

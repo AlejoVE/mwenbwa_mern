@@ -2,7 +2,7 @@
 
 Mwenbwa is a WebApp that consist in an online IDLE Game, based in Liège. We developed this app as part of the web development training at [BeCode - Liège](https://becode.org/learn/junior-web-developer/).
 
--   [Frontend](https://github.com/Maxime-Bott/mwenbwa_mern)
+-   [Front end](https://github.com/Maxime-Bott/mwenbwa_mern)
 
 # **Backend architecture**
 
