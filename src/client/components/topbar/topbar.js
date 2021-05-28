@@ -52,6 +52,7 @@ const Topbar = () => {
             <div className={"topbar"}>
                 <a href="#" className="link-leader" onClick={handleLeader}>Leaderboard</a>
                 <a href="#" className="link-log" onClick={handleLog}>Gamelog</a>
+                <a href="#" className="github-logo" target="_blank"><img src="#" alt="github-logo"></img></a> 
             </div>
             
             {leader && <Ladder closeModal={handleModal}/>}

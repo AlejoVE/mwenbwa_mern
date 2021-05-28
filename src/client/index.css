@@ -110,7 +110,8 @@ button {
 
 .user-logo,
 .logout-logo,
-.sound-logo {
+.sound-logo,
+.github-logo {
     display: flex;
     justify-content: center;
     align-items: center;
