@@ -2,7 +2,7 @@
 
 Mwenbwa is a WebApp that consist in an online IDLE Game, based in Liège. We developed this app as part of the web development training at [BeCode - Liège](https://becode.org/learn/junior-web-developer/).
 
--   [Front end](https://github.com/Maxime-Bott/mwenbwa_mern)
+-   [Frontend](https://github.com/Maxime-Bott/mwenbwa_mern)
 
 # **Backend architecture**
 
@@ -10,7 +10,7 @@ Mwenbwa is a WebApp that consist in an online IDLE Game, based in Liège. We dev
 
 ![Database structure](https://user-images.githubusercontent.com/59319966/119871247-8cfb3a00-bf22-11eb-9609-c1c5c3e08fd6.png "Database structure")
 
-### **Create and/or configure environement variables**
+### **Create and/or configure environment variables**
 
 -   Create a .env file at the root of your project folder
 -   Replace all variables noted with $ below, and save it to the .env file

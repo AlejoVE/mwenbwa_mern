@@ -3,6 +3,8 @@ Mwenbwa is a  WebApp that consist in an online IDLE Game, based in Liège. We de
 
 - 	[Backend documentation](https://github.com/Maxime-Bott/mwenbwa_mern/tree/main/src/server)
 
+### [***CHECK THE LIVE VERSION HERE***](https://mwenbwa-jepsens-4-27.herokuapp.com/)
+
 ## Features:
 
 **A player can**:
